@@ -15,4 +15,13 @@ jobs:
       matrix:
         os: [ubuntu-20.04, macos-12]
     steps:
-      - uses: ac
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        if: ${{ matrix.os != 'macos-12' }}
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      - na
