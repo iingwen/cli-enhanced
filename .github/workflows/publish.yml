@@ -24,4 +24,11 @@ jobs:
             ~/.cargo/git
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      - na
+      - name: Build
+        run: ./scripts/build
+      - name: Run tests
+        run: ./scripts/check
+        env:
+          REINFER_CLI_TEST_PROJECT: ${{ secrets.REINFER_CLI_TEST_PROJECT }}
+          REINFER_CLI_TEST_TOKEN: ${{ secrets.REINFER_CLI_TEST_TOKEN }}
+          REINFER_CLI_TEST
