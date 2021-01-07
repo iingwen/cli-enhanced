@@ -31,4 +31,12 @@ jobs:
         env:
           REINFER_CLI_TEST_PROJECT: ${{ secrets.REINFER_CLI_TEST_PROJECT }}
           REINFER_CLI_TEST_TOKEN: ${{ secrets.REINFER_CLI_TEST_TOKEN }}
-          REINFER_CLI_TEST
+          REINFER_CLI_TEST_ENDPOINT: ${{ secrets.REINFER_CLI_TEST_ENDPOINT }}
+      - name: Install publish dependencies
+        run: ./scripts/publish-install
+        env:
+          BUILD_PLATFORM: ${{ matrix.os }}
+      - name: GCP Auth
+        uses: google-github-actions/auth@v1
+        with:
+          credential
