@@ -39,4 +39,12 @@ jobs:
       - name: GCP Auth
         uses: google-github-actions/auth@v1
         with:
-          credential
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+      - uses: google-github-actions/setup-gcloud@v1
+        name: Set up Cloud SDK
+      - name: Publish Binaries
+        run: ./cli/publish-binaries
+        env:
+          BUILD_PLATFORM: ${{ matrix.os }}
+      - name: Publish Crates
+        if: ${{ matrix.os == 'ubu
