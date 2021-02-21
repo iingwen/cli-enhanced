@@ -13,4 +13,11 @@ use reqwest::{
     IntoUrl, Proxy, Result as ReqwestResult,
 };
 use resources::{
-    bucket_statistics::GetBucketStat
+    bucket_statistics::GetBucketStatisticsResponse,
+    comment::CommentTimestampFilter,
+    dataset::{
+        QueryRequestParams, QueryResponse,
+        StatisticsRequestParams as DatasetStatisticsRequestParams, SummaryRequestParams,
+        SummaryResponse,
+    },
+    documents::{Document, SyncRawEmails
