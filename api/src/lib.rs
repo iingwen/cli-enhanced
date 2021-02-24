@@ -42,4 +42,10 @@ use url::Url;
 use crate::resources::{
     audit::{AuditQueryFilter, AuditQueryRequest, AuditQueryResponse},
     bucket::{
-        CreateRequest as CreateBucketRequest, CreateResp
+        CreateRequest as CreateBucketRequest, CreateResponse as CreateBucketResponse,
+        GetAvailableResponse as GetAvailableBucketsResponse, GetResponse as GetBucketResponse,
+    },
+    bucket_statistics::Statistics as BucketStatistics,
+    comment::{
+        GetAnnotationsResponse, GetCommentResponse, GetLabellingsAfter, GetPredictionsResponse,
+        GetRec
