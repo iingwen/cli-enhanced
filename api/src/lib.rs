@@ -20,4 +20,11 @@ use resources::{
         StatisticsRequestParams as DatasetStatisticsRequestParams, SummaryRequestParams,
         SummaryResponse,
     },
-    documents::{Document, SyncRawEmails
+    documents::{Document, SyncRawEmailsRequest, SyncRawEmailsResponse},
+    integration::{
+        GetIntegrationResponse, GetIntegrationsResponse, Integration, NewIntegration,
+        PostIntegrationRequest, PostIntegrationResponse, PutIntegrationRequest,
+        PutIntegrationResponse,
+    },
+    project::ForceDeleteProject,
+    quota::{GetQuotasResponse
