@@ -53,4 +53,9 @@ use crate::resources::{
     },
     dataset::{
         CreateRequest as CreateDatasetRequest, CreateResponse as CreateDatasetResponse,
-        GetAvailableResponse as GetAvailableDatasetsRes
+        GetAvailableResponse as GetAvailableDatasetsResponse, GetResponse as GetDatasetResponse,
+        UpdateRequest as UpdateDatasetRequest, UpdateResponse as UpdateDatasetResponse,
+    },
+    email::{PutEmailsRequest, PutEmailsResponse},
+    project::{
+        CreateProjectRequest, CreateProjectResponse, GetProjectResponse, GetProjectsR
