@@ -58,4 +58,10 @@ use crate::resources::{
     },
     email::{PutEmailsRequest, PutEmailsResponse},
     project::{
-        CreateProjectRequest, CreateProjectResponse, GetProjectResponse, GetProjectsR
+        CreateProjectRequest, CreateProjectResponse, GetProjectResponse, GetProjectsResponse,
+        UpdateProjectRequest, UpdateProjectResponse,
+    },
+    quota::{CreateQuota, TenantQuotaKind},
+    source::{
+        CreateRequest as CreateSourceRequest, CreateResponse as CreateSourceResponse,
+        GetAvailableResponse as GetAvailableSourcesResponse, 
