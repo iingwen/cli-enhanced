@@ -48,4 +48,9 @@ use crate::resources::{
     bucket_statistics::Statistics as BucketStatistics,
     comment::{
         GetAnnotationsResponse, GetCommentResponse, GetLabellingsAfter, GetPredictionsResponse,
-        GetRec
+        GetRecentRequest, PutCommentsRequest, PutCommentsResponse, RecentCommentsPage,
+        SyncCommentsRequest, UpdateAnnotationsRequest,
+    },
+    dataset::{
+        CreateRequest as CreateDatasetRequest, CreateResponse as CreateDatasetResponse,
+        GetAvailableResponse as GetAvailableDatasetsRes
