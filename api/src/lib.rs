@@ -64,4 +64,9 @@ use crate::resources::{
     quota::{CreateQuota, TenantQuotaKind},
     source::{
         CreateRequest as CreateSourceRequest, CreateResponse as CreateSourceResponse,
-        GetAvailableResponse as GetAvailableSourcesResponse, 
+        GetAvailableResponse as GetAvailableSourcesResponse, GetResponse as GetSourceResponse,
+        UpdateRequest as UpdateSourceRequest, UpdateResponse as UpdateSourceResponse,
+    },
+    statistics::GetResponse as GetStatisticsResponse,
+    stream::{
+        AdvanceRequest as StreamAdvanceRequest, FetchRequest as StreamFet
