@@ -76,4 +76,14 @@ use crate::resources::{
     tenant_id::TenantId,
     user::GetResponse as GetUserResponse,
     user::{
-        CreateRequest as CreateUserRequest, CreateRespo
+        CreateRequest as CreateUserRequest, CreateResponse as CreateUserResponse,
+        GetAvailableResponse as GetAvailableUsersResponse,
+        GetCurrentResponse as GetCurrentUserResponse, PostUserRequest, PostUserResponse,
+        WelcomeEmailResponse,
+    },
+    EmptySuccess, Response,
+};
+
+use crate::retry::{Retrier, RetryConfig};
+
+p
