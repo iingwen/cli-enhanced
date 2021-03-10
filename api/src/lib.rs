@@ -86,4 +86,12 @@ use crate::resources::{
 
 use crate::retry::{Retrier, RetryConfig};
 
-p
+pub use crate::{
+    error::{Error, Result},
+    resources::{
+        bucket::{
+            Bucket, BucketType, FullName as BucketFullName, Id as BucketId,
+            Identifier as BucketIdentifier, Name as BucketName, NewBucket,
+        },
+        comment::{
+            AnnotatedComment, 
