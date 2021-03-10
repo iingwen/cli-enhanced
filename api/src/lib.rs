@@ -94,4 +94,7 @@ pub use crate::{
             Identifier as BucketIdentifier, Name as BucketName, NewBucket,
         },
         comment::{
-            AnnotatedComment, 
+            AnnotatedComment, Comment, CommentFilter, CommentsIterPage, Continuation,
+            EitherLabelling, Entities, Entity, HasAnnotations, Id as CommentId, Label, Labelling,
+            Message, MessageBody, MessageSignature, MessageSubject, NewAnnotatedComment,
+            NewComment, NewEntities, NewLabell
