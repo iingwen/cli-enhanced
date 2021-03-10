@@ -69,4 +69,11 @@ use crate::resources::{
     },
     statistics::GetResponse as GetStatisticsResponse,
     stream::{
-        AdvanceRequest as StreamAdvanceRequest, FetchRequest as StreamFet
+        AdvanceRequest as StreamAdvanceRequest, FetchRequest as StreamFetchRequest,
+        GetStreamsResponse, ResetRequest as StreamResetRequest,
+        TagExceptionsRequest as TagStreamExceptionsRequest,
+    },
+    tenant_id::TenantId,
+    user::GetResponse as GetUserResponse,
+    user::{
+        CreateRequest as CreateUserRequest, CreateRespo
