@@ -102,4 +102,10 @@ pub use crate::{
         },
         dataset::{
             Dataset, FullName as DatasetFullName, Id as DatasetId, Identifier as DatasetIdentifier,
-            ModelVer
+            ModelVersion, Name as DatasetName, NewDataset, UpdateDataset,
+        },
+        email::{
+            Continuation as EmailContinuation, EmailsIterPage, Id as EmailId, Mailbox, MimeContent,
+            NewEmail,
+        },
+        entity_def::{EntityDef, Id as EntityDefId, Name as EntityNa
