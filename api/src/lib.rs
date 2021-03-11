@@ -97,4 +97,9 @@ pub use crate::{
             AnnotatedComment, Comment, CommentFilter, CommentsIterPage, Continuation,
             EitherLabelling, Entities, Entity, HasAnnotations, Id as CommentId, Label, Labelling,
             Message, MessageBody, MessageSignature, MessageSubject, NewAnnotatedComment,
-            NewComment, NewEntities, NewLabell
+            NewComment, NewEntities, NewLabelling, NewMoonForm, PredictedLabel, Prediction,
+            PropertyMap, PropertyValue, Sentiment, SyncCommentsResponse, Uid as CommentUid,
+        },
+        dataset::{
+            Dataset, FullName as DatasetFullName, Id as DatasetId, Identifier as DatasetIdentifier,
+            ModelVer
