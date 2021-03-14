@@ -108,4 +108,9 @@ pub use crate::{
             Continuation as EmailContinuation, EmailsIterPage, Id as EmailId, Mailbox, MimeContent,
             NewEmail,
         },
-        entity_def::{EntityDef, Id as EntityDefId, Name as EntityNa
+        entity_def::{EntityDef, Id as EntityDefId, Name as EntityName, NewEntityDef},
+        integration::FullName as IntegrationFullName,
+        label_def::{
+            LabelDef, LabelDefPretrained, MoonFormFieldDef, Name as LabelName, NewLabelDef,
+            NewLabelDefPretrained, PretrainedId as LabelDefPretrainedId,
+    
