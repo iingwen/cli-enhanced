@@ -119,4 +119,9 @@ pub use crate::{
         },
         project::{NewProject, Project, ProjectName, UpdateProject},
         source::{
-            FullName as SourceFullName, 
+            FullName as SourceFullName, Id as SourceId, Identifier as SourceIdentifier,
+            Name as SourceName, NewSource, Source, SourceKind, TransformTag, UpdateSource,
+        },
+        statistics::Statistics as CommentStatistics,
+        stream::{
+            Batch as StreamBatch, FullName as StreamFullName, SequenceId as Strea
