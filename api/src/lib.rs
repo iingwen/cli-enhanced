@@ -113,4 +113,10 @@ pub use crate::{
         label_def::{
             LabelDef, LabelDefPretrained, MoonFormFieldDef, Name as LabelName, NewLabelDef,
             NewLabelDefPretrained, PretrainedId as LabelDefPretrainedId,
-    
+        },
+        label_group::{
+            LabelGroup, Name as LabelGroupName, NewLabelGroup, DEFAULT_LABEL_GROUP_NAME,
+        },
+        project::{NewProject, Project, ProjectName, UpdateProject},
+        source::{
+            FullName as SourceFullName, 
