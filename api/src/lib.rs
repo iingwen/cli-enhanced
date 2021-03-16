@@ -129,4 +129,17 @@ pub use crate::{
         },
         user::{
             Email, GlobalPermission, Id as UserId, Identifier as UserIdentifier,
-            ModifiedPermissions, NewUser, ProjectPermission, UpdateUser, Use
+            ModifiedPermissions, NewUser, ProjectPermission, UpdateUser, User, Username,
+        },
+    },
+};
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Token(pub String);
+
+pub struct Config {
+    pub endpoint: Url,
+    pub token: Token,
+    pub accept_invalid_certificates: bool,
+    pub proxy: Option<Url>,
+    /// Retry settings to use, if any. Thi
