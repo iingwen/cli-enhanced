@@ -124,4 +124,9 @@ pub use crate::{
         },
         statistics::Statistics as CommentStatistics,
         stream::{
-            Batch as StreamBatch, FullName as StreamFullName, SequenceId as Strea
+            Batch as StreamBatch, FullName as StreamFullName, SequenceId as StreamSequenceId,
+            Stream, StreamException, StreamExceptionMetadata,
+        },
+        user::{
+            Email, GlobalPermission, Id as UserId, Identifier as UserIdentifier,
+            ModifiedPermissions, NewUser, ProjectPermission, UpdateUser, Use
