@@ -142,4 +142,12 @@ pub struct Config {
     pub token: Token,
     pub accept_invalid_certificates: bool,
     pub proxy: Option<Url>,
-    /// Retry settings to use, if any. Thi
+    /// Retry settings to use, if any. This will apply to all requests except for POST requests
+    /// which are not idempotent (as they cannot be naively retried).
+    pub retry_config: Option<RetryConfig>,
+}
+
+impl Default for Config {
+    fn default() -> Self {
+        Config {
+            endpoint: DEF
