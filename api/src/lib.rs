@@ -150,4 +150,16 @@ pub struct Config {
 impl Default for Config {
     fn default() -> Self {
         Config {
-            endpoint: DEF
+            endpoint: DEFAULT_ENDPOINT.clone(),
+            token: Token("".to_owned()),
+            accept_invalid_certificates: false,
+            proxy: None,
+            retry_config: None,
+        }
+    }
+}
+
+#[derive(Debug)]
+pub struct Client {
+    endpoints: Endpoints,
+    
