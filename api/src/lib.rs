@@ -162,4 +162,15 @@ impl Default for Config {
 #[derive(Debug)]
 pub struct Client {
     endpoints: Endpoints,
-    
+    http_client: HttpClient,
+    headers: HeaderMap,
+    retrier: Option<Retrier>,
+}
+
+#[derive(Serialize)]
+pub struct GetLabellingsInBulk<'a> {
+    pub source_id: &'a SourceId,
+    pub return_predictions: &'a bool,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub aft
