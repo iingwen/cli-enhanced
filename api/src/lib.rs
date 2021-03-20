@@ -182,4 +182,14 @@ pub struct GetLabellingsInBulk<'a> {
 #[derive(Serialize)]
 pub struct GetCommentsIterPageQuery<'a> {
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub from_timestamp: Option<Dat
+    pub from_timestamp: Option<DateTime<Utc>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub to_timestamp: Option<DateTime<Utc>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub after: Option<&'a Continuation>,
+    pub limit: usize,
+    pub include_markup: bool,
+}
+
+#[derive(Serialize)]
+pub struct GetEmai
