@@ -173,4 +173,13 @@ pub struct GetLabellingsInBulk<'a> {
     pub return_predictions: &'a bool,
 
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub aft
+    pub after: &'a Option<GetLabellingsAfter>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub limit: &'a Option<usize>,
+}
+
+#[derive(Serialize)]
+pub struct GetCommentsIterPageQuery<'a> {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub from_timestamp: Option<Dat
