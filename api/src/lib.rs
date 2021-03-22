@@ -192,4 +192,17 @@ pub struct GetCommentsIterPageQuery<'a> {
 }
 
 #[derive(Serialize)]
-pub struct GetEmai
+pub struct GetEmailsIterPageQuery<'a> {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub continuation: Option<&'a EmailContinuation>,
+    pub limit: usize,
+}
+
+#[derive(Serialize)]
+pub struct GetCommentQuery {
+    pub include_markup: bool,
+}
+
+impl Client {
+    /// Create a new API client.
+    pu
