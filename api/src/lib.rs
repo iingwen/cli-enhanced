@@ -205,4 +205,10 @@ pub struct GetCommentQuery {
 
 impl Client {
     /// Create a new API client.
-    pu
+    pub fn new(config: Config) -> Result<Client> {
+        let http_client = build_http_client(&config)?;
+        let headers = build_headers(&config)?;
+        let endpoints = Endpoints::new(config.endpoint)?;
+        let retrier = config.retry_config.map(Retrier::new);
+        Ok(Client {
+     
