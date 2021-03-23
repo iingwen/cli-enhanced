@@ -211,4 +211,17 @@ impl Client {
         let endpoints = Endpoints::new(config.endpoint)?;
         let retrier = config.retry_config.map(Retrier::new);
         Ok(Client {
-     
+            endpoints,
+            http_client,
+            headers,
+            retrier,
+        })
+    }
+
+    /// Get the base url for the client
+    pub fn base_url(&self) -> &Url {
+        &self.endpoints.base
+    }
+
+    /// List all visible sources.
+    pub fn get_sources(&self) -> R
