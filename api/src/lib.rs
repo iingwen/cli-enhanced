@@ -224,4 +224,12 @@ impl Client {
     }
 
     /// List all visible sources.
-    pub fn get_sources(&self) -> R
+    pub fn get_sources(&self) -> Result<Vec<Source>> {
+        Ok(self
+            .get::<_, GetAvailableSourcesResponse>(self.endpoints.sources.clone())?
+            .sources)
+    }
+
+    /// Get a source by either id or name.
+    pub fn get_user(&self, user: impl Into<UserIdentifier>) -> Result<User> {
+        Ok(match user.into() 
