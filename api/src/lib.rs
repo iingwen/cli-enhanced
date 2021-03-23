@@ -232,4 +232,13 @@ impl Client {
 
     /// Get a source by either id or name.
     pub fn get_user(&self, user: impl Into<UserIdentifier>) -> Result<User> {
-        Ok(match user.into() 
+        Ok(match user.into() {
+            UserIdentifier::Id(user_id) => {
+                self.get::<_, GetUserResponse>(self.endpoints.user_by_id(&user_id)?)?
+                    .user
+            }
+        })
+    }
+
+    /// Get a source by either id or name.
+    pub fn get_source(&self, source: impl Into<SourceIdentifier>) -> Re
