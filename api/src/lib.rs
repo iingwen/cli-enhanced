@@ -271,4 +271,10 @@ impl Client {
     /// Update a source.
     pub fn update_source(
         &self,
-        source_
+        source_name: &SourceFullName,
+        options: UpdateSource<'_>,
+    ) -> Result<Source> {
+        Ok(self
+            .post::<_, _, UpdateSourceResponse>(
+                self.endpoints.source_by_name(source_name)?,
+                UpdateSourceRequest { source:
