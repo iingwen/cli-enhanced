@@ -248,4 +248,15 @@ impl Client {
                     .source
             }
             SourceIdentifier::FullName(source_name) => {
-                
+                self.get::<_, GetSourceResponse>(self.endpoints.source_by_name(&source_name)?)?
+                    .source
+            }
+        })
+    }
+
+    /// Create a new source.
+    pub fn create_source(
+        &self,
+        source_name: &SourceFullName,
+        options: NewSource<'_>,
+    ) -> Result<Source> 
