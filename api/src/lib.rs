@@ -241,4 +241,11 @@ impl Client {
     }
 
     /// Get a source by either id or name.
-    pub fn get_source(&self, source: impl Into<SourceIdentifier>) -> Re
+    pub fn get_source(&self, source: impl Into<SourceIdentifier>) -> Result<Source> {
+        Ok(match source.into() {
+            SourceIdentifier::Id(source_id) => {
+                self.get::<_, GetSourceResponse>(self.endpoints.source_by_id(&source_id)?)?
+                    .source
+            }
+            SourceIdentifier::FullName(source_name) => {
+                
