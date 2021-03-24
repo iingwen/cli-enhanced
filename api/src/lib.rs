@@ -259,4 +259,16 @@ impl Client {
         &self,
         source_name: &SourceFullName,
         options: NewSource<'_>,
-    ) -> Result<Source> 
+    ) -> Result<Source> {
+        Ok(self
+            .put::<_, _, CreateSourceResponse>(
+                self.endpoints.source_by_name(source_name)?,
+                CreateSourceRequest { source: options },
+            )?
+            .source)
+    }
+
+    /// Update a source.
+    pub fn update_source(
+        &self,
+        source_
