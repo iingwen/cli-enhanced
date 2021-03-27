@@ -277,4 +277,13 @@ impl Client {
         Ok(self
             .post::<_, _, UpdateSourceResponse>(
                 self.endpoints.source_by_name(source_name)?,
-                UpdateSourceRequest { source:
+                UpdateSourceRequest { source: options },
+                Retry::Yes,
+            )?
+            .source)
+    }
+
+    /// Delete a source.
+    pub fn delete_source(&self, source: impl Into<SourceIdentifier>) -> Result<()> {
+        let source_id = match source.into() {
+            SourceIdentifier::Id(source_id) =
