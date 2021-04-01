@@ -286,4 +286,13 @@ impl Client {
     /// Delete a source.
     pub fn delete_source(&self, source: impl Into<SourceIdentifier>) -> Result<()> {
         let source_id = match source.into() {
-            SourceIdentifier::Id(source_id) =
+            SourceIdentifier::Id(source_id) => source_id,
+            source @ SourceIdentifier::FullName(_) => self.get_source(source)?.id,
+        };
+        self.delete(self.endpoints.source_by_id(&source_id)?)
+    }
+
+    /// Set a quota
+    pub fn create_quota(
+        &self,
+        target_tenant_id: &Ten
