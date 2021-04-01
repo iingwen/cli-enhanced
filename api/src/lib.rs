@@ -306,4 +306,13 @@ impl Client {
         )
     }
 
-    /// Get quotas for 
+    /// Get quotas for current tenant
+    pub fn get_quotas(&self) -> Result<Vec<Quota>> {
+        Ok(self
+            .get::<_, GetQuotasResponse>(self.endpoints.quotas()?)?
+            .quotas)
+    }
+
+    /// Delete a user.
+    pub fn delete_user(&self, user: impl Into<UserIdentifier>) -> Result<()> {
+        let UserId
