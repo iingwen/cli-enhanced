@@ -295,4 +295,15 @@ impl Client {
     /// Set a quota
     pub fn create_quota(
         &self,
-        target_tenant_id: &Ten
+        target_tenant_id: &TenantId,
+        tenant_quota_kind: TenantQuotaKind,
+        options: CreateQuota,
+    ) -> Result<()> {
+        self.post(
+            self.endpoints.quota(target_tenant_id, tenant_quota_kind)?,
+            options,
+            Retry::Yes,
+        )
+    }
+
+    /// Get quotas for 
