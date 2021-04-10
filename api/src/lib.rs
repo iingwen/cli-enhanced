@@ -315,4 +315,14 @@ impl Client {
 
     /// Delete a user.
     pub fn delete_user(&self, user: impl Into<UserIdentifier>) -> Result<()> {
-        let UserId
+        let UserIdentifier::Id(user_id) = user.into();
+        self.delete(self.endpoints.user_by_id(&user_id)?)
+    }
+
+    /// Delete comments by id in a source.
+    pub fn delete_comments(
+        &self,
+        source: impl Into<SourceIdentifier>,
+        comments: &[CommentId],
+    ) -> Result<()> {
+        let source
