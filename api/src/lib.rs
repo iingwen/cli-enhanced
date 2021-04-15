@@ -330,4 +330,13 @@ impl Client {
             SourceIdentifier::FullName(source_full_name) => source_full_name,
         };
         self.delete_query(
-            self.endpoints.comments_v1(&
+            self.endpoints.comments_v1(&source_full_name)?,
+            Some(&id_list_query(comments.iter().map(|uid| &uid.0))),
+        )
+    }
+
+    /// Get a page of comments from a source.
+    pub fn get_comments_iter_page(
+        &self,
+        source_name: &SourceFullName,
+        continuation: Option<&ContinuationK
