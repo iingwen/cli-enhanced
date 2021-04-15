@@ -325,4 +325,9 @@ impl Client {
         source: impl Into<SourceIdentifier>,
         comments: &[CommentId],
     ) -> Result<()> {
-        let source
+        let source_full_name = match source.into() {
+            source @ SourceIdentifier::Id(_) => self.get_source(source)?.full_name(),
+            SourceIdentifier::FullName(source_full_name) => source_full_name,
+        };
+        self.delete_query(
+            self.endpoints.comments_v1(&
