@@ -339,4 +339,11 @@ impl Client {
     pub fn get_comments_iter_page(
         &self,
         source_name: &SourceFullName,
-        continuation: Option<&ContinuationK
+        continuation: Option<&ContinuationKind>,
+        to_timestamp: Option<DateTime<Utc>>,
+        limit: usize,
+    ) -> Result<CommentsIterPage> {
+        // Comments are returned from the API in increasing order of their
+        // `timestamp` field.
+        let (from_timestamp, after) = match continuation {
+            // If we have a timesta
