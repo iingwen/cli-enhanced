@@ -353,4 +353,12 @@ impl Client {
             // a series of comments, where the continuation came from page n.
             Some(ContinuationKind::Continuation(after)) => (None, Some(after)),
             // Otherwise, this is a request for the first page of a series of comments
-            // w
+            // with timestamps starting from the beginning of time.
+            None => (None, None),
+        };
+        let query_params = GetCommentsIterPageQuery {
+            from_timestamp,
+            to_timestamp,
+            after,
+            limit,
+            include_mar
