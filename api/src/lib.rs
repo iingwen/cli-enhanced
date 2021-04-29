@@ -346,4 +346,7 @@ impl Client {
         // Comments are returned from the API in increasing order of their
         // `timestamp` field.
         let (from_timestamp, after) = match continuation {
-            // If we have a timesta
+            // If we have a timestamp, then this is a request for the first page of
+            // a series of comments with timestamps starting from the given time.
+            Some(ContinuationKind::Timestamp(from_timestamp)) => (Some(*from_timestamp), None),
+            // If we have a continuation,
