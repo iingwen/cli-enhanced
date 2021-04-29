@@ -349,4 +349,8 @@ impl Client {
             // If we have a timestamp, then this is a request for the first page of
             // a series of comments with timestamps starting from the given time.
             Some(ContinuationKind::Timestamp(from_timestamp)) => (Some(*from_timestamp), None),
-            // If we have a continuation,
+            // If we have a continuation, then this is a request for page n+1 of
+            // a series of comments, where the continuation came from page n.
+            Some(ContinuationKind::Continuation(after)) => (None, Some(after)),
+            // Otherwise, this is a request for the first page of a series of comments
+            // w
