@@ -361,4 +361,12 @@ impl Client {
             to_timestamp,
             after,
             limit,
-            include_mar
+            include_markup: true,
+        };
+        self.get_query(self.endpoints.comments(source_name)?, Some(&query_params))
+    }
+
+    /// Iterate through all comments for a given dataset query.
+    pub fn get_dataset_query_iter<'a>(
+        &'a self,
+        dataset_name: &'a DatasetFullName,
