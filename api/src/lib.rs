@@ -370,3 +370,12 @@ impl Client {
     pub fn get_dataset_query_iter<'a>(
         &'a self,
         dataset_name: &'a DatasetFullName,
+        params: &'a mut QueryRequestParams,
+    ) -> DatasetQueryIter<'a> {
+        DatasetQueryIter::new(self, dataset_name, params)
+    }
+
+    /// Iterate through all comments in a source.
+    pub fn get_comments_iter<'a>(
+        &'a self,
+        source_name: &'a SourceFullName
