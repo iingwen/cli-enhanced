@@ -388,4 +388,13 @@ impl Client {
     /// Get a page of comments from a source.
     pub fn get_emails_iter_page(
         &self,
-        bucket_name
+        bucket_name: &BucketFullName,
+        continuation: Option<&EmailContinuation>,
+        limit: usize,
+    ) -> Result<EmailsIterPage> {
+        let query_params = GetEmailsIterPageQuery {
+            continuation,
+            limit,
+        };
+        self.post(
+            self.endpoints.get_emails(bucket_name)?,
