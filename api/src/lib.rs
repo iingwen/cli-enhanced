@@ -409,4 +409,13 @@ impl Client {
         bucket_name: &'a BucketFullName,
         page_size: Option<usize>,
     ) -> EmailsIter<'a> {
-        EmailsIt
+        EmailsIter::new(self, bucket_name, page_size)
+    }
+
+    /// Get a single comment by id.
+    pub fn get_comment<'a>(
+        &'a self,
+        source_name: &'a SourceFullName,
+        comment_id: &'a CommentId,
+    ) -> Result<Comment> {
+        let query_params = GetCommentQuer
