@@ -398,3 +398,15 @@ impl Client {
         };
         self.post(
             self.endpoints.get_emails(bucket_name)?,
+            Some(&query_params),
+            Retry::Yes,
+        )
+    }
+
+    /// Iterate through all comments in a source.
+    pub fn get_emails_iter<'a>(
+        &'a self,
+        bucket_name: &'a BucketFullName,
+        page_size: Option<usize>,
+    ) -> EmailsIter<'a> {
+        EmailsIt
