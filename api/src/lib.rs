@@ -378,4 +378,14 @@ impl Client {
     /// Iterate through all comments in a source.
     pub fn get_comments_iter<'a>(
         &'a self,
-        source_name: &'a SourceFullName
+        source_name: &'a SourceFullName,
+        page_size: Option<usize>,
+        timerange: CommentsIterTimerange,
+    ) -> CommentsIter<'a> {
+        CommentsIter::new(self, source_name, page_size, timerange)
+    }
+
+    /// Get a page of comments from a source.
+    pub fn get_emails_iter_page(
+        &self,
+        bucket_name
