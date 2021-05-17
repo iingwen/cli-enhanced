@@ -418,4 +418,14 @@ impl Client {
         source_name: &'a SourceFullName,
         comment_id: &'a CommentId,
     ) -> Result<Comment> {
-        let query_params = GetCommentQuer
+        let query_params = GetCommentQuery {
+            include_markup: true,
+        };
+        Ok(self
+            .get_query::<_, _, GetCommentResponse>(
+                self.endpoints.comment_by_id(source_name, comment_id)?,
+                Some(&query_params),
+            )?
+            .comment)
+    }
+    pub fn post_integratio
