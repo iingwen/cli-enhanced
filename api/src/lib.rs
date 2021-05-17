@@ -428,4 +428,13 @@ impl Client {
             )?
             .comment)
     }
-    pub fn post_integratio
+    pub fn post_integration(
+        &self,
+        name: &IntegrationFullName,
+        integration: &NewIntegration,
+    ) -> Result<PostIntegrationResponse> {
+        self.request(
+            Method::POST,
+            self.endpoints.integration(name)?,
+            Some(PostIntegrationRequest {
+                integrat
