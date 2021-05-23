@@ -437,4 +437,16 @@ impl Client {
             Method::POST,
             self.endpoints.integration(name)?,
             Some(PostIntegrationRequest {
-                integrat
+                integration: integration.clone(),
+            }),
+            None::<()>,
+            Retry::No,
+        )
+    }
+
+    pub fn put_integration(
+        &self,
+        name: &IntegrationFullName,
+        integration: &NewIntegration,
+    ) -> Result<PutIntegrationResponse> {
+        self.reques
