@@ -449,4 +449,17 @@ impl Client {
         name: &IntegrationFullName,
         integration: &NewIntegration,
     ) -> Result<PutIntegrationResponse> {
-        self.reques
+        self.request(
+            Method::PUT,
+            self.endpoints.integration(name)?,
+            Some(PutIntegrationRequest {
+                integration: integration.clone(),
+            }),
+            None::<()>,
+            Retry::No,
+        )
+    }
+
+    pub fn put_comments(
+        &self,
+        so
