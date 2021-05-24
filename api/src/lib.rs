@@ -470,4 +470,16 @@ impl Client {
             Method::PUT,
             self.endpoints.put_comments(source_name)?,
             Some(PutCommentsRequest { comments }),
-    
+            Some(NoChargeQuery { no_charge }),
+            Retry::No,
+        )
+    }
+
+    pub fn put_stream(
+        &self,
+        dataset_name: &DatasetFullName,
+        stream: &NewStream,
+    ) -> Result<PutStreamResponse> {
+        self.put(
+            self.endpoints.streams(dataset_name)?,
+ 
