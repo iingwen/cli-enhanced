@@ -462,4 +462,12 @@ impl Client {
 
     pub fn put_comments(
         &self,
-        so
+        source_name: &SourceFullName,
+        comments: &[NewComment],
+        no_charge: bool,
+    ) -> Result<PutCommentsResponse> {
+        self.request(
+            Method::PUT,
+            self.endpoints.put_comments(source_name)?,
+            Some(PutCommentsRequest { comments }),
+    
