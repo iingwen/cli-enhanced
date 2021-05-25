@@ -491,4 +491,11 @@ impl Client {
         minimum_timestamp: Option<DateTime<Utc>>,
         maximum_timestamp: Option<DateTime<Utc>>,
         continuation: Option<Continuation>,
-    ) -> Result<AuditQueryResponse>
+    ) -> Result<AuditQueryResponse> {
+        self.post::<_, _, AuditQueryResponse>(
+            self.endpoints.audit_events_query()?,
+            AuditQueryRequest {
+                continuation,
+                filter: AuditQueryFilter {
+                    timestamp: CommentTimestampFilter {
+                        
