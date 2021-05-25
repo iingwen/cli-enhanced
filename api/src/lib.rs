@@ -482,4 +482,13 @@ impl Client {
     ) -> Result<PutStreamResponse> {
         self.put(
             self.endpoints.streams(dataset_name)?,
- 
+            Some(PutStreamRequest { stream }),
+        )
+    }
+
+    pub fn get_audit_events(
+        &self,
+        minimum_timestamp: Option<DateTime<Utc>>,
+        maximum_timestamp: Option<DateTime<Utc>>,
+        continuation: Option<Continuation>,
+    ) -> Result<AuditQueryResponse>
