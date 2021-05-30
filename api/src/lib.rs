@@ -498,4 +498,15 @@ impl Client {
                 continuation,
                 filter: AuditQueryFilter {
                     timestamp: CommentTimestampFilter {
-                        
+                        minimum: minimum_timestamp,
+                        maximum: maximum_timestamp,
+                    },
+                },
+            },
+            Retry::Yes,
+        )
+    }
+
+    pub fn get_validation(
+        &self,
+        dataset_name: &Datas
