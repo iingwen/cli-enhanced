@@ -509,4 +509,12 @@ impl Client {
 
     pub fn get_validation(
         &self,
-        dataset_name: &Datas
+        dataset_name: &DatasetFullName,
+        model_version: &ModelVersion,
+    ) -> Result<ValidationResponse> {
+        self.get::<_, ValidationResponse>(self.endpoints.validation(dataset_name, model_version)?)
+    }
+
+    pub fn get_label_validation(
+        &self,
+        label: &LabelName,
