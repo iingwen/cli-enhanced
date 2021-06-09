@@ -536,4 +536,12 @@ impl Client {
     pub fn sync_comments(
         &self,
         source_name: &SourceFullName,
-        comments: &[
+        comments: &[NewComment],
+        no_charge: bool,
+    ) -> Result<SyncCommentsResponse> {
+        self.request(
+            Method::POST,
+            self.endpoints.sync_comments(source_name)?,
+            Some(SyncCommentsRequest { comments }),
+            Some(NoChargeQuery { no_charge }),
+            Retry::
