@@ -544,4 +544,16 @@ impl Client {
             self.endpoints.sync_comments(source_name)?,
             Some(SyncCommentsRequest { comments }),
             Some(NoChargeQuery { no_charge }),
-            Retry::
+            Retry::Yes,
+        )
+    }
+
+    pub fn sync_raw_emails(
+        &self,
+        source_name: &SourceFullName,
+        documents: &[Document],
+        transform_tag: &TransformTag,
+        include_comments: bool,
+        no_charge: bool,
+    ) -> Result<SyncRawEmailsResponse> {
+        sel
