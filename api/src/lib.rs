@@ -518,3 +518,10 @@ impl Client {
     pub fn get_label_validation(
         &self,
         label: &LabelName,
+        dataset_name: &DatasetFullName,
+        model_version: &ModelVersion,
+    ) -> Result<LabelValidation> {
+        Ok(self
+            .post::<_, _, LabelValidationResponse>(
+                self.endpoints
+                    .label_validation(dataset_name,
