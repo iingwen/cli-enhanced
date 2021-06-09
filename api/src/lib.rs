@@ -524,4 +524,16 @@ impl Client {
         Ok(self
             .post::<_, _, LabelValidationResponse>(
                 self.endpoints
-                    .label_validation(dataset_name,
+                    .label_validation(dataset_name, model_version)?,
+                LabelValidationRequest {
+                    label: label.clone(),
+                },
+                Retry::Yes,
+            )?
+            .label_validation)
+    }
+
+    pub fn sync_comments(
+        &self,
+        source_name: &SourceFullName,
+        comments: &[
