@@ -556,4 +556,12 @@ impl Client {
         include_comments: bool,
         no_charge: bool,
     ) -> Result<SyncRawEmailsResponse> {
-        sel
+        self.request(
+            Method::POST,
+            self.endpoints.sync_comments_raw_emails(source_name)?,
+            Some(SyncRawEmailsRequest {
+                documents,
+                transform_tag,
+                include_comments,
+            }),
+   
