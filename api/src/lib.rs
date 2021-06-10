@@ -564,4 +564,16 @@ impl Client {
                 transform_tag,
                 include_comments,
             }),
-   
+            Some(NoChargeQuery { no_charge }),
+            Retry::Yes,
+        )
+    }
+
+    pub fn put_emails(
+        &self,
+        bucket_name: &BucketFullName,
+        emails: &[NewEmail],
+        no_charge: bool,
+    ) -> Result<PutEmailsResponse> {
+        self.request(
+            Method::P
