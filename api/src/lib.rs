@@ -576,4 +576,12 @@ impl Client {
         no_charge: bool,
     ) -> Result<PutEmailsResponse> {
         self.request(
-            Method::P
+            Method::PUT,
+            self.endpoints.put_emails(bucket_name)?,
+            Some(PutEmailsRequest { emails }),
+            Some(NoChargeQuery { no_charge }),
+            Retry::Yes,
+        )
+    }
+
+    pub fn post_user(&self, user_id: &UserId, user: UpdateUser) -> Result<PostUserRe
