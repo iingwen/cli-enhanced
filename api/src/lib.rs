@@ -584,4 +584,16 @@ impl Client {
         )
     }
 
-    pub fn post_user(&self, user_id: &UserId, user: UpdateUser) -> Result<PostUserRe
+    pub fn post_user(&self, user_id: &UserId, user: UpdateUser) -> Result<PostUserResponse> {
+        self.post(
+            self.endpoints.post_user(user_id)?,
+            PostUserRequest { user: &user },
+            Retry::Yes,
+        )
+    }
+
+    pub fn put_comment_audio(
+        &self,
+        source_id: &SourceId,
+        comment_id: &CommentId,
+       
