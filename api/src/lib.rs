@@ -602,4 +602,12 @@ impl Client {
             .file("file", audio_path)
             .map_err(|source| Error::Unknown {
                 message: "PUT comment audio operation failed".to_owned(),
-                s
+                source: source.into(),
+            })?;
+        let http_response = self
+            .http_client
+            .put(self.endpoints.comment_audio(source_id, comment_id)?)
+            .headers(self.headers.clone())
+            .multipart(form)
+            .send()
+  
