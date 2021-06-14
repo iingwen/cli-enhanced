@@ -596,4 +596,10 @@ impl Client {
         &self,
         source_id: &SourceId,
         comment_id: &CommentId,
-       
+        audio_path: impl AsRef<Path>,
+    ) -> Result<()> {
+        let form = Form::new()
+            .file("file", audio_path)
+            .map_err(|source| Error::Unknown {
+                message: "PUT comment audio operation failed".to_owned(),
+                s
