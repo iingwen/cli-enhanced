@@ -617,4 +617,12 @@ impl Client {
         let status = http_response.status();
         http_response
             .json::<Response<EmptySuccess>>()
-           
+            .map_err(Error::BadJsonResponse)?
+            .into_result(status)?;
+        Ok(())
+    }
+
+    pub fn get_integrations(&self) -> Result<Vec<Integration>> {
+        Ok(self
+            .get::<_, GetIntegrationsResponse>(self.endpoints.integrations()?)?
+            .integr
