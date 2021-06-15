@@ -610,4 +610,11 @@ impl Client {
             .headers(self.headers.clone())
             .multipart(form)
             .send()
-  
+            .map_err(|source| Error::ReqwestError {
+                message: "PUT comment audio operation failed".to_owned(),
+                source,
+            })?;
+        let status = http_response.status();
+        http_response
+            .json::<Response<EmptySuccess>>()
+           
