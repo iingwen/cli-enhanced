@@ -625,4 +625,13 @@ impl Client {
     pub fn get_integrations(&self) -> Result<Vec<Integration>> {
         Ok(self
             .get::<_, GetIntegrationsResponse>(self.endpoints.integrations()?)?
-            .integr
+            .integrations)
+    }
+
+    pub fn get_integration(&self, name: &IntegrationFullName) -> Result<Integration> {
+        Ok(self
+            .get::<_, GetIntegrationResponse>(self.endpoints.integration(name)?)?
+            .integration)
+    }
+
+    pub fn get_datasets(&self) -> Result<Vec<Datase
