@@ -634,4 +634,14 @@ impl Client {
             .integration)
     }
 
-    pub fn get_datasets(&self) -> Result<Vec<Datase
+    pub fn get_datasets(&self) -> Result<Vec<Dataset>> {
+        Ok(self
+            .get::<_, GetAvailableDatasetsResponse>(self.endpoints.datasets.clone())?
+            .datasets)
+    }
+
+    pub fn get_dataset<IdentifierT>(&self, dataset: IdentifierT) -> Result<Dataset>
+    where
+        IdentifierT: Into<DatasetIdentifier>,
+    {
+        Ok(match dataset
