@@ -650,4 +650,15 @@ impl Client {
                     .dataset
             }
             DatasetIdentifier::FullName(dataset_name) => {
-                self.get::<_, GetDatasetResp
+                self.get::<_, GetDatasetResponse>(self.endpoints.dataset_by_name(&dataset_name)?)?
+                    .dataset
+            }
+        })
+    }
+
+    /// Create a dataset.
+    pub fn create_dataset(
+        &self,
+        dataset_name: &DatasetFullName,
+        options: NewDataset<'_>,
+    ) -> Result<Data
