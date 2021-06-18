@@ -644,4 +644,10 @@ impl Client {
     where
         IdentifierT: Into<DatasetIdentifier>,
     {
-        Ok(match dataset
+        Ok(match dataset.into() {
+            DatasetIdentifier::Id(dataset_id) => {
+                self.get::<_, GetDatasetResponse>(self.endpoints.dataset_by_id(&dataset_id)?)?
+                    .dataset
+            }
+            DatasetIdentifier::FullName(dataset_name) => {
+                self.get::<_, GetDatasetResp
