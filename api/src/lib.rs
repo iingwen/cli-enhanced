@@ -672,4 +672,11 @@ impl Client {
 
     /// Update a dataset.
     pub fn update_dataset(
-    
+        &self,
+        dataset_name: &DatasetFullName,
+        options: UpdateDataset<'_>,
+    ) -> Result<Dataset> {
+        Ok(self
+            .post::<_, _, UpdateDatasetResponse>(
+                self.endpoints.dataset_by_name(dataset_name)?,
+                UpdateDatasetRequest { datas
