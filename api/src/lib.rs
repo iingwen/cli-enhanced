@@ -661,4 +661,15 @@ impl Client {
         &self,
         dataset_name: &DatasetFullName,
         options: NewDataset<'_>,
-    ) -> Result<Data
+    ) -> Result<Dataset> {
+        Ok(self
+            .put::<_, _, CreateDatasetResponse>(
+                self.endpoints.dataset_by_name(dataset_name)?,
+                CreateDatasetRequest { dataset: options },
+            )?
+            .dataset)
+    }
+
+    /// Update a dataset.
+    pub fn update_dataset(
+    
