@@ -679,4 +679,15 @@ impl Client {
         Ok(self
             .post::<_, _, UpdateDatasetResponse>(
                 self.endpoints.dataset_by_name(dataset_name)?,
-                UpdateDatasetRequest { datas
+                UpdateDatasetRequest { dataset: options },
+                Retry::Yes,
+            )?
+            .dataset)
+    }
+
+    pub fn delete_dataset<IdentifierT>(&self, dataset: IdentifierT) -> Result<()>
+    where
+        IdentifierT: Into<DatasetIdentifier>,
+    {
+        let dataset_id = match dataset.into() {
+            
