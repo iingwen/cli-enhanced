@@ -704,4 +704,14 @@ impl Client {
     ) -> Result<Vec<AnnotatedComment>> {
         Ok(self
             .get_query::<_, _, GetAnnotationsResponse>(
-                self.endpoints.get_labellings(dataset_name)?
+                self.endpoints.get_labellings(dataset_name)?,
+                Some(&id_list_query(comment_uids.into_iter().map(|id| &id.0))),
+            )?
+            .results)
+    }
+
+    /// Iterate through all reviewed comments in a source.
+    pub fn get_labellings_iter<'a>(
+        &'a self,
+        dataset_name: &'a DatasetFullName,
+   
