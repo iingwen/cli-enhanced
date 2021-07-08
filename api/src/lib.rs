@@ -697,4 +697,11 @@ impl Client {
     }
 
     /// Get labellings for a given a dataset and a list of comment UIDs.
-    pu
+    pub fn get_labellings<'a>(
+        &self,
+        dataset_name: &DatasetFullName,
+        comment_uids: impl Iterator<Item = &'a CommentUid>,
+    ) -> Result<Vec<AnnotatedComment>> {
+        Ok(self
+            .get_query::<_, _, GetAnnotationsResponse>(
+                self.endpoints.get_labellings(dataset_name)?
