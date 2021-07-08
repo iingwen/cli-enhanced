@@ -690,4 +690,11 @@ impl Client {
         IdentifierT: Into<DatasetIdentifier>,
     {
         let dataset_id = match dataset.into() {
-            
+            DatasetIdentifier::Id(dataset_id) => dataset_id,
+            dataset @ DatasetIdentifier::FullName(_) => self.get_dataset(dataset)?.id,
+        };
+        self.delete(self.endpoints.dataset_by_id(&dataset_id)?)
+    }
+
+    /// Get labellings for a given a dataset and a list of comment UIDs.
+    pu
