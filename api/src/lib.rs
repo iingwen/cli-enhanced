@@ -728,4 +728,15 @@ impl Client {
         query_parameters: GetLabellingsInBulk<'_>,
     ) -> Result<GetAnnotationsResponse> {
         self.get_query::<_, _, GetAnnotationsResponse>(
-            self.endpoints.get_labellings(data
+            self.endpoints.get_labellings(dataset_name)?,
+            Some(&query_parameters),
+        )
+    }
+
+    /// Update labellings for a given a dataset and comment UID.
+    pub fn update_labelling(
+        &self,
+        dataset_name: &DatasetFullName,
+        comment_uid: &CommentUid,
+        labelling: Option<&[NewLabelling]>,
+        entities: Optio
