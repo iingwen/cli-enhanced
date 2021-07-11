@@ -739,4 +739,10 @@ impl Client {
         dataset_name: &DatasetFullName,
         comment_uid: &CommentUid,
         labelling: Option<&[NewLabelling]>,
-        entities: Optio
+        entities: Option<&NewEntities>,
+        moon_forms: Option<&[NewMoonForm]>,
+    ) -> Result<AnnotatedComment> {
+        self.post::<_, _, AnnotatedComment>(
+            self.endpoints.post_labelling(dataset_name, comment_uid)?,
+            UpdateAnnotationsRequest {
+                labell
