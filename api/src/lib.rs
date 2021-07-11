@@ -714,4 +714,12 @@ impl Client {
     pub fn get_labellings_iter<'a>(
         &'a self,
         dataset_name: &'a DatasetFullName,
-   
+        source_id: &'a SourceId,
+        return_predictions: bool,
+        limit: Option<usize>,
+    ) -> LabellingsIter<'a> {
+        LabellingsIter::new(self, dataset_name, source_id, return_predictions, limit)
+    }
+
+    /// Get reviewed comments in bulk
+    pub 
