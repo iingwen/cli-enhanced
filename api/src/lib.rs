@@ -722,4 +722,10 @@ impl Client {
     }
 
     /// Get reviewed comments in bulk
-    pub 
+    pub fn get_labellings_in_bulk(
+        &self,
+        dataset_name: &DatasetFullName,
+        query_parameters: GetLabellingsInBulk<'_>,
+    ) -> Result<GetAnnotationsResponse> {
+        self.get_query::<_, _, GetAnnotationsResponse>(
+            self.endpoints.get_labellings(data
