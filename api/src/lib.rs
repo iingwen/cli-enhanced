@@ -745,4 +745,15 @@ impl Client {
         self.post::<_, _, AnnotatedComment>(
             self.endpoints.post_labelling(dataset_name, comment_uid)?,
             UpdateAnnotationsRequest {
-                labell
+                labelling,
+                entities,
+                moon_forms,
+            },
+            Retry::Yes,
+        )
+    }
+
+    /// Get predictions for a given a dataset, a model version, and a list of comment UIDs.
+    pub fn get_comment_predictions<'a>(
+        &self,
+        dataset_name: &Datase
