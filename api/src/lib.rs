@@ -756,4 +756,11 @@ impl Client {
     /// Get predictions for a given a dataset, a model version, and a list of comment UIDs.
     pub fn get_comment_predictions<'a>(
         &self,
-        dataset_name: &Datase
+        dataset_name: &DatasetFullName,
+        model_version: &ModelVersion,
+        comment_uids: impl Iterator<Item = &'a CommentUid>,
+    ) -> Result<Vec<Prediction>> {
+        Ok(self
+            .post::<_, _, GetPredictionsResponse>(
+                self.endpoints
+                    .get_comment_predictions(dataset_name, model_version)?,
