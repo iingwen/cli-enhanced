@@ -764,3 +764,13 @@ impl Client {
             .post::<_, _, GetPredictionsResponse>(
                 self.endpoints
                     .get_comment_predictions(dataset_name, model_version)?,
+                json!({
+                    "threshold": "auto",
+                    "uids": comment_uids.into_iter().map(|id| id.0.as_str()).collect::<Vec<_>>(),
+                }),
+                Retry::Yes,
+            )?
+            .predictions)
+    }
+
+    pub fn get_stream
