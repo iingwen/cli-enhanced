@@ -773,4 +773,12 @@ impl Client {
             .predictions)
     }
 
-    pub fn get_stream
+    pub fn get_streams(&self, dataset_name: &DatasetFullName) -> Result<Vec<Stream>> {
+        Ok(self
+            .get::<_, GetStreamsResponse>(self.endpoints.streams(dataset_name)?)?
+            .streams)
+    }
+
+    pub fn get_recent_comments(
+        &self,
+        dataset_n
