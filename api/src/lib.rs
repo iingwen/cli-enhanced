@@ -788,4 +788,15 @@ impl Client {
     ) -> Result<RecentCommentsPage> {
         self.post::<_, _, RecentCommentsPage>(
             self.endpoints.recent_comments(dataset_name)?,
-            GetR
+            GetRecentRequest {
+                limit,
+                filter,
+                continuation,
+            },
+            Retry::No,
+        )
+    }
+
+    pub fn get_current_user(&self) -> Result<User> {
+        Ok(self
+            .get::<_, GetCurrentUserResponse>(self.endpoints.
