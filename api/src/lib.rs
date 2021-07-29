@@ -799,4 +799,14 @@ impl Client {
 
     pub fn get_current_user(&self) -> Result<User> {
         Ok(self
-            .get::<_, GetCurrentUserResponse>(self.endpoints.
+            .get::<_, GetCurrentUserResponse>(self.endpoints.current_user.clone())?
+            .user)
+    }
+
+    pub fn get_users(&self) -> Result<Vec<User>> {
+        Ok(self
+            .get::<_, GetAvailableUsersResponse>(self.endpoints.users.clone())?
+            .users)
+    }
+
+    pub fn create_user(&self, user: NewUser<'_>) -> Result<User> {
