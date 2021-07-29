@@ -781,4 +781,11 @@ impl Client {
 
     pub fn get_recent_comments(
         &self,
-        dataset_n
+        dataset_name: &DatasetFullName,
+        filter: &CommentFilter,
+        limit: usize,
+        continuation: Option<&Continuation>,
+    ) -> Result<RecentCommentsPage> {
+        self.post::<_, _, RecentCommentsPage>(
+            self.endpoints.recent_comments(dataset_name)?,
+            GetR
