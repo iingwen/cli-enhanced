@@ -810,3 +810,15 @@ impl Client {
     }
 
     pub fn create_user(&self, user: NewUser<'_>) -> Result<User> {
+        Ok(self
+            .put::<_, _, CreateUserResponse>(
+                self.endpoints.users.clone(),
+                CreateUserRequest { user },
+            )?
+            .user)
+    }
+
+    pub fn dataset_summary(
+        &self,
+        dataset_name: &DatasetFullName,
+    
