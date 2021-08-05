@@ -837,4 +837,11 @@ impl Client {
     ) -> Result<QueryResponse> {
         self.post::<_, _, QueryResponse>(
             self.endpoints.query_dataset(dataset_name)?,
-      
+            serde_json::to_value(params).expect("query params serialization error"),
+            Retry::Yes,
+        )
+    }
+
+    pub fn send_welcome_email(&self, user_id: UserId) -> Result<()> {
+        self.post::<_, _, WelcomeEmailResponse>(
+            self.endpoints.welc
