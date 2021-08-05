@@ -826,4 +826,15 @@ impl Client {
         self.post::<_, _, SummaryResponse>(
             self.endpoints.dataset_summary(dataset_name)?,
             serde_json::to_value(params).expect("summary params serialization error"),
-            Retr
+            Retry::Yes,
+        )
+    }
+
+    pub fn query_dataset(
+        &self,
+        dataset_name: &DatasetFullName,
+        params: &QueryRequestParams,
+    ) -> Result<QueryResponse> {
+        self.post::<_, _, QueryResponse>(
+            self.endpoints.query_dataset(dataset_name)?,
+      
