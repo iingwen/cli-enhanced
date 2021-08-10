@@ -844,4 +844,13 @@ impl Client {
 
     pub fn send_welcome_email(&self, user_id: UserId) -> Result<()> {
         self.post::<_, _, WelcomeEmailResponse>(
-            self.endpoints.welc
+            self.endpoints.welcome_email(&user_id)?,
+            json!({}),
+            Retry::No,
+        )?;
+        Ok(())
+    }
+
+    pub fn get_bucket_statistics(&self, bucket_name: &BucketFullName) -> Result<BucketStatistics> {
+        Ok(self
+            .get:
