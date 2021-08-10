@@ -853,4 +853,12 @@ impl Client {
 
     pub fn get_bucket_statistics(&self, bucket_name: &BucketFullName) -> Result<BucketStatistics> {
         Ok(self
-            .get:
+            .get::<_, GetBucketStatisticsResponse>(self.endpoints.bucket_statistics(bucket_name)?)?
+            .statistics)
+    }
+
+    pub fn get_dataset_statistics(
+        &self,
+        dataset_name: &DatasetFullName,
+        params: &DatasetStatisticsRequestParams,
+    ) -
