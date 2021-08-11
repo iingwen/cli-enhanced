@@ -861,4 +861,9 @@ impl Client {
         &self,
         dataset_name: &DatasetFullName,
         params: &DatasetStatisticsRequestParams,
-    ) -
+    ) -> Result<CommentStatistics> {
+        Ok(self
+            .post::<_, _, GetStatisticsResponse>(
+                self.endpoints.dataset_statistics(dataset_name)?,
+                serde_json::to_value(params)
+                    .expect("dataset statistics params serialization
