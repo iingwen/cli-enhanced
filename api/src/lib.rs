@@ -866,4 +866,16 @@ impl Client {
             .post::<_, _, GetStatisticsResponse>(
                 self.endpoints.dataset_statistics(dataset_name)?,
                 serde_json::to_value(params)
-                    .expect("dataset statistics params serialization
+                    .expect("dataset statistics params serialization error"),
+                Retry::No,
+            )?
+            .statistics)
+    }
+
+    pub fn get_source_statistics(
+        &self,
+        source_name: &SourceFullName,
+        params: &SourceStatisticsRequestParams,
+    ) -> Result<CommentStatistics> {
+        Ok(self
+            .post::<_, _, GetS
