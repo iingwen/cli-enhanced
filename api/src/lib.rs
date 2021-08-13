@@ -878,4 +878,12 @@ impl Client {
         params: &SourceStatisticsRequestParams,
     ) -> Result<CommentStatistics> {
         Ok(self
-            .post::<_, _, GetS
+            .post::<_, _, GetStatisticsResponse>(
+                self.endpoints.source_statistics(source_name)?,
+                serde_json::to_value(params).expect("source statistics params serialization error"),
+                Retry::No,
+            )?
+            .statistics)
+    }
+
+   
