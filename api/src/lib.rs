@@ -886,4 +886,13 @@ impl Client {
             .statistics)
     }
 
+    /// Create a new bucket.
+    pub fn create_bucket(
+        &self,
+        bucket_name: &BucketFullName,
+        options: NewBucket<'_>,
+    ) -> Result<Bucket> {
+        Ok(self
+            .put::<_, _, CreateBucketResponse>(
+                self.endpoints.bucket_by_name(bucket_name)?,
    
