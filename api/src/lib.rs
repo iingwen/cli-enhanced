@@ -906,4 +906,10 @@ impl Client {
             .buckets)
     }
 
-   
+    pub fn get_bucket<IdentifierT>(&self, bucket: IdentifierT) -> Result<Bucket>
+    where
+        IdentifierT: Into<BucketIdentifier>,
+    {
+        Ok(match bucket.into() {
+            BucketIdentifier::Id(bucket_id) => {
+                self.get::<_, Ge
