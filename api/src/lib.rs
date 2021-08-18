@@ -912,4 +912,9 @@ impl Client {
     {
         Ok(match bucket.into() {
             BucketIdentifier::Id(bucket_id) => {
-                self.get::<_, Ge
+                self.get::<_, GetBucketResponse>(self.endpoints.bucket_by_id(&bucket_id)?)?
+                    .bucket
+            }
+            BucketIdentifier::FullName(bucket_name) => {
+                self.get::<_, GetBucketResponse>(self.endpoints.bucket_by_name(&bucket_name)?)?
+             
