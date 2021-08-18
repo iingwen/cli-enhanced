@@ -895,4 +895,15 @@ impl Client {
         Ok(self
             .put::<_, _, CreateBucketResponse>(
                 self.endpoints.bucket_by_name(bucket_name)?,
+                CreateBucketRequest { bucket: options },
+            )?
+            .bucket)
+    }
+
+    pub fn get_buckets(&self) -> Result<Vec<Bucket>> {
+        Ok(self
+            .get::<_, GetAvailableBucketsResponse>(self.endpoints.buckets.clone())?
+            .buckets)
+    }
+
    
