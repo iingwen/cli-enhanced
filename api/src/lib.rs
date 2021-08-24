@@ -927,4 +927,14 @@ impl Client {
         IdentifierT: Into<BucketIdentifier>,
     {
         let bucket_id = match bucket.into() {
-            BucketIdentifier::Id(bucket_id) => bucket_i
+            BucketIdentifier::Id(bucket_id) => bucket_id,
+            bucket @ BucketIdentifier::FullName(_) => self.get_bucket(bucket)?.id,
+        };
+        self.delete(self.endpoints.bucket_by_id(&bucket_id)?)
+    }
+
+    pub fn fetch_stream_comments(
+        &self,
+        stream_name: &StreamFullName,
+        size: u32,
+    ) -> Result<
