@@ -917,4 +917,14 @@ impl Client {
             }
             BucketIdentifier::FullName(bucket_name) => {
                 self.get::<_, GetBucketResponse>(self.endpoints.bucket_by_name(&bucket_name)?)?
-             
+                    .bucket
+            }
+        })
+    }
+
+    pub fn delete_bucket<IdentifierT>(&self, bucket: IdentifierT) -> Result<()>
+    where
+        IdentifierT: Into<BucketIdentifier>,
+    {
+        let bucket_id = match bucket.into() {
+            BucketIdentifier::Id(bucket_id) => bucket_i
