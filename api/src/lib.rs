@@ -947,4 +947,14 @@ impl Client {
 
     pub fn get_stream(&self, stream_name: &StreamFullName) -> Result<Stream> {
         Ok(self
-            .get::<_, Ge
+            .get::<_, GetStreamResponse>(self.endpoints.stream(stream_name)?)?
+            .stream)
+    }
+
+    pub fn advance_stream(
+        &self,
+        stream_name: &StreamFullName,
+        sequence_id: StreamSequenceId,
+    ) -> Result<()> {
+        self.post::<_, _, serde::de::IgnoredAny>(
+            self.endpoints.stream_advanc
