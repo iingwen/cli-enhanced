@@ -937,4 +937,14 @@ impl Client {
         &self,
         stream_name: &StreamFullName,
         size: u32,
-    ) -> Result<
+    ) -> Result<StreamBatch> {
+        self.post(
+            self.endpoints.stream_fetch(stream_name)?,
+            StreamFetchRequest { size },
+            Retry::No,
+        )
+    }
+
+    pub fn get_stream(&self, stream_name: &StreamFullName) -> Result<Stream> {
+        Ok(self
+            .get::<_, Ge
