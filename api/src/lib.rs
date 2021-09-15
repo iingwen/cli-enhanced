@@ -957,4 +957,15 @@ impl Client {
         sequence_id: StreamSequenceId,
     ) -> Result<()> {
         self.post::<_, _, serde::de::IgnoredAny>(
-            self.endpoints.stream_advanc
+            self.endpoints.stream_advance(stream_name)?,
+            StreamAdvanceRequest { sequence_id },
+            Retry::No,
+        )?;
+        Ok(())
+    }
+
+    pub fn reset_stream(
+        &self,
+        stream_name: &StreamFullName,
+        to_comment_created_at: DateTime<Utc>,
+    ) -> Result<()> {
