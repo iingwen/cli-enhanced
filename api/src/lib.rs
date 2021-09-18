@@ -979,4 +979,11 @@ impl Client {
         Ok(())
     }
 
-    pub fn tag_
+    pub fn tag_stream_exceptions(
+        &self,
+        stream_name: &StreamFullName,
+        exceptions: &[StreamException],
+    ) -> Result<()> {
+        self.put::<_, _, serde::de::IgnoredAny>(
+            self.endpoints.stream_exceptions(stream_name)?,
+            TagStream
