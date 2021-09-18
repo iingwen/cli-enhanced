@@ -986,4 +986,12 @@ impl Client {
     ) -> Result<()> {
         self.put::<_, _, serde::de::IgnoredAny>(
             self.endpoints.stream_exceptions(stream_name)?,
-            TagStream
+            TagStreamExceptionsRequest { exceptions },
+        )?;
+        Ok(())
+    }
+
+    /// Gets a project.
+    pub fn get_project(&self, project_name: &ProjectName) -> Result<Project> {
+        let response =
+            self.get::<_, GetProjectResponse>(self.endpoints.project_by_n
