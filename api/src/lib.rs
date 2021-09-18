@@ -994,4 +994,15 @@ impl Client {
     /// Gets a project.
     pub fn get_project(&self, project_name: &ProjectName) -> Result<Project> {
         let response =
-            self.get::<_, GetProjectResponse>(self.endpoints.project_by_n
+            self.get::<_, GetProjectResponse>(self.endpoints.project_by_name(project_name)?)?;
+        Ok(response.project)
+    }
+
+    /// Gets all projects.
+    pub fn get_projects(&self) -> Result<Vec<Project>> {
+        let response = self.get::<_, GetProjectsResponse>(self.endpoints.projects.clone())?;
+        Ok(response.projects)
+    }
+
+    /// Creates a new project.
+    p
