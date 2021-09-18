@@ -969,3 +969,14 @@ impl Client {
         stream_name: &StreamFullName,
         to_comment_created_at: DateTime<Utc>,
     ) -> Result<()> {
+        self.post::<_, _, serde::de::IgnoredAny>(
+            self.endpoints.stream_reset(stream_name)?,
+            StreamResetRequest {
+                to_comment_created_at,
+            },
+            Retry::No,
+        )?;
+        Ok(())
+    }
+
+    pub fn tag_
