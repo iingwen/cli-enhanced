@@ -1025,4 +1025,12 @@ impl Client {
     /// Updates an existing project.
     pub fn update_project(
         &self,
-        projec
+        project_name: &ProjectName,
+        options: UpdateProject,
+    ) -> Result<Project> {
+        Ok(self
+            .post::<_, _, UpdateProjectResponse>(
+                self.endpoints.project_by_name(project_name)?,
+                UpdateProjectRequest { project: options },
+                Retry::Yes,
+     
