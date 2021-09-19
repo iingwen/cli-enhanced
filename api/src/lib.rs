@@ -1013,4 +1013,16 @@ impl Client {
     ) -> Result<Project> {
         Ok(self
             .put::<_, _, CreateProjectResponse>(
-                self.endpoints.project_by_na
+                self.endpoints.project_by_name(project_name)?,
+                CreateProjectRequest {
+                    project: options,
+                    user_ids,
+                },
+            )?
+            .project)
+    }
+
+    /// Updates an existing project.
+    pub fn update_project(
+        &self,
+        projec
