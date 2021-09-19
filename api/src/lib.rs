@@ -1033,4 +1033,14 @@ impl Client {
                 self.endpoints.project_by_name(project_name)?,
                 UpdateProjectRequest { project: options },
                 Retry::Yes,
-     
+            )?
+            .project)
+    }
+
+    /// Deletes an existing project.
+    pub fn delete_project(
+        &self,
+        project_name: &ProjectName,
+        force_delete: ForceDeleteProject,
+    ) -> Result<()> {
+        let endpoint = self.endpoints.proj
