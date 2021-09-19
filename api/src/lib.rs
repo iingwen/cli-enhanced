@@ -1005,4 +1005,12 @@ impl Client {
     }
 
     /// Creates a new project.
-    p
+    pub fn create_project(
+        &self,
+        project_name: &ProjectName,
+        options: NewProject,
+        user_ids: &[UserId],
+    ) -> Result<Project> {
+        Ok(self
+            .put::<_, _, CreateProjectResponse>(
+                self.endpoints.project_by_na
