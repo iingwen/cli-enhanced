@@ -1053,4 +1053,13 @@ impl Client {
         Ok(())
     }
 
-    fn
+    fn get<LocationT, SuccessT>(&self, url: LocationT) -> Result<SuccessT>
+    where
+        LocationT: IntoUrl + Display + Clone,
+        for<'de> SuccessT: Deserialize<'de>,
+    {
+        self.request(Method::GET, url, None::<()>, None::<()>, Retry::Yes)
+    }
+
+    fn get_query<LocationT, QueryT, SuccessT>(
+        
