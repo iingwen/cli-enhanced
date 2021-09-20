@@ -1043,4 +1043,14 @@ impl Client {
         project_name: &ProjectName,
         force_delete: ForceDeleteProject,
     ) -> Result<()> {
-        let endpoint = self.endpoints.proj
+        let endpoint = self.endpoints.project_by_name(project_name)?;
+        match force_delete {
+            ForceDeleteProject::No => self.delete(endpoint)?,
+            ForceDeleteProject::Yes => {
+                self.delete_query(endpoint, Some(&json!({ "force": true })))?
+            }
+        };
+        Ok(())
+    }
+
+    fn
