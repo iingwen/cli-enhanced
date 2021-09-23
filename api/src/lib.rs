@@ -1081,4 +1081,14 @@ impl Client {
         self.delete_query::<LocationT, ()>(url, None)
     }
 
-    fn delete_query<LocationT, QueryT>(&self, url: LocationT, qu
+    fn delete_query<LocationT, QueryT>(&self, url: LocationT, query: Option<&QueryT>) -> Result<()>
+    where
+        LocationT: IntoUrl + Display + Clone,
+        QueryT: Serialize,
+    {
+        debug!("Attempting DELETE `{}`", url);
+
+        let attempts = Cell::new(0);
+        let http_response = self
+            .with_retries(|| {
+                attempts.set(at
