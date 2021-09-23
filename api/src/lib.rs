@@ -1071,4 +1071,14 @@ impl Client {
         QueryT: Serialize,
         for<'de> SuccessT: Deserialize<'de>,
     {
-        self.request(Method::GET, url, None::<()>
+        self.request(Method::GET, url, None::<()>, Some(query), Retry::Yes)
+    }
+
+    fn delete<LocationT>(&self, url: LocationT) -> Result<()>
+    where
+        LocationT: IntoUrl + Display + Clone,
+    {
+        self.delete_query::<LocationT, ()>(url, None)
+    }
+
+    fn delete_query<LocationT, QueryT>(&self, url: LocationT, qu
