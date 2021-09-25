@@ -1091,4 +1091,11 @@ impl Client {
         let attempts = Cell::new(0);
         let http_response = self
             .with_retries(|| {
-                attempts.set(at
+                attempts.set(attempts.get() + 1);
+
+                let mut request = self
+                    .http_client
+                    .delete(url.clone())
+                    .headers(self.headers.clone());
+                if let Some(query) = query {
+                    requ
