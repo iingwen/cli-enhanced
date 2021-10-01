@@ -1106,4 +1106,10 @@ impl Client {
                 source,
                 message: "DELETE operation failed.".to_owned(),
             })?;
-        let sta
+        let status = http_response.status();
+        http_response
+            .json::<Response<EmptySuccess>>()
+            .map_err(Error::BadJsonResponse)?
+            .into_result(status)
+            .map_or_else(
+                // Ignore 404 not found if the request had t
