@@ -1098,4 +1098,12 @@ impl Client {
                     .delete(url.clone())
                     .headers(self.headers.clone());
                 if let Some(query) = query {
-                    requ
+                    request = request.query(query);
+                }
+                request.send()
+            })
+            .map_err(|source| Error::ReqwestError {
+                source,
+                message: "DELETE operation failed.".to_owned(),
+            })?;
+        let sta
