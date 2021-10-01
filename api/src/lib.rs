@@ -1112,4 +1112,9 @@ impl Client {
             .map_err(Error::BadJsonResponse)?
             .into_result(status)
             .map_or_else(
-                // Ignore 404 not found if the request had t
+                // Ignore 404 not found if the request had to be re-tried - assume the target
+                // object was deleted on a previous incomplete request.
+                |error| {
+                    if attempts.get() > 1 && status == reqwest::StatusCode::NOT_FOUND {
+                        Ok(())
+                    } e
