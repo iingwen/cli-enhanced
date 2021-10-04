@@ -1117,4 +1117,17 @@ impl Client {
                 |error| {
                     if attempts.get() > 1 && status == reqwest::StatusCode::NOT_FOUND {
                         Ok(())
-                    } e
+                    } else {
+                        Err(error)
+                    }
+                },
+                |_| Ok(()),
+            )
+    }
+
+    fn post<LocationT, RequestT, SuccessT>(
+        &self,
+        url: LocationT,
+        request: RequestT,
+        retry: Retry,
+    ) -> Re
