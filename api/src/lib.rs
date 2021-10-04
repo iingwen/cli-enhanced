@@ -1141,4 +1141,13 @@ impl Client {
 
     fn put<LocationT, RequestT, SuccessT>(
         &self,
-        url: Loc
+        url: LocationT,
+        request: RequestT,
+    ) -> Result<SuccessT>
+    where
+        LocationT: IntoUrl + Display + Clone,
+        RequestT: Serialize,
+        for<'de> SuccessT: Deserialize<'de>,
+    {
+        self.request(Method::PUT, url, Some(request), None::<()>, Retry::Yes)
+    }
