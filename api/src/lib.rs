@@ -1151,3 +1151,15 @@ impl Client {
     {
         self.request(Method::PUT, url, Some(request), None::<()>, Retry::Yes)
     }
+
+    fn request<LocationT, RequestT, SuccessT, QueryT>(
+        &self,
+        method: Method,
+        url: LocationT,
+        body: Option<RequestT>,
+        query: Option<QueryT>,
+        retry: Retry,
+    ) -> Result<SuccessT>
+    where
+        LocationT: IntoUrl + Display + Clone,
+   
