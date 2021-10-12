@@ -1162,4 +1162,12 @@ impl Client {
     ) -> Result<SuccessT>
     where
         LocationT: IntoUrl + Display + Clone,
-   
+        RequestT: Serialize,
+        QueryT: Serialize,
+        for<'de> SuccessT: Deserialize<'de>,
+    {
+        debug!("Attempting {} `{}`", method, url);
+        let do_request = || {
+            let request = self
+                .http_client
+                .
