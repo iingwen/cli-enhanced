@@ -1177,4 +1177,14 @@ impl Client {
                 None => request,
             };
             let request = match &body {
-                Some(bo
+                Some(body) => request.json(body),
+                None => request,
+            };
+            request.send()
+        };
+
+        let result = match retry {
+            Retry::Yes => self.with_retries(do_request),
+            Retry::No => do_request(),
+        };
+        let http_response = result.map_er
