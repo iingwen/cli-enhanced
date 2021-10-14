@@ -1170,4 +1170,11 @@ impl Client {
         let do_request = || {
             let request = self
                 .http_client
-                .
+                .request(method.clone(), url.clone())
+                .headers(self.headers.clone());
+            let request = match &query {
+                Some(query) => request.query(query),
+                None => request,
+            };
+            let request = match &body {
+                Some(bo
