@@ -1226,4 +1226,17 @@ pub struct DatasetQueryIter<'a> {
 impl<'a> DatasetQueryIter<'a> {
     fn new(
         client: &'a Client,
-        dataset_na
+        dataset_name: &'a DatasetFullName,
+        params: &'a mut QueryRequestParams,
+    ) -> Self {
+        Self {
+            client,
+            dataset_name,
+            done: false,
+            params,
+        }
+    }
+}
+
+impl<'a> Iterator for DatasetQueryIter<'a> {
+    type Item = Result<Vec<Annot
