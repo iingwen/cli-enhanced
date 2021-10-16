@@ -1187,4 +1187,14 @@ impl Client {
             Retry::Yes => self.with_retries(do_request),
             Retry::No => do_request(),
         };
-        let http_response = result.map_er
+        let http_response = result.map_err(|source| Error::ReqwestError {
+            source,
+            message: format!("{method} operation failed."),
+        })?;
+
+        let status = http_response.status();
+
+        http_response
+            .json::<Response<SuccessT>>()
+            .map_err(Error::BadJsonResponse)?
+            .i
