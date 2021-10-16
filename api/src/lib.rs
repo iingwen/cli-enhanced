@@ -1206,4 +1206,24 @@ impl Client {
     ) -> ReqwestResult<HttpResponse> {
         match &self.retrier {
             Some(retrier) => retrier.with_retries(send_request),
-            None => send_request()
+            None => send_request(),
+        }
+    }
+}
+
+enum Retry {
+    Yes,
+    No,
+}
+
+pub struct DatasetQueryIter<'a> {
+    client: &'a Client,
+    dataset_name: &'a DatasetFullName,
+    done: bool,
+    params: &'a mut QueryRequestParams,
+}
+
+impl<'a> DatasetQueryIter<'a> {
+    fn new(
+        client: &'a Client,
+        dataset_na
