@@ -1197,4 +1197,13 @@ impl Client {
         http_response
             .json::<Response<SuccessT>>()
             .map_err(Error::BadJsonResponse)?
-            .i
+            .into_result(status)
+    }
+
+    fn with_retries(
+        &self,
+        send_request: impl Fn() -> ReqwestResult<HttpResponse>,
+    ) -> ReqwestResult<HttpResponse> {
+        match &self.retrier {
+            Some(retrier) => retrier.with_retries(send_request),
+            None => send_request()
