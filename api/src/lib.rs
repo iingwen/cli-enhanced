@@ -1239,4 +1239,14 @@ impl<'a> DatasetQueryIter<'a> {
 }
 
 impl<'a> Iterator for DatasetQueryIter<'a> {
-    type Item = Result<Vec<Annot
+    type Item = Result<Vec<AnnotatedComment>>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.done {
+            return None;
+        }
+
+        let response = self.client.query_dataset(self.dataset_name, self.params);
+        Some(response.map(|page| {
+            self.params.continuation = page.continuation;
+    
