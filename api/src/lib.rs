@@ -1249,4 +1249,18 @@ impl<'a> Iterator for DatasetQueryIter<'a> {
         let response = self.client.query_dataset(self.dataset_name, self.params);
         Some(response.map(|page| {
             self.params.continuation = page.continuation;
-    
+            self.done = self.params.continuation.is_none();
+            page.results
+        }))
+    }
+}
+
+pub enum ContinuationKind {
+    Timestamp(DateTime<Utc>),
+    Continuation(Continuation),
+}
+
+pub struct EmailsIter<'a> {
+    client: &'a Client,
+    bucket_name: &'a BucketFullName,
+    contin
