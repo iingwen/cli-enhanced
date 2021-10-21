@@ -1263,4 +1263,13 @@ pub enum ContinuationKind {
 pub struct EmailsIter<'a> {
     client: &'a Client,
     bucket_name: &'a BucketFullName,
-    contin
+    continuation: Option<EmailContinuation>,
+    done: bool,
+    page_size: usize,
+}
+
+impl<'a> EmailsIter<'a> {
+    // Default number of emails per page to request from API.
+    pub const DEFAULT_PAGE_SIZE: usize = 64;
+    // Maximum number of emails per page which can be requested from the API.
+    pub const MAX_PAGE_S
