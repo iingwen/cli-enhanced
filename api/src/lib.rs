@@ -1272,4 +1272,12 @@ impl<'a> EmailsIter<'a> {
     // Default number of emails per page to request from API.
     pub const DEFAULT_PAGE_SIZE: usize = 64;
     // Maximum number of emails per page which can be requested from the API.
-    pub const MAX_PAGE_S
+    pub const MAX_PAGE_SIZE: usize = 256;
+
+    fn new(client: &'a Client, bucket_name: &'a BucketFullName, page_size: Option<usize>) -> Self {
+        Self {
+            client,
+            bucket_name,
+            continuation: None,
+            done: false,
+            page_size: page_size.un
