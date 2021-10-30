@@ -1280,4 +1280,16 @@ impl<'a> EmailsIter<'a> {
             bucket_name,
             continuation: None,
             done: false,
-            page_size: page_size.un
+            page_size: page_size.unwrap_or(Self::DEFAULT_PAGE_SIZE),
+        }
+    }
+}
+
+impl<'a> Iterator for EmailsIter<'a> {
+    type Item = Result<Vec<NewEmail>>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.done {
+            return None;
+        }
+        let response = self.client.get_emai
