@@ -1292,4 +1292,12 @@ impl<'a> Iterator for EmailsIter<'a> {
         if self.done {
             return None;
         }
-        let response = self.client.get_emai
+        let response = self.client.get_emails_iter_page(
+            self.bucket_name,
+            self.continuation.as_ref(),
+            self.page_size,
+        );
+        Some(response.map(|page| {
+            self.continuation = page.continuation;
+            self.done = self.continuation.is_none();
+            page.e
