@@ -1300,4 +1300,19 @@ impl<'a> Iterator for EmailsIter<'a> {
         Some(response.map(|page| {
             self.continuation = page.continuation;
             self.done = self.continuation.is_none();
-            page.e
+            page.emails
+        }))
+    }
+}
+
+pub struct CommentsIter<'a> {
+    client: &'a Client,
+    source_name: &'a SourceFullName,
+    continuation: Option<ContinuationKind>,
+    done: bool,
+    page_size: usize,
+    to_timestamp: Option<DateTime<Utc>>,
+}
+
+#[derive(Debug, Default)]
+pub str
