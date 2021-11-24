@@ -1350,4 +1350,11 @@ impl<'a> Iterator for CommentsIter<'a> {
         if self.done {
             return None;
         }
-        let response = self.client.g
+        let response = self.client.get_comments_iter_page(
+            self.source_name,
+            self.continuation.as_ref(),
+            self.to_timestamp,
+            self.page_size,
+        );
+        Some(response.map(|page| {
+            self.continuation = page.continuation.map(ContinuationKind::Conti
