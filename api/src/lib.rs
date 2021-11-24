@@ -1331,4 +1331,11 @@ impl<'a> CommentsIter<'a> {
         page_size: Option<usize>,
         timerange: CommentsIterTimerange,
     ) -> Self {
-        let (from_ti
+        let (from_timestamp, to_timestamp) = (timerange.from, timerange.to);
+        Self {
+            client,
+            source_name,
+            to_timestamp,
+            continuation: from_timestamp.map(ContinuationKind::Timestamp),
+            done: false,
+            page_size: page_size.unwrap_or
