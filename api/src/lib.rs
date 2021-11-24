@@ -1338,4 +1338,16 @@ impl<'a> CommentsIter<'a> {
             to_timestamp,
             continuation: from_timestamp.map(ContinuationKind::Timestamp),
             done: false,
-            page_size: page_size.unwrap_or
+            page_size: page_size.unwrap_or(Self::DEFAULT_PAGE_SIZE),
+        }
+    }
+}
+
+impl<'a> Iterator for CommentsIter<'a> {
+    type Item = Result<Vec<Comment>>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.done {
+            return None;
+        }
+        let response = self.client.g
