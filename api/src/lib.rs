@@ -1315,4 +1315,11 @@ pub struct CommentsIter<'a> {
 }
 
 #[derive(Debug, Default)]
-pub str
+pub struct CommentsIterTimerange {
+    pub from: Option<DateTime<Utc>>,
+    pub to: Option<DateTime<Utc>>,
+}
+impl<'a> CommentsIter<'a> {
+    // Default number of comments per page to request from API.
+    pub const DEFAULT_PAGE_SIZE: usize = 64;
+    // Maximum number of comments per page which c
