@@ -1322,4 +1322,13 @@ pub struct CommentsIterTimerange {
 impl<'a> CommentsIter<'a> {
     // Default number of comments per page to request from API.
     pub const DEFAULT_PAGE_SIZE: usize = 64;
-    // Maximum number of comments per page which c
+    // Maximum number of comments per page which can be requested from the API.
+    pub const MAX_PAGE_SIZE: usize = 256;
+
+    fn new(
+        client: &'a Client,
+        source_name: &'a SourceFullName,
+        page_size: Option<usize>,
+        timerange: CommentsIterTimerange,
+    ) -> Self {
+        let (from_ti
