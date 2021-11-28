@@ -1357,4 +1357,16 @@ impl<'a> Iterator for CommentsIter<'a> {
             self.page_size,
         );
         Some(response.map(|page| {
-            self.continuation = page.continuation.map(ContinuationKind::Conti
+            self.continuation = page.continuation.map(ContinuationKind::Continuation);
+            self.done = self.continuation.is_none();
+            page.comments
+        }))
+    }
+}
+
+pub struct LabellingsIter<'a> {
+    client: &'a Client,
+    dataset_name: &'a DatasetFullName,
+    source_id: &'a SourceId,
+    return_predictions: bool,
+    after: Option<Ge
