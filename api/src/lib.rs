@@ -1369,4 +1369,15 @@ pub struct LabellingsIter<'a> {
     dataset_name: &'a DatasetFullName,
     source_id: &'a SourceId,
     return_predictions: bool,
-    after: Option<Ge
+    after: Option<GetLabellingsAfter>,
+    limit: Option<usize>,
+    done: bool,
+}
+
+impl<'a> LabellingsIter<'a> {
+    fn new(
+        client: &'a Client,
+        dataset_name: &'a DatasetFullName,
+        source_id: &'a SourceId,
+        return_predictions: bool,
+        limit: Option<
