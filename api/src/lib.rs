@@ -1380,4 +1380,19 @@ impl<'a> LabellingsIter<'a> {
         dataset_name: &'a DatasetFullName,
         source_id: &'a SourceId,
         return_predictions: bool,
-        limit: Option<
+        limit: Option<usize>,
+    ) -> Self {
+        Self {
+            client,
+            dataset_name,
+            source_id,
+            return_predictions,
+            after: None,
+            limit,
+            done: false,
+        }
+    }
+}
+
+impl<'a> Iterator for LabellingsIter<'a> {
+    type Item =
