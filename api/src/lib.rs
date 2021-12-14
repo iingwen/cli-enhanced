@@ -1424,4 +1424,20 @@ impl<'a> Iterator for LabellingsIter<'a> {
 }
 
 #[derive(Debug)]
-struct Endpoin
+struct Endpoints {
+    base: Url,
+    datasets: Url,
+    sources: Url,
+    buckets: Url,
+    users: Url,
+    current_user: Url,
+    projects: Url,
+}
+
+#[derive(Debug, Serialize)]
+struct NoChargeQuery {
+    no_charge: bool,
+}
+
+fn construct_endpoint(base: &Url, segments: &[&str]) -> Result<Url> {
+    let mu
