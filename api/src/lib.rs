@@ -1412,4 +1412,16 @@ impl<'a> Iterator for LabellingsIter<'a> {
         );
         Some(response.map(|page| {
             if self.after == page.after && !page.results.is_empty() {
-                panic!
+                panic!("Labellings API did not increment pagination continuation");
+            }
+            self.after = page.after;
+            if page.results.is_empty() {
+                self.done = true;
+            }
+            page.results
+        }))
+    }
+}
+
+#[derive(Debug)]
+struct Endpoin
