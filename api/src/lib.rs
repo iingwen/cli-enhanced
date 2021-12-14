@@ -1404,4 +1404,12 @@ impl<'a> Iterator for LabellingsIter<'a> {
         let response = self.client.get_labellings_in_bulk(
             self.dataset_name,
             GetLabellingsInBulk {
-                source_id: self.source
+                source_id: self.source_id,
+                return_predictions: &self.return_predictions,
+                after: &self.after,
+                limit: &self.limit,
+            },
+        );
+        Some(response.map(|page| {
+            if self.after == page.after && !page.results.is_empty() {
+                panic!
