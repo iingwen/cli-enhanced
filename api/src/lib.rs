@@ -1395,4 +1395,13 @@ impl<'a> LabellingsIter<'a> {
 }
 
 impl<'a> Iterator for LabellingsIter<'a> {
-    type Item =
+    type Item = Result<Vec<AnnotatedComment>>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.done {
+            return None;
+        }
+        let response = self.client.get_labellings_in_bulk(
+            self.dataset_name,
+            GetLabellingsInBulk {
+                source_id: self.source
