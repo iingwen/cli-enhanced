@@ -1440,4 +1440,18 @@ struct NoChargeQuery {
 }
 
 fn construct_endpoint(base: &Url, segments: &[&str]) -> Result<Url> {
-    let mu
+    let mut endpoint = base.clone();
+
+    let mut endpoint_segments = endpoint
+        .path_segments_mut()
+        .map_err(|_| Error::BadEndpoint {
+            endpoint: base.clone(),
+        })?;
+
+    for segment in segments {
+        endpoint_segments.push(segment);
+    }
+
+    drop(endpoint_segments);
+
+    Ok(endp
