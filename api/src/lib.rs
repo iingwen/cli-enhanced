@@ -1454,4 +1454,11 @@ fn construct_endpoint(base: &Url, segments: &[&str]) -> Result<Url> {
 
     drop(endpoint_segments);
 
-    Ok(endp
+    Ok(endpoint)
+}
+
+impl Endpoints {
+    pub fn new(base: Url) -> Result<Self> {
+        let datasets = construct_endpoint(&base, &["api", "v1", "datasets"])?;
+        let sources = construct_endpoint(&base, &["api", "v1", "sources"])?;
+        let buckets = construct_endpoint(&base, &["api", "_
