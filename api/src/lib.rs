@@ -1461,4 +1461,11 @@ impl Endpoints {
     pub fn new(base: Url) -> Result<Self> {
         let datasets = construct_endpoint(&base, &["api", "v1", "datasets"])?;
         let sources = construct_endpoint(&base, &["api", "v1", "sources"])?;
-        let buckets = construct_endpoint(&base, &["api", "_
+        let buckets = construct_endpoint(&base, &["api", "_private", "buckets"])?;
+        let users = construct_endpoint(&base, &["api", "_private", "users"])?;
+        let current_user = construct_endpoint(&base, &["auth", "user"])?;
+        let projects = construct_endpoint(&base, &["api", "_private", "projects"])?;
+
+        Ok(Endpoints {
+            base,
+     
