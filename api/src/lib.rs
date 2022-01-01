@@ -1489,4 +1489,16 @@ impl Endpoints {
         construct_endpoint(&self.base, &["api", "_private", "integrations", &name.0])
     }
 
-    fn validatio
+    fn validation(
+        &self,
+        dataset_name: &DatasetFullName,
+        model_version: &ModelVersion,
+    ) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &[
+                "api",
+                "_private",
+                "datasets",
+                &dataset_name.0,
+            
