@@ -1468,4 +1468,17 @@ impl Endpoints {
 
         Ok(Endpoints {
             base,
-     
+            datasets,
+            sources,
+            buckets,
+            users,
+            current_user,
+            projects,
+        })
+    }
+
+    fn audit_events_query(&self) -> Result<Url> {
+        construct_endpoint(&self.base, &["api", "v1", "audit_events", "query"])
+    }
+
+    fn integrat
