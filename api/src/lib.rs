@@ -1481,4 +1481,12 @@ impl Endpoints {
         construct_endpoint(&self.base, &["api", "v1", "audit_events", "query"])
     }
 
-    fn integrat
+    fn integrations(&self) -> Result<Url> {
+        construct_endpoint(&self.base, &["api", "_private", "integrations"])
+    }
+
+    fn integration(&self, name: &IntegrationFullName) -> Result<Url> {
+        construct_endpoint(&self.base, &["api", "_private", "integrations", &name.0])
+    }
+
+    fn validatio
