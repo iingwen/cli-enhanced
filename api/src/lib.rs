@@ -1501,4 +1501,16 @@ impl Endpoints {
                 "_private",
                 "datasets",
                 &dataset_name.0,
-            
+                "labellers",
+                &model_version.0.to_string(),
+                "validation",
+            ],
+        )
+    }
+
+    fn label_validation(
+        &self,
+        dataset_name: &DatasetFullName,
+        model_version: &ModelVersion,
+    ) -> Result<Url> {
+        construct_endpo
