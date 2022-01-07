@@ -1513,4 +1513,16 @@ impl Endpoints {
         dataset_name: &DatasetFullName,
         model_version: &ModelVersion,
     ) -> Result<Url> {
-        construct_endpo
+        construct_endpoint(
+            &self.base,
+            &[
+                "api",
+                "_private",
+                "datasets",
+                &dataset_name.0,
+                "labellers",
+                &model_version.0.to_string(),
+                "label-validation",
+            ],
+        )
+    }
