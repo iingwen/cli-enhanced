@@ -1526,3 +1526,11 @@ impl Endpoints {
             ],
         )
     }
+    fn bucket_statistics(&self, bucket_name: &BucketFullName) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &["api", "_private", "buckets", &bucket_name.0, "statistics"],
+        )
+    }
+
+    fn dataset_summary(&self, dataset_name: &DatasetFullNam
