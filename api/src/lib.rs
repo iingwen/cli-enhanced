@@ -1541,4 +1541,13 @@ impl Endpoints {
     }
 
     fn query_dataset(&self, dataset_name: &DatasetFullName) -> Result<Url> {
-        construct_
+        construct_endpoint(
+            &self.base,
+            &["api", "_private", "datasets", &dataset_name.0, "query"],
+        )
+    }
+
+    fn streams(&self, dataset_name: &DatasetFullName) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &["api", "v1", "datasets", &datas
