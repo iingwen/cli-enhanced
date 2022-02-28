@@ -1533,4 +1533,12 @@ impl Endpoints {
         )
     }
 
-    fn dataset_summary(&self, dataset_name: &DatasetFullNam
+    fn dataset_summary(&self, dataset_name: &DatasetFullName) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &["api", "_private", "datasets", &dataset_name.0, "summary"],
+        )
+    }
+
+    fn query_dataset(&self, dataset_name: &DatasetFullName) -> Result<Url> {
+        construct_
