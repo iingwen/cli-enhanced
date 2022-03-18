@@ -1561,4 +1561,17 @@ impl Endpoints {
                 "api",
                 "v1",
                 "datasets",
-                &stream_name.dataset.
+                &stream_name.dataset.0,
+                "streams",
+                &stream_name.stream.0,
+            ],
+        )
+    }
+
+    fn stream_fetch(&self, stream_name: &StreamFullName) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &[
+                "api",
+                "v1",
+ 
