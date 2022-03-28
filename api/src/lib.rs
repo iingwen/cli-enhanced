@@ -1584,4 +1584,16 @@ impl Endpoints {
     }
 
     fn stream_advance(&self, stream_name: &StreamFullName) -> Result<Url> {
-        construct_endpo
+        construct_endpoint(
+            &self.base,
+            &[
+                "api",
+                "v1",
+                "datasets",
+                &stream_name.dataset.0,
+                "streams",
+                &stream_name.stream.0,
+                "advance",
+            ],
+        )
+  
