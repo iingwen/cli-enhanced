@@ -1596,4 +1596,15 @@ impl Endpoints {
                 "advance",
             ],
         )
-  
+    }
+
+    fn stream_reset(&self, stream_name: &StreamFullName) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &[
+                "api",
+                "v1",
+                "datasets",
+                &stream_name.dataset.0,
+                "streams",
+       
