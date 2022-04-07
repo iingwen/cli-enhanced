@@ -1628,4 +1628,14 @@ impl Endpoints {
         )
     }
 
-    fn recent_comments(&self, dataset_name: &DatasetFullName) -> Result<
+    fn recent_comments(&self, dataset_name: &DatasetFullName) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &["api", "_private", "datasets", &dataset_name.0, "recent"],
+        )
+    }
+
+    fn dataset_statistics(&self, dataset_name: &DatasetFullName) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &["api", "_private", 
