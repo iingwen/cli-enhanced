@@ -1638,4 +1638,15 @@ impl Endpoints {
     fn dataset_statistics(&self, dataset_name: &DatasetFullName) -> Result<Url> {
         construct_endpoint(
             &self.base,
-            &["api", "_private", 
+            &["api", "_private", "datasets", &dataset_name.0, "statistics"],
+        )
+    }
+
+    fn source_statistics(&self, source_name: &SourceFullName) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &["api", "v1", "sources", &source_name.0, "statistics"],
+        )
+    }
+
+    fn user_by_id(&
