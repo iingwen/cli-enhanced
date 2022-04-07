@@ -1649,4 +1649,11 @@ impl Endpoints {
         )
     }
 
-    fn user_by_id(&
+    fn user_by_id(&self, user_id: &UserId) -> Result<Url> {
+        construct_endpoint(&self.base, &["api", "_private", "users", &user_id.0])
+    }
+
+    fn source_by_id(&self, source_id: &SourceId) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &["api", "v1", "sources", &format!("id:{}", source_id.0
