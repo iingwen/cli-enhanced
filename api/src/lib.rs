@@ -1675,4 +1675,14 @@ impl Endpoints {
                 "api",
                 "_private",
                 "quotas",
-                &tenant_id.to_string()
+                &tenant_id.to_string(),
+                &tenant_quota_kind.to_string(),
+            ],
+        )
+    }
+
+    fn put_comments(&self, source_name: &SourceFullName) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &["api", "_private", "sources", &source_name.0, "comments"],
+ 
