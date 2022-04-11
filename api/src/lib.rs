@@ -1665,4 +1665,14 @@ impl Endpoints {
     }
 
     fn quotas(&self) -> Result<Url> {
-        construct_endpoint(&self.base, &["api", "_private", "q
+        construct_endpoint(&self.base, &["api", "_private", "quotas"])
+    }
+
+    fn quota(&self, tenant_id: &TenantId, tenant_quota_kind: TenantQuotaKind) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &[
+                "api",
+                "_private",
+                "quotas",
+                &tenant_id.to_string()
