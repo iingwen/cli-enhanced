@@ -1685,4 +1685,14 @@ impl Endpoints {
         construct_endpoint(
             &self.base,
             &["api", "_private", "sources", &source_name.0, "comments"],
- 
+        )
+    }
+
+    fn comments(&self, source_name: &SourceFullName) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &["api", "_private", "sources", &source_name.0, "comments"],
+        )
+    }
+
+    fn comment_by_id(&self, source_name: &SourceFullName, com
