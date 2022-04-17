@@ -1706,3 +1706,14 @@ impl Endpoints {
                 "comments",
                 &comment_id.0,
             ],
+        )
+    }
+
+    fn comments_v1(&self, source_name: &SourceFullName) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &["api", "v1", "sources", &source_name.0, "comments"],
+        )
+    }
+
+    fn sync_comments(&self, source_name: &So
