@@ -1695,4 +1695,14 @@ impl Endpoints {
         )
     }
 
-    fn comment_by_id(&self, source_name: &SourceFullName, com
+    fn comment_by_id(&self, source_name: &SourceFullName, comment_id: &CommentId) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &[
+                "api",
+                "v1",
+                "sources",
+                &source_name.0,
+                "comments",
+                &comment_id.0,
+            ],
