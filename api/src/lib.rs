@@ -1724,4 +1724,13 @@ impl Endpoints {
     }
 
     fn sync_comments_raw_emails(&self, source_name: &SourceFullName) -> Result<Url> {
-        con
+        construct_endpoint(
+            &self.base,
+            &["api", "v1", "sources", &source_name.0, "sync-raw-emails"],
+        )
+    }
+
+    fn comment_audio(&self, source_id: &SourceId, comment_id: &CommentId) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+        
