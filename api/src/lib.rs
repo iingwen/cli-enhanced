@@ -1733,4 +1733,16 @@ impl Endpoints {
     fn comment_audio(&self, source_id: &SourceId, comment_id: &CommentId) -> Result<Url> {
         construct_endpoint(
             &self.base,
-        
+            &[
+                "api",
+                "_private",
+                "sources",
+                &format!("id:{}", source_id.0),
+                "comments",
+                &comment_id.0,
+                "audio",
+            ],
+        )
+    }
+
+    fn get_emails(&self, bucket_name: &BucketFu
