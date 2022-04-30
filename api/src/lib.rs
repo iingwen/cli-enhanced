@@ -1745,4 +1745,12 @@ impl Endpoints {
         )
     }
 
-    fn get_emails(&self, bucket_name: &BucketFu
+    fn get_emails(&self, bucket_name: &BucketFullName) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &["api", "_private", "buckets", &bucket_name.0, "emails"],
+        )
+    }
+
+    fn put_emails(&self, bucket_name: &BucketFullName) -> Result<Url> {
+        construct_e
