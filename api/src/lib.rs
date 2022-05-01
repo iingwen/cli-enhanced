@@ -1753,4 +1753,14 @@ impl Endpoints {
     }
 
     fn put_emails(&self, bucket_name: &BucketFullName) -> Result<Url> {
-        construct_e
+        construct_endpoint(
+            &self.base,
+            &["api", "_private", "buckets", &bucket_name.0, "emails"],
+        )
+    }
+
+    fn post_user(&self, user_id: &UserId) -> Result<Url> {
+        construct_endpoint(&self.base, &["api", "_private", "users", &user_id.0])
+    }
+
+    fn dataset_by_id(&self, dat
