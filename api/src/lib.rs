@@ -1763,4 +1763,12 @@ impl Endpoints {
         construct_endpoint(&self.base, &["api", "_private", "users", &user_id.0])
     }
 
-    fn dataset_by_id(&self, dat
+    fn dataset_by_id(&self, dataset_id: &DatasetId) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &["api", "v1", "datasets", &format!("id:{}", dataset_id.0)],
+        )
+    }
+
+    fn dataset_by_name(&self, dataset_name: &DatasetFullName) -> Result<Url> {
+        construct_endpoint(&self
