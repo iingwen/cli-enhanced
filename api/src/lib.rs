@@ -1804,4 +1804,14 @@ impl Endpoints {
         &self,
         dataset_name: &DatasetFullName,
         comment_uid: &CommentUid,
-    ) -> Resu
+    ) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &[
+                "api",
+                "_private",
+                "datasets",
+                &dataset_name.0,
+                "labellings",
+                &comment_uid.0,
+           
