@@ -1781,4 +1781,16 @@ impl Endpoints {
         )
     }
 
-    fn get_comment
+    fn get_comment_predictions(
+        &self,
+        dataset_name: &DatasetFullName,
+        model_version: &ModelVersion,
+    ) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &[
+                "api",
+                "v1",
+                "datasets",
+                &dataset_name.0,
+                "lab
