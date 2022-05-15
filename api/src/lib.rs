@@ -1771,4 +1771,14 @@ impl Endpoints {
     }
 
     fn dataset_by_name(&self, dataset_name: &DatasetFullName) -> Result<Url> {
-        construct_endpoint(&self
+        construct_endpoint(&self.base, &["api", "v1", "datasets", &dataset_name.0])
+    }
+
+    fn get_labellings(&self, dataset_name: &DatasetFullName) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &["api", "_private", "datasets", &dataset_name.0, "labellings"],
+        )
+    }
+
+    fn get_comment
