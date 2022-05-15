@@ -1793,4 +1793,15 @@ impl Endpoints {
                 "v1",
                 "datasets",
                 &dataset_name.0,
-                "lab
+                "labellers",
+                &model_version.0.to_string(),
+                "predict-comments",
+            ],
+        )
+    }
+
+    fn post_labelling(
+        &self,
+        dataset_name: &DatasetFullName,
+        comment_uid: &CommentUid,
+    ) -> Resu
