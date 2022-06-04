@@ -1814,4 +1814,15 @@ impl Endpoints {
                 &dataset_name.0,
                 "labellings",
                 &comment_uid.0,
-           
+            ],
+        )
+    }
+
+    fn bucket_by_id(&self, bucket_id: &BucketId) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &["api", "_private", "buckets", &format!("id:{}", bucket_id.0)],
+        )
+    }
+
+    fn bucket_by_name(&self, bucket_name: &BucketFullName) -> Result<Ur
