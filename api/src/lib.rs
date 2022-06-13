@@ -1825,4 +1825,11 @@ impl Endpoints {
         )
     }
 
-    fn bucket_by_name(&self, bucket_name: &BucketFullName) -> Result<Ur
+    fn bucket_by_name(&self, bucket_name: &BucketFullName) -> Result<Url> {
+        construct_endpoint(&self.base, &["api", "_private", "buckets", &bucket_name.0])
+    }
+
+    fn project_by_name(&self, project_name: &ProjectName) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &["api", "_private", "proje
