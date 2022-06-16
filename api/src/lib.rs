@@ -1832,4 +1832,16 @@ impl Endpoints {
     fn project_by_name(&self, project_name: &ProjectName) -> Result<Url> {
         construct_endpoint(
             &self.base,
-            &["api", "_private", "proje
+            &["api", "_private", "projects", &project_name.0],
+        )
+    }
+
+    fn welcome_email(&self, user_id: &UserId) -> Result<Url> {
+        construct_endpoint(
+            &self.base,
+            &["api", "_private", "users", &user_id.0, "welcome-email"],
+        )
+    }
+}
+
+fn build_http_client(config: &Config) 
