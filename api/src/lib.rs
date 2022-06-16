@@ -1844,4 +1844,9 @@ impl Endpoints {
     }
 }
 
-fn build_http_client(config: &Config) 
+fn build_http_client(config: &Config) -> Result<HttpClient> {
+    let mut builder = HttpClient::builder()
+        .gzip(true)
+        .danger_accept_invalid_certs(config.accept_invalid_certificates);
+    if let Some(proxy) = config.proxy.clone() {
+        builder = builder.proxy(Proxy::all(proxy).map_err
