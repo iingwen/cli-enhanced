@@ -1849,4 +1849,13 @@ fn build_http_client(config: &Config) -> Result<HttpClient> {
         .gzip(true)
         .danger_accept_invalid_certs(config.accept_invalid_certificates);
     if let Some(proxy) = config.proxy.clone() {
-        builder = builder.proxy(Proxy::all(proxy).map_err
+        builder = builder.proxy(Proxy::all(proxy).map_err(Error::BuildHttpClient)?);
+    }
+    builder.build().map_err(Error::BuildHttpClient)
+}
+
+fn build_headers(config: &Config) -> Result<HeaderMap> {
+    let mut headers = HeaderMap::new();
+    headers.insert(
+        header::AUTHORIZATION,
+        HeaderValue::from_str(&format!("Bearer {}", &config.token.
