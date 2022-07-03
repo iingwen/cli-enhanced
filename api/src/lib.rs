@@ -1878,4 +1878,13 @@ pub static DEFAULT_ENDPOINT: Lazy<Url> =
     Lazy::new(|| Url::parse("https://reinfer.io").expect("Default URL is well-formed"));
 
 #[cfg(test)]
-m
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_construct_endpoint() {
+        let url = construct_endpoint(
+            &Url::parse("https://cloud.uipath.com/org/tenant/reinfer_").unwrap(),
+            &["api", "v1", "sources", "project", "source", "sync"],
+        )
+        .unwr
