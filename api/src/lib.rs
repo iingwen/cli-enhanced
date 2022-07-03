@@ -1887,4 +1887,14 @@ mod tests {
             &Url::parse("https://cloud.uipath.com/org/tenant/reinfer_").unwrap(),
             &["api", "v1", "sources", "project", "source", "sync"],
         )
-        .unwr
+        .unwrap();
+
+        assert_eq!(
+            url.to_string(),
+            "https://cloud.uipath.com/org/tenant/reinfer_/api/v1/sources/project/source/sync"
+        )
+    }
+
+    #[test]
+    fn test_id_list_query() {
+        assert_eq!(id_list_query(Vec::new
