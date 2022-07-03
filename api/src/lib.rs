@@ -1897,4 +1897,13 @@ mod tests {
 
     #[test]
     fn test_id_list_query() {
-        assert_eq!(id_list_query(Vec::new
+        assert_eq!(id_list_query(Vec::new().iter()), Vec::new());
+        assert_eq!(
+            id_list_query(["foo".to_owned()].iter()),
+            vec![("id", "foo")]
+        );
+        assert_eq!(
+            id_list_query(
+                [
+                    "Stream".to_owned(),
+                    "River".to_owned(
