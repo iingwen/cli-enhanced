@@ -1869,4 +1869,13 @@ fn build_headers(config: &Config) -> Result<HeaderMap> {
 
 fn id_list_query<'a>(ids: impl Iterator<Item = &'a String>) -> Vec<(&'static str, &'a str)> {
     // Return a list of pairs ("id", "a"), ("id", "b"), ...
-    /
+    // The http client will turn this into a query string of
+    // the form "id=a&id=b&..."
+    ids.map(|id| ("id", id.as_str())).collect()
+}
+
+pub static DEFAULT_ENDPOINT: Lazy<Url> =
+    Lazy::new(|| Url::parse("https://reinfer.io").expect("Default URL is well-formed"));
+
+#[cfg(test)]
+m
