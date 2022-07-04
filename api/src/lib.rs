@@ -1906,4 +1906,12 @@ mod tests {
             id_list_query(
                 [
                     "Stream".to_owned(),
-                    "River".to_owned(
+                    "River".to_owned(),
+                    "Waterfall".to_owned()
+                ]
+                .iter()
+            ),
+            [("id", "Stream"), ("id", "River"), ("id", "Waterfall"),]
+        );
+    }
+}
