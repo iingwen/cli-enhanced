@@ -13,4 +13,18 @@ use crate::{
 static FULL_NAME_REGEX: Lazy<Regex> =
     Lazy::new(|| Regex::new("^[A-Za-z0-9-_]{1,256}/[A-Za-z0-9-_]{1,256}$").unwrap());
 
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct Bucket {
+    pub id: Id,
+    pub name: Name,
+    pub owner: Username,
+    pub created_at: DateTime<Utc>,
+}
+
+impl Bucket {
+    pub fn full_name(&self) -> FullName {
+        FullName(format!("{}/{}", self.owner.0, self.name.0))
+    }
+}
+
+#[derive(Debug, C
