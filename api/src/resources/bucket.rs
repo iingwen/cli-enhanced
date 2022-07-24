@@ -41,4 +41,18 @@ pub struct ModelFamily(pub String);
 
 // TODO(mcobzarenco)[3963]: Make `Identifier` into a trait (ensure it still implements
 // `FromStr` so we can take T: Identifier as a clap command line argument).
-#[derive(Debug, Clo
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
+pub enum Identifier {
+    Id(Id),
+    FullName(FullName),
+}
+
+impl From<FullName> for Identifier {
+    fn from(full_name: FullName) -> Self {
+        Identifier::FullName(full_name)
+    }
+}
+
+impl From<Id> for Identifier {
+    fn from(id: Id) -> Self {
+ 
