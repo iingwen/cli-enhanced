@@ -34,4 +34,11 @@ pub struct Name(pub String);
 pub struct FullName(pub String);
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
-pub struct Id(pub Strin
+pub struct Id(pub String);
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
+pub struct ModelFamily(pub String);
+
+// TODO(mcobzarenco)[3963]: Make `Identifier` into a trait (ensure it still implements
+// `FromStr` so we can take T: Identifier as a clap command line argument).
+#[derive(Debug, Clo
