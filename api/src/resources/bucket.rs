@@ -76,4 +76,16 @@ impl FromStr for Identifier {
 }
 
 impl Display for FullName {
-    fn fmt(&self, formatter: &m
+    fn fmt(&self, formatter: &mut Formatter<'_>) -> FmtResult {
+        write!(formatter, "{}", self.0)
+    }
+}
+
+impl Display for Id {
+    fn fmt(&self, formatter: &mut Formatter<'_>) -> FmtResult {
+        write!(formatter, "{}", self.0)
+    }
+}
+
+impl Display for Identifier {
+    fn fmt(&self, f
