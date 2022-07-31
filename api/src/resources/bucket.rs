@@ -55,4 +55,14 @@ impl From<FullName> for Identifier {
 
 impl From<Id> for Identifier {
     fn from(id: Id) -> Self {
- 
+        Identifier::Id(id)
+    }
+}
+
+impl FromStr for Identifier {
+    type Err = Error;
+
+    fn from_str(string: &str) -> Result<Self> {
+        if string.chars().all(|c| c.is_ascii_hexdigit()) {
+            Ok(Identifier::Id(Id(string.into())))
+        } else if FULL_NAME_REGEX.
