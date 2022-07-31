@@ -65,4 +65,15 @@ impl FromStr for Identifier {
     fn from_str(string: &str) -> Result<Self> {
         if string.chars().all(|c| c.is_ascii_hexdigit()) {
             Ok(Identifier::Id(Id(string.into())))
-        } else if FULL_NAME_REGEX.
+        } else if FULL_NAME_REGEX.is_match(string) {
+            Ok(Identifier::FullName(FullName(string.into())))
+        } else {
+            Err(Error::BadBucketIdentifier {
+                identifier: string.into(),
+            })
+        }
+    }
+}
+
+impl Display for FullName {
+    fn fmt(&self, formatter: &m
