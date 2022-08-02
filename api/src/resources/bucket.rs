@@ -97,4 +97,12 @@ impl Display for Identifier {
 }
 
 #[derive(Debug, Clone, Serialize, PartialEq, Eq)]
-pub struct NewBucke
+pub struct NewBucket<'request> {
+    pub bucket_type: BucketType,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub title: Option<&'request str>,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub(crate) struct CreateRequest<'request> {
+    pub bucket: NewBuc
