@@ -88,4 +88,13 @@ impl Display for Id {
 }
 
 impl Display for Identifier {
-    fn fmt(&self, f
+    fn fmt(&self, formatter: &mut Formatter<'_>) -> FmtResult {
+        match self {
+            Identifier::Id(id) => Display::fmt(id, formatter),
+            Identifier::FullName(full_name) => Display::fmt(full_name, formatter),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub struct NewBucke
