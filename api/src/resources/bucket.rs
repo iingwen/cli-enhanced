@@ -105,4 +105,17 @@ pub struct NewBucket<'request> {
 
 #[derive(Debug, Clone, Serialize, PartialEq, Eq)]
 pub(crate) struct CreateRequest<'request> {
-    pub bucket: NewBuc
+    pub bucket: NewBucket<'request>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub(crate) struct CreateResponse {
+    pub bucket: Bucket,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub(crate) struct GetAvailableResponse {
+    pub buckets: Vec<Bucket>,
+}
+
+#[derive(Debug, Cl
