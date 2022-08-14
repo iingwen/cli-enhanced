@@ -143,4 +143,19 @@ impl FromStr for BucketType {
 }
 
 impl Default for BucketType {
-    fn default() ->
+    fn default() -> Self {
+        Self::Emails
+    }
+}
+
+impl Display for BucketType {
+    fn fmt(&self, formatter: &mut Formatter<'_>) -> FmtResult {
+        match *self {
+            Self::Emails => write!(formatter, "emails"),
+        }
+    }
+}
+
+impl FromStr for FullName {
+    type Err = Error;
+    f
