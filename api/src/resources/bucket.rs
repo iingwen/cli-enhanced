@@ -129,4 +129,18 @@ pub enum BucketType {
     Emails,
 }
 
-impl FromStr for Bucket
+impl FromStr for BucketType {
+    type Err = Error;
+
+    fn from_str(string: &str) -> Result<Self> {
+        match string {
+            "emails" => Ok(Self::Emails),
+            _ => Err(Error::BadBucketType {
+                bucket_type: string.into(),
+            }),
+        }
+    }
+}
+
+impl Default for BucketType {
+    fn default() ->
