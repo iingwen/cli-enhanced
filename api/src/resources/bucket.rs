@@ -118,4 +118,15 @@ pub(crate) struct GetAvailableResponse {
     pub buckets: Vec<Bucket>,
 }
 
-#[derive(Debug, Cl
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub(crate) struct GetResponse {
+    pub bucket: Bucket,
+}
+
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq, Hash)]
+pub enum BucketType {
+    #[serde(rename = "emails")]
+    Emails,
+}
+
+impl FromStr for Bucket
