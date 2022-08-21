@@ -158,4 +158,13 @@ impl Display for BucketType {
 
 impl FromStr for FullName {
     type Err = Error;
-    f
+    fn from_str(string: &str) -> Result<Self> {
+        if FULL_NAME_REGEX.is_match(string) {
+            Ok(FullName(string.into()))
+        } else {
+            Err(Error::BadBucketName {
+                name: string.into(),
+            })
+        }
+    }
+}
