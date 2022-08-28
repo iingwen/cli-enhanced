@@ -595,3 +595,301 @@ impl HasAnnotations for Vec<NewMoonForm> {
         self.iter().any(|form| !form.assigned.is_empty())
     }
 }
+
+impl NewAnnotatedComment {
+    pub fn has_annotations(&self) -> bool {
+        self.labelling.has_annotations()
+            || self.entities.has_annotations()
+            || self.moon_forms.has_annotations()
+    }
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct Labelling {
+    pub group: LabelGroupName,
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub assigned: Vec<Label>,
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub dismissed: Vec<Label>,
+    #[serde(skip_serializing_if = "should_skip_serializing_optional_vec", default)]
+    pub predicted: Option<Vec<PredictedLabel>>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct NewLabelling {
+    pub group: LabelGroupName,
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub assigned: Option<Vec<Label>>,
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub dismissed: Option<Vec<Label>>,
+}
+
+/// Old, pre-label group labelling format.
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct NewLegacyLabelling {
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub assigned: Option<Vec<Label>>,
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub dismissed: Option<Vec<Label>>,
+}
+
+#[derive(Debug, Clone, PartialEq, Deserialize, Serialize, Eq)]
+pub struct Label {
+    pub name: LabelName,
+    pub sentiment: Sentiment,
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub metadata: Option<HashMap<String, JsonValue>>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(untagged)]
+pub enum PredictedLabelName {
+    Parts(Vec<String>),
+    String(LabelName),
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct PredictedLabel {
+    pub name: PredictedLabelName,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub sentiment: Option<NotNan<f64>>,
+    pub probability: NotNan<f64>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub auto_thresholds: Option<Vec<String>>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct AutoThresholdLabel {
+    pub name: Vec<String>,
+    pub probability: NotNan<f64>,
+    pub auto_thresholds: Vec<String>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct LabelProperty {
+    pub id: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub name: Option<String>,
+    pub value: NotNan<f64>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub breakdown: Option<LabelPropertyBreakdown>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct LabelPropertyBreakdown {
+    pub label_contributions: Vec<LabelPropertyContribution>,
+    pub other_group_contributions: Vec<LabelPropertyGroupContribution>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct LabelPropertyContribution {
+    pub name: LabelName,
+    pub value: NotNan<f64>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct LabelPropertyGroupContribution {
+    pub name: LabelGroupName,
+    pub value: NotNan<f64>,
+}
+
+#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct Entities {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub assigned: Vec<Entity>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub dismissed: Vec<Entity>,
+    #[serde(skip_serializing_if = "should_skip_serializing_optional_vec", default)]
+    pub predicted: Option<Vec<Entity>>,
+}
+
+#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct NewEntities {
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub assigned: Vec<NewEntity>,
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub dismissed: Vec<NewEntity>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct MoonFormCapture {
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub fields: Vec<Entity>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct MoonFormLabelCaptures {
+    pub label: Label,
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub captures: Vec<MoonFormCapture>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct MoonForm {
+    pub group: LabelGroupName,
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub assigned: Vec<MoonFormLabelCaptures>,
+    #[serde(skip_serializing_if = "should_skip_serializing_optional_vec", default)]
+    pub predicted: Option<Vec<MoonFormLabelCaptures>>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct NewMoonFormCapture {
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub fields: Vec<NewEntity>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct NewMoonFormLabelCaptures {
+    pub label: Label,
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub captures: Vec<NewMoonFormCapture>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct NewMoonForm {
+    pub group: LabelGroupName,
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub assigned: Vec<NewMoonFormLabelCaptures>,
+}
+
+pub trait HasAnnotations {
+    fn has_annotations(&self) -> bool;
+}
+
+impl HasAnnotations for NewEntities {
+    fn has_annotations(&self) -> bool {
+        !self.assigned.is_empty() || !self.dismissed.is_empty()
+    }
+}
+
+pub fn should_skip_serializing_optional_vec<T>(maybe_vec: &Option<Vec<T>>) -> bool {
+    if let Some(actual_vec) = maybe_vec {
+        actual_vec.is_empty()
+    } else {
+        true
+    }
+}
+
+fn should_skip_serializing_labelling(maybe_labelling: &Option<Vec<Labelling>>) -> bool {
+    if let Some(default_labelling) = get_default_labelling_group(maybe_labelling) {
+        default_labelling.assigned.is_empty()
+            && default_labelling.dismissed.is_empty()
+            && should_skip_serializing_optional_vec(&default_labelling.predicted)
+    } else {
+        true
+    }
+}
+
+fn should_skip_serializing_entities(maybe_entities: &Option<Entities>) -> bool {
+    if let Some(entities) = maybe_entities {
+        entities.assigned.is_empty()
+            && entities.dismissed.is_empty()
+            && should_skip_serializing_optional_vec(&entities.predicted)
+    } else {
+        true
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Deserialize, Serialize, Eq)]
+#[serde(untagged)]
+pub enum NewEntity {
+    WithSpan(NewEntityWithSpan),
+    WithSpans(NewEntityWithSpans),
+}
+
+#[derive(Debug, Clone, PartialEq, Deserialize, Serialize, Eq)]
+pub struct NewEntityWithSpan {
+    pub name: EntityName,
+    pub formatted_value: String,
+    pub span: NewEntitySpan,
+}
+
+#[derive(Debug, Clone, PartialEq, Deserialize, Serialize, Eq)]
+pub struct NewEntityWithSpans {
+    pub name: EntityName,
+    pub formatted_value: String,
+    pub spans: Vec<NewEntitySpan>,
+}
+
+#[derive(Debug, PartialEq, Clone, Deserialize, Serialize, Eq)]
+pub struct NewEntitySpan {
+    content_part: String,
+    message_index: usize,
+    utf16_byte_start: usize,
+    utf16_byte_end: usize,
+}
+
+#[derive(Debug, Clone, PartialEq, Deserialize, Serialize, Eq)]
+pub struct Entity {
+    pub name: EntityName,
+    pub formatted_value: String,
+    pub spans: Vec<EntitySpan>,
+}
+
+#[derive(Debug, PartialEq, Clone, Deserialize, Serialize, Eq)]
+pub struct EntitySpan {
+    content_part: String,
+    message_index: usize,
+    char_start: usize,
+    char_end: usize,
+    utf16_byte_start: usize,
+    utf16_byte_end: usize,
+}
+
+#[inline]
+fn strip_prefix(string: &mut String, prefix: &str) -> bool {
+    if string.starts_with(prefix) {
+        string.drain(..prefix.len());
+        true
+    } else {
+        false
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::{self, json, Value as JsonValue};
+    use std::collections::HashMap;
+
+    #[test]
+    fn property_map_empty_serialize() {
+        assert_eq!(serde_json::to_string(&PropertyMap::new()).expect(""), "{}");
+    }
+
+    #[test]
+    fn property_map_one_number_serialize() {
+        let mut map = PropertyMap::new();
+        map.insert_number("nps".to_owned(), NotNan::new(7.0).unwrap());
+        assert_eq!(
+            serde_json::to_string(&map).expect(""),
+            r#"{"number:nps":7.0}"#
+        );
+    }
+
+    #[test]
+    fn property_map_one_string_serialize() {
+        let mut map = PropertyMap::new();
+        map.insert_string("age".to_owned(), "18-25".to_owned());
+        assert_eq!(
+            serde_json::to_string(&map).expect(""),
+            r#"{"string:age":"18-25"}"#
+        );
+    }
+
+    #[test]
+    fn property_map_mixed_serialize() {
+        let mut map = PropertyMap::new();
+        map.insert_string("age".to_owned(), "18-25".to_owned());
+        map.insert_string("income".to_owned(), "$6000".to_owned());
+        map.insert_number("nps".to_owned(), NotNan::new(3.0).unwrap());
+
+        let actual_map: HashMap<String, JsonValue> =
+            serde_json::from_str(&serde_json::to_string(&map).expect("ser")).expect("de");
+
+        let mut expected_map = HashMap::new();
+        expected_map.insert(
+            "string:age".to_owned(),
+            JsonValue::String("18-25".to_owned()),
+        );
