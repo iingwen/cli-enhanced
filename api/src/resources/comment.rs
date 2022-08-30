@@ -893,3 +893,88 @@ mod tests {
             "string:age".to_owned(),
             JsonValue::String("18-25".to_owned()),
         );
+        expected_map.insert(
+            "string:income".to_owned(),
+            JsonValue::String("$6000".to_owned()),
+        );
+        expected_map.insert("number:nps".to_owned(), json!(3.0));
+
+        assert_eq!(actual_map, expected_map);
+    }
+
+    #[test]
+    fn property_map_empty_deserialize() {
+        let map: PropertyMap = serde_json::from_str("{}").expect("");
+        assert_eq!(map, PropertyMap::new());
+    }
+
+    #[test]
+    fn property_map_null_deserialize() {
+        let map: PropertyMap = serde_json::from_str("null").expect("");
+        assert_eq!(map, PropertyMap::new());
+    }
+
+    #[test]
+    fn property_map_one_number_float_deserialize() {
+        let actual: PropertyMap = serde_json::from_str(r#"{"number:nps":7.0}"#).expect("");
+        let mut expected = PropertyMap::new();
+        expected.insert_number("nps".to_owned(), NotNan::new(7.0).unwrap());
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn property_map_one_number_unsigned_deserialize() {
+        let actual: PropertyMap = serde_json::from_str(r#"{"number:nps":7}"#).expect("");
+        let mut expected = PropertyMap::new();
+        expected.insert_number("nps".to_owned(), NotNan::new(7.0).unwrap());
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn property_map_one_number_negative_deserialize() {
+        let actual: PropertyMap = serde_json::from_str(r#"{"number:nps":-7}"#).expect("");
+        let mut expected = PropertyMap::new();
+        expected.insert_number("nps".to_owned(), NotNan::new(-7.0).unwrap());
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn property_map_one_string_deserialize() {
+        let actual: PropertyMap = serde_json::from_str(r#"{"string:age":"18-25"}"#).expect("");
+        let mut expected = PropertyMap::new();
+        expected.insert_string("age".to_owned(), "18-25".to_owned());
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn property_map_illegal_prefix_deserialize() {
+        let result: StdResult<PropertyMap, _> =
+            serde_json::from_str(r#"{"illegal:something":"18-25"}"#);
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn property_map_illegal_value_for_prefix_deserialize() {
+        let result: StdResult<PropertyMap, _> =
+            serde_json::from_str(r#"{"string:something":18.0}"#);
+        assert!(result.is_err());
+
+        let result: StdResult<PropertyMap, _> = serde_json::from_str(r#"{"number:something":"x"}"#);
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn property_map_mixed_deserialize() {
+        let mut expected = PropertyMap::new();
+        expected.insert_string("age".to_owned(), "18-25".to_owned());
+        expected.insert_string("income".to_owned(), "$6000".to_owned());
+        expected.insert_number("nps".to_owned(), NotNan::new(3.0).unwrap());
+
+        let actual: PropertyMap = serde_json::from_str(
+            r#"{"string:age":"18-25","number:nps":3,"string:income":"$6000"}"#,
+        )
+        .expect("");
+
+        assert_eq!(actual, expected);
+    }
+}
