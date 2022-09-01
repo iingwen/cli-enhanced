@@ -215,3 +215,247 @@ impl FromStr for Identifier {
         }
     }
 }
+
+impl Display for Identifier {
+    fn fmt(&self, formatter: &mut Formatter<'_>) -> FmtResult {
+        write!(
+            formatter,
+            "{}",
+            match self {
+                Identifier::Id(id) => &id.0,
+                Identifier::FullName(full_name) => &full_name.0,
+            }
+        )
+    }
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub struct NewDataset<'request> {
+    pub source_ids: &'request [SourceId],
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub title: Option<&'request str>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub description: Option<&'request str>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub has_sentiment: Option<bool>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub entity_defs: Option<&'request [NewEntityDef]>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub label_defs: Option<&'request [NewLabelDef]>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub label_groups: Option<&'request [NewLabelGroup]>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub model_family: Option<&'request str>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub copy_annotations_from: Option<&'request str>,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub(crate) struct CreateRequest<'request> {
+    pub dataset: NewDataset<'request>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub(crate) struct CreateResponse {
+    pub dataset: Dataset,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub(crate) struct GetAvailableResponse {
+    pub datasets: Vec<Dataset>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub(crate) struct GetResponse {
+    pub dataset: Dataset,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub struct UpdateDataset<'request> {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub source_ids: Option<&'request [SourceId]>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub title: Option<&'request str>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub description: Option<&'request str>,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub(crate) struct UpdateRequest<'request> {
+    pub dataset: UpdateDataset<'request>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub(crate) struct UpdateResponse {
+    pub dataset: Dataset,
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::resources::comment::{CommentTimestampFilter, PropertyFilter, UserPropertiesFilter};
+
+    use super::*;
+    use crate::PropertyValue;
+    use chrono::TimeZone;
+    use std::collections::HashMap;
+
+    #[test]
+    pub fn test_serialize_query_params_recent() {
+        let params = QueryRequestParams {
+            filter: CommentFilter {
+                user_properties: None,
+                timestamp: Some(CommentTimestampFilter {
+                    maximum: Some(
+                        chrono::Utc
+                            .with_ymd_and_hms(2023, 5, 19, 23, 59, 59)
+                            .unwrap(),
+                    ),
+                    minimum: None,
+                }),
+                reviewed: Some(crate::resources::comment::ReviewedFilterEnum::OnlyUnreviewed),
+                ..Default::default()
+            },
+            attribute_filters: vec![AttributeFilter {
+                attribute: Attribute::Labels,
+                filter: AttributeFilterEnum::StringAnyOf {
+                    any_of: vec!["Access Management".to_string()],
+                },
+            }],
+            continuation: Some(Continuation(
+                "36498883b7f4c2c12cc364be0a44d806-8abb3088feffef3f".to_string(),
+            )),
+            limit: 20,
+            order: OrderEnum::Recent,
+        };
+
+        assert_eq!(
+            serde_json::to_string(&params).unwrap(),
+            r#"{"attribute_filters":[{"attribute":"labels","filter":{"kind":"string_any_of","any_of":["Access Management"]}}],"continuation":"36498883b7f4c2c12cc364be0a44d806-8abb3088feffef3f","filter":{"reviewed":"only_unreviewed","timestamp":{"maximum":"2023-05-19T23:59:59Z"}},"limit":20,"order":{"kind":"recent"}}"#
+        );
+    }
+
+    #[test]
+    pub fn test_serialize_query_params_by_label() {
+        let params = QueryRequestParams {
+            filter: CommentFilter {
+                user_properties: None,
+                timestamp: Some(CommentTimestampFilter {
+                    maximum: Some(
+                        chrono::Utc
+                            .with_ymd_and_hms(2023, 5, 19, 23, 59, 59)
+                            .unwrap(),
+                    ),
+                    minimum: None,
+                }),
+                reviewed: Some(crate::resources::comment::ReviewedFilterEnum::OnlyUnreviewed),
+                ..Default::default()
+            },
+            attribute_filters: vec![AttributeFilter {
+                attribute: Attribute::Labels,
+                filter: AttributeFilterEnum::StringAnyOf {
+                    any_of: vec!["Access Management".to_string()],
+                },
+            }],
+            continuation: Some(Continuation(
+                "36498883b7f4c2c12cc364be0a44d806-8abb3088feffef3f".to_string(),
+            )),
+            limit: 20,
+            order: OrderEnum::ByLabel {
+                label: "Access Management".to_string(),
+            },
+        };
+
+        assert_eq!(
+            serde_json::to_string(&params).unwrap(),
+            r#"{"attribute_filters":[{"attribute":"labels","filter":{"kind":"string_any_of","any_of":["Access Management"]}}],"continuation":"36498883b7f4c2c12cc364be0a44d806-8abb3088feffef3f","filter":{"reviewed":"only_unreviewed","timestamp":{"maximum":"2023-05-19T23:59:59Z"}},"limit":20,"order":{"kind":"by_label","label":"Access Management"}}"#
+        );
+    }
+
+    #[test]
+    pub fn test_serialize_statistics_request_params_default() {
+        let params = StatisticsRequestParams::default();
+        assert_eq!(
+            serde_json::to_string(&params).unwrap(),
+            "{\"comment_filter\":{},\"label_property_timeseries\":false,\"label_timeseries\":false}"
+        )
+    }
+
+    #[test]
+    pub fn test_serialize_statistics_request_params() {
+        let params = StatisticsRequestParams {
+            attribute_filters: vec![AttributeFilter {
+                attribute: Attribute::Labels,
+                filter: AttributeFilterEnum::StringAnyOf {
+                    any_of: vec!["label Name".to_string()],
+                },
+            }],
+            label_property_timeseries: true,
+            label_timeseries: true,
+            time_resolution: Some(TimeResolution::Day),
+            comment_filter: CommentFilter {
+                user_properties: None,
+                reviewed: None,
+                timestamp: Some(CommentTimestampFilter {
+                    minimum: Some(
+                        chrono::Utc
+                            .with_ymd_and_hms(2019, 3, 17, 16, 43, 0)
+                            .unwrap(),
+                    ),
+                    maximum: Some(
+                        chrono::Utc
+                            .with_ymd_and_hms(2020, 3, 17, 13, 33, 15)
+                            .unwrap(),
+                    ),
+                }),
+                ..Default::default()
+            },
+        };
+
+        assert_eq!(
+            serde_json::to_string(&params).unwrap(),
+            r#"{"attribute_filters":[{"attribute":"labels","filter":{"kind":"string_any_of","any_of":["label Name"]}}],"comment_filter":{"timestamp":{"minimum":"2019-03-17T16:43:00Z","maximum":"2020-03-17T13:33:15Z"}},"label_property_timeseries":true,"label_timeseries":true,"time_resolution":"day"}"#
+        )
+    }
+
+    #[test]
+    pub fn test_serialize_user_properties_request_params() {
+        let user_property_filter = UserPropertiesFilter(HashMap::from([(
+            "string:Generation Tag".to_string(),
+            PropertyFilter::new(
+                vec![PropertyValue::String(
+                    "72b01fe7-ef2e-481e-934d-bc2fe0ca9b06".to_string(),
+                )],
+                Vec::new(),
+                Vec::new(),
+            ),
+        )]));
+
+        let params = QueryRequestParams {
+            attribute_filters: Vec::new(),
+            continuation: None,
+            limit: 20,
+            order: OrderEnum::Recent,
+            filter: CommentFilter {
+                reviewed: None,
+                timestamp: None,
+                user_properties: Some(user_property_filter),
+                ..Default::default()
+            },
+        };
+
+        assert_eq!(
+            serde_json::to_string(&params).unwrap(),
+            r#"{"filter":{"user_properties":{"string:Generation Tag":{"one_of":["72b01fe7-ef2e-481e-934d-bc2fe0ca9b06"]}}},"limit":20,"order":{"kind":"recent"}}"#
+        );
+    }
+}
