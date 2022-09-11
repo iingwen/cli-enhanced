@@ -24,4 +24,12 @@ pub struct EmailMetadata {
     pub has_attachments: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub conversation_id: Option<String>,
-    #[serde
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub is_read: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub folder: Option<Vec<String>>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct AttachmentMetadata {
+    pub name:
