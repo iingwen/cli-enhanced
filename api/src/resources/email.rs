@@ -18,4 +18,10 @@ pub struct EmailMetadata {
     pub size: Option<u64>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub categories: Option<Vec<String>>,
-    #[serde(ski
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub importance: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub has_attachments: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub conversation_id: Option<String>,
+    #[serde
