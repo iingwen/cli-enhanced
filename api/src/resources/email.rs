@@ -32,4 +32,15 @@ pub struct EmailMetadata {
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct AttachmentMetadata {
-    pub name:
+    pub name: String,
+    pub size: u64,
+    pub content_type: String,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct NewEmail {
+    pub id: Id,
+    pub mailbox: Mailbox,
+    pub timestamp: DateTime<Utc>,
+    pub mime_content: MimeContent,
+    #[serde(skip_serializing_if = 
