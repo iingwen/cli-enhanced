@@ -43,4 +43,12 @@ pub struct NewEmail {
     pub mailbox: Mailbox,
     pub timestamp: DateTime<Utc>,
     pub mime_content: MimeContent,
-    #[serde(skip_serializing_if = 
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub metadata: Option<EmailMetadata>,
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub attachments: Vec<AttachmentMetadata>,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub(crate) struct PutEmailsRequest<'request> {
+    pub email
