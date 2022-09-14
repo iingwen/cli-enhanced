@@ -61,4 +61,7 @@ pub struct PutEmailsResponse {}
 pub struct Continuation(pub String);
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct EmailsIterPage 
+pub struct EmailsIterPage {
+    pub emails: Vec<NewEmail>,
+    pub continuation: Option<Continuation>,
+}
