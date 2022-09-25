@@ -16,4 +16,10 @@ pub struct EntityDef {
     pub trainable: bool,
 }
 
-#[d
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct NewEntityDef {
+    pub inherits_from: Vec<Id>,
+    pub name: Name,
+    pub title: String,
+    pub trainable: bool,
+}
