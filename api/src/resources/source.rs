@@ -24,4 +24,15 @@ impl FromStr for TransformTag {
     }
 }
 
-#[derive(Debug, Clone, S
+#[derive(Debug, Clone, Serialize, Default)]
+pub struct StatisticsRequestParams {
+    pub comment_filter: CommentFilter,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct Source {
+    pub id: Id,
+    pub owner: Username,
+    pub name: Name,
+    pub title: String,
+    pub description: St
