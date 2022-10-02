@@ -35,4 +35,13 @@ pub struct Source {
     pub owner: Username,
     pub name: Name,
     pub title: String,
-    pub description: St
+    pub description: String,
+    pub language: String,
+    pub should_translate: bool,
+    pub created_at: DateTime<Utc>,
+    pub updated_at: DateTime<Utc>,
+    pub bucket_id: Option<BucketId>,
+
+    #[serde(rename = "_kind")]
+    pub kind: SourceKind,
+    #[serde(default, rename = "email
