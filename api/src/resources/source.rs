@@ -55,4 +55,13 @@ impl Source {
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
-pub struct N
+pub struct Name(pub String);
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
+pub struct FullName(pub String);
+
+impl FromStr for FullName {
+    type Err = Error;
+
+    fn from_str(string: &str) -> Result<Self> {
+        if string.split('/').
