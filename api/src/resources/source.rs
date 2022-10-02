@@ -44,4 +44,15 @@ pub struct Source {
 
     #[serde(rename = "_kind")]
     pub kind: SourceKind,
-    #[serde(default, rename = "email
+    #[serde(default, rename = "email_transform_tag")]
+    pub transform_tag: Option<TransformTag>,
+}
+
+impl Source {
+    pub fn full_name(&self) -> FullName {
+        FullName(format!("{}/{}", self.owner.0, self.name.0))
+    }
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
+pub struct N
