@@ -64,4 +64,15 @@ impl FromStr for FullName {
     type Err = Error;
 
     fn from_str(string: &str) -> Result<Self> {
-        if string.split('/').
+        if string.split('/').count() == 2 {
+            Ok(FullName(string.into()))
+        } else {
+            Err(Error::BadSourceIdentifier {
+                identifier: string.into(),
+            })
+        }
+    }
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
+pub struct Id(pub String);
