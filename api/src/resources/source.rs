@@ -76,3 +76,11 @@ impl FromStr for FullName {
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
 pub struct Id(pub String);
+
+// TODO(mcobzarenco)[3963]: Make `Identifier` into a trait (ensure it still implements
+// `FromStr` so we can take T: Identifier as a clap command line argument).
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
+pub enum Identifier {
+    Id(Id),
+    FullName(FullName),
+}
