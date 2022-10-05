@@ -84,3 +84,18 @@ pub enum Identifier {
     Id(Id),
     FullName(FullName),
 }
+
+impl From<Id> for Identifier {
+    fn from(id: Id) -> Self {
+        Identifier::Id(id)
+    }
+}
+
+impl From<FullName> for Identifier {
+    fn from(full_name: FullName) -> Self {
+        Identifier::FullName(full_name)
+    }
+}
+
+impl<'a> From<&'a Source> for Identifier {
+    fn fro
