@@ -98,4 +98,15 @@ impl From<FullName> for Identifier {
 }
 
 impl<'a> From<&'a Source> for Identifier {
-    fn fro
+    fn from(source: &Source) -> Self {
+        Identifier::FullName(source.full_name())
+    }
+}
+
+impl FromStr for Identifier {
+    type Err = Error;
+
+    fn from_str(string: &str) -> Result<Self> {
+        if string.chars().all(|c| c.is_ascii_hexdigit()) {
+            Ok(Identifier::Id(Id(string.into())))
+  
