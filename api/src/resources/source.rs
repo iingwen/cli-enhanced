@@ -131,4 +131,15 @@ impl Display for Identifier {
 #[derive(Debug, Clone, SerializeDisplay, DeserializeFromStr, PartialEq, Eq, Hash)]
 pub enum SourceKind {
     Call,
-    Ch
+    Chat,
+    Unknown(Box<str>),
+}
+
+impl FromStr for SourceKind {
+    type Err = Error;
+
+    fn from_str(string: &str) -> Result<Self> {
+        Ok(match string {
+            "call" => SourceKind::Call,
+            "chat" => SourceKind::Chat,
+            value => SourceKind::Unknown(v
