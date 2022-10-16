@@ -109,4 +109,15 @@ impl FromStr for Identifier {
     fn from_str(string: &str) -> Result<Self> {
         if string.chars().all(|c| c.is_ascii_hexdigit()) {
             Ok(Identifier::Id(Id(string.into())))
-  
+        } else {
+            FullName::from_str(string).map(Identifier::FullName)
+        }
+    }
+}
+
+impl Display for Identifier {
+    fn fmt(&self, formatter: &mut Formatter<'_>) -> FmtResult {
+        write!(
+            formatter,
+            "{}",
+            match self {
