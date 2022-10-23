@@ -166,4 +166,13 @@ pub struct NewSource<'request> {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub title: Option<&'request str>,
 
-    #[serde(skip_seria
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub description: Option<&'request str>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub language: Option<&'request str>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub should_translate: Option<bool>,
+
+    #[ser
