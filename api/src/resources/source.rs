@@ -175,4 +175,11 @@ pub struct NewSource<'request> {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub should_translate: Option<bool>,
 
-    #[ser
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub bucket_id: Option<BucketId>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub sensitive_properties: Option<Vec<&'request str>>,
+
+    #[serde(skip_serializing_if = "Option::is_none", rename = "_kind")]
+    pub kind: Option<&'request 
