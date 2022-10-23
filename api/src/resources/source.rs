@@ -142,4 +142,17 @@ impl FromStr for SourceKind {
         Ok(match string {
             "call" => SourceKind::Call,
             "chat" => SourceKind::Chat,
-            value => SourceKind::Unknown(v
+            value => SourceKind::Unknown(value.into()),
+        })
+    }
+}
+
+impl Display for SourceKind {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                SourceKind::Call => "call",
+                SourceKind::Chat => "chat",
+   
