@@ -155,4 +155,15 @@ impl Display for SourceKind {
             match self {
                 SourceKind::Call => "call",
                 SourceKind::Chat => "chat",
-   
+                SourceKind::Unknown(value) => value.as_ref(),
+            }
+        )
+    }
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq, Default)]
+pub struct NewSource<'request> {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub title: Option<&'request str>,
+
+    #[serde(skip_seria
