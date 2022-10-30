@@ -213,4 +213,13 @@ pub(crate) struct GetResponse {
 
 #[derive(Debug, Clone, Serialize, PartialEq, Eq, Default)]
 pub struct UpdateSource<'request> {
-    #[serde(skip_serializing_if = "Option::is_none")
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub title: Option<&'request str>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub description: Option<&'request str>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub should_translate: Option<bool>,
+
+    #[serde(skip_serializing_if = "Option::is_
