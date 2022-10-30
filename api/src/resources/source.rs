@@ -203,4 +203,14 @@ pub(crate) struct CreateResponse {
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub(crate) struct GetAvailableResponse {
-    pub sources: Vec<Source
+    pub sources: Vec<Source>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub(crate) struct GetResponse {
+    pub source: Source,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq, Default)]
+pub struct UpdateSource<'request> {
+    #[serde(skip_serializing_if = "Option::is_none")
