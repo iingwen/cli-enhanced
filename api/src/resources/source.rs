@@ -196,4 +196,11 @@ pub(crate) struct CreateRequest<'request> {
     pub source: NewSource<'request>,
 }
 
-#[de
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub(crate) struct CreateResponse {
+    pub source: Source,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub(crate) struct GetAvailableResponse {
+    pub sources: Vec<Source
