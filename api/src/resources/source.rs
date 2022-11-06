@@ -241,4 +241,16 @@ pub(crate) struct UpdateRequest<'request> {
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
-pub(crate
+pub(crate) struct UpdateResponse {
+    pub source: Source,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn source_kind_roundtrips() {
+        assert_eq!(SourceKind::Call, SourceKind::from_str("call").unwrap());
+        assert_eq!(
+            &serde_json::ser::to_stri
