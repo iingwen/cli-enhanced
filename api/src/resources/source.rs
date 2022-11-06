@@ -253,4 +253,12 @@ mod tests {
     fn source_kind_roundtrips() {
         assert_eq!(SourceKind::Call, SourceKind::from_str("call").unwrap());
         assert_eq!(
-            &serde_json::ser::to_stri
+            &serde_json::ser::to_string(&SourceKind::Call).unwrap(),
+            "\"call\""
+        );
+
+        assert_eq!(SourceKind::Chat, SourceKind::from_str("chat").unwrap());
+        assert_eq!(
+            &serde_json::ser::to_string(&SourceKind::Chat).unwrap(),
+            "\"chat\""
+      
