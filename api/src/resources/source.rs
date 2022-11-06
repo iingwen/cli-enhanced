@@ -232,4 +232,13 @@ pub struct UpdateSource<'request> {
         skip_serializing_if = "Option::is_none",
         rename = "email_transform_tag"
     )]
-    pub transform_
+    pub transform_tag: Option<&'request TransformTag>,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq, Default)]
+pub(crate) struct UpdateRequest<'request> {
+    pub source: UpdateSource<'request>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub(crate
