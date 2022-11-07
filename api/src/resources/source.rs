@@ -261,4 +261,13 @@ mod tests {
         assert_eq!(
             &serde_json::ser::to_string(&SourceKind::Chat).unwrap(),
             "\"chat\""
-      
+        );
+    }
+
+    #[test]
+    fn unknown_source_kind_roundtrips() {
+        let kind = SourceKind::from_str("unknown").unwrap();
+        match &kind {
+            SourceKind::Unknown(error) => assert_eq!(&**error, "unknown"),
+            _ => panic!("Expected error to be parsed as Unknown(..)"),
+  
