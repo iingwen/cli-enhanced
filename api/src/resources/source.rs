@@ -270,4 +270,8 @@ mod tests {
         match &kind {
             SourceKind::Unknown(error) => assert_eq!(&**error, "unknown"),
             _ => panic!("Expected error to be parsed as Unknown(..)"),
-  
+        }
+
+        assert_eq!(&serde_json::ser::to_string(&kind).unwrap(), "\"unknown\"")
+    }
+}
