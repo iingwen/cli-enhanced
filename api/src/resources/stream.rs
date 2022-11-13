@@ -147,3 +147,42 @@ pub struct StreamResult {
 }
 
 #[derive(Debug, Clone, Deserialize)]
+pub(crate) struct GetStreamsResponse {
+    pub streams: Vec<Stream>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub(crate) struct GetStreamResponse {
+    pub stream: Stream,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub(crate) struct FetchRequest {
+    pub size: u32,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub(crate) struct AdvanceRequest {
+    pub sequence_id: SequenceId,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub(crate) struct ResetRequest {
+    pub to_comment_created_at: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub(crate) struct TagExceptionsRequest<'request> {
+    pub exceptions: &'request [StreamException<'request>],
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct StreamException<'request> {
+    pub metadata: StreamExceptionMetadata<'request>,
+    pub uid: &'request CommentUid,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct StreamExceptionMetadata<'request> {
+    pub r#type: &'request String,
+}
