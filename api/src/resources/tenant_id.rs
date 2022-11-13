@@ -23,4 +23,22 @@ impl Display for TenantId {
                 TenantId::Reinfer(ReinferTenantId(tenant_id))
                 | TenantId::UiPath(UiPathTenantId(tenant_id)) => tenant_id,
             }
-     
+        )
+    }
+}
+
+impl FromStr for ReinferTenantId {
+    type Err = Error;
+
+    fn from_str(s: &str) -> Result<Self> {
+        Ok(Self(s.to_string()))
+    }
+}
+
+impl FromStr for UiPathTenantId {
+    type Err = Error;
+
+    fn from_str(s: &str) -> Result<Self> {
+        Ok(Self(s.to_string()))
+    }
+}
