@@ -15,4 +15,12 @@ pub enum TenantId {
 }
 
 impl Display for TenantId {
-    fn fmt(&self, f: &m
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                TenantId::Reinfer(ReinferTenantId(tenant_id))
+                | TenantId::UiPath(UiPathTenantId(tenant_id)) => tenant_id,
+            }
+     
