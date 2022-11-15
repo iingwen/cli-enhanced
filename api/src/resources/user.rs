@@ -10,4 +10,13 @@ use std::{
 use super::project::ProjectName;
 use crate::error::{Error, Result};
 
-#[derive(Debug, Clone, Deserializ
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
+pub struct Id(pub String);
+
+impl FromStr for Id {
+    type Err = Error;
+
+    fn from_str(string: &str) -> Result<Self> {
+        if string.chars().all(|c| c.is_ascii_hexdigit()) {
+            Ok(Id(string.into()))
+      
