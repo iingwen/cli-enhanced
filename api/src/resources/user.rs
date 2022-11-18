@@ -33,4 +33,12 @@ pub struct Username(pub String);
 impl FromStr for Username {
     type Err = Error;
 
-    f
+    fn from_str(string: &str) -> Result<Self> {
+        if string
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || c == '_' || c == '-')
+        {
+            Ok(Username(string.into()))
+        } else {
+            Err(Error::BadUserIdentifier {
+                id
