@@ -19,4 +19,18 @@ impl FromStr for Id {
     fn from_str(string: &str) -> Result<Self> {
         if string.chars().all(|c| c.is_ascii_hexdigit()) {
             Ok(Id(string.into()))
-      
+        } else {
+            Err(Error::BadUserIdentifier {
+                identifier: string.into(),
+            })
+        }
+    }
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
+pub struct Username(pub String);
+
+impl FromStr for Username {
+    type Err = Error;
+
+    f
