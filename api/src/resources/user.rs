@@ -41,4 +41,17 @@ impl FromStr for Username {
             Ok(Username(string.into()))
         } else {
             Err(Error::BadUserIdentifier {
-                id
+                identifier: string.into(),
+            })
+        }
+    }
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
+pub struct Email(pub String);
+
+impl FromStr for Email {
+    type Err = Error;
+
+    fn from_str(string: &str) -> Result<Self> {
+        Ok(Email(strin
