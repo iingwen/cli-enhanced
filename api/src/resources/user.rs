@@ -54,4 +54,18 @@ impl FromStr for Email {
     type Err = Error;
 
     fn from_str(string: &str) -> Result<Self> {
-        Ok(Email(strin
+        Ok(Email(string.into()))
+    }
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
+pub enum Identifier {
+    Id(Id),
+}
+
+impl FromStr for Identifier {
+    type Err = Error;
+
+    fn from_str(string: &str) -> Result<Self> {
+        if string.chars().all(|c| c.is_ascii_hexdigit()) {
+            Ok(Ide
