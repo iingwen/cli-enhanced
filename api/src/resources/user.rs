@@ -68,4 +68,17 @@ impl FromStr for Identifier {
 
     fn from_str(string: &str) -> Result<Self> {
         if string.chars().all(|c| c.is_ascii_hexdigit()) {
-            Ok(Ide
+            Ok(Identifier::Id(Id(string.into())))
+        } else {
+            Err(Error::BadUserIdentifier {
+                identifier: string.into(),
+            })
+        }
+    }
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct User {
+    pub id: Id,
+    pub username: Username,
+    p
