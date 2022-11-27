@@ -81,4 +81,10 @@ impl FromStr for Identifier {
 pub struct User {
     pub id: Id,
     pub username: Username,
-    p
+    pub email: Email,
+    #[serde(rename = "created")]
+    pub created_at: DateTime<Utc>,
+    pub global_permissions: HashSet<GlobalPermission>,
+    #[serde(rename = "organisation_permissions")]
+    pub project_permissions: HashMap<ProjectName, HashSet<ProjectPermission>>,
+    pub sso_global_permissions: H
