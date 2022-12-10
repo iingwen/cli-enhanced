@@ -97,4 +97,12 @@ pub struct NewUser<'r> {
     pub email: &'r Email,
     pub global_permissions: &'r [GlobalPermission],
     #[serde(rename = "organisation_permissions")]
- 
+    pub project_permissions: &'r HashMap<ProjectName, HashSet<ProjectPermission>>,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub struct ModifiedPermissions<'r> {
+    #[serde(
+        rename = "organisation_permissions",
+        skip_serializing_if = "HashMap::is_empty"
+  
