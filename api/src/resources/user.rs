@@ -112,4 +112,15 @@ pub struct ModifiedPermissions<'r> {
 }
 
 #[derive(Debug, Clone, Serialize, PartialEq, Eq)]
-pub(crate) struct CreateRequest
+pub(crate) struct CreateRequest<'request> {
+    pub user: NewUser<'request>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub(crate) struct CreateResponse {
+    pub user: User,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub(crate) struct GetAvailableResponse {
+    pub users:
