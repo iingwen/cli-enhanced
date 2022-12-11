@@ -135,3 +135,11 @@ pub(crate) struct GetCurrentResponse {
 pub(crate) struct GetResponse {
     pub user: User,
 }
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub(crate) struct WelcomeEmailResponse {}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
+#[serde(untagged)]
+pub enum ProjectPermission {
+    // TODO(jcalero)[RE-978] There is a bug with the im
