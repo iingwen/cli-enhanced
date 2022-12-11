@@ -123,4 +123,15 @@ pub(crate) struct CreateResponse {
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub(crate) struct GetAvailableResponse {
-    pub users:
+    pub users: Vec<User>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub(crate) struct GetCurrentResponse {
+    pub user: User,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub(crate) struct GetResponse {
+    pub user: User,
+}
