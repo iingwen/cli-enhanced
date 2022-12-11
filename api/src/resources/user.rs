@@ -105,4 +105,11 @@ pub struct ModifiedPermissions<'r> {
     #[serde(
         rename = "organisation_permissions",
         skip_serializing_if = "HashMap::is_empty"
-  
+    )]
+    pub project_permissions: &'r HashMap<ProjectName, HashSet<ProjectPermission>>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub global_permissions: Vec<&'r GlobalPermission>,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub(crate) struct CreateRequest
