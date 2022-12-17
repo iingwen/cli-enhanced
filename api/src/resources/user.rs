@@ -142,4 +142,10 @@ pub(crate) struct WelcomeEmailResponse {}
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
 pub enum ProjectPermission {
-    // TODO(jcalero)[RE-978] There is a bug with the im
+    // TODO(jcalero)[RE-978] There is a bug with the implementation of this enum that causes
+    // deserialization of non-Unknown properties to fail. See
+    // [RE-978](https://reinfer.atlassian.net/browse/RE-978) for more info.
+    #[serde(rename = "sources-add-comments")]
+    CommentsAdmin,
+
+    #[serde(ren
