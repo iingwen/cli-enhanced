@@ -148,4 +148,17 @@ pub enum ProjectPermission {
     #[serde(rename = "sources-add-comments")]
     CommentsAdmin,
 
-    #[serde(ren
+    #[serde(rename = "datasets-admin")]
+    DatasetsAdmin,
+
+    #[serde(rename = "voc")]
+    DatasetsWrite,
+
+    #[serde(rename = "datasets-review")]
+    DatasetsReview,
+
+    #[serde(rename = "voc-readonly")]
+    DatasetsRead,
+
+    #[serde(rename = "datasets-export")]
+    DatasetsEx
