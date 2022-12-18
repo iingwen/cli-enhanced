@@ -173,4 +173,21 @@ pub enum ProjectPermission {
     SourcesRead,
 
     #[serde(rename = "sources-read-sensitive")]
-    SourcesReadSensitive
+    SourcesReadSensitive,
+
+    #[serde(rename = "streams-admin")]
+    StreamsAdmin,
+
+    #[serde(rename = "streams-consume")]
+    StreamsConsume,
+
+    #[serde(rename = "streams-read")]
+    StreamsRead,
+
+    #[serde(rename = "streams-write")]
+    StreamsWrite,
+
+    #[serde(rename = "users-read")]
+    UsersRead,
+
+    #[serde(rename = "users-write")]
