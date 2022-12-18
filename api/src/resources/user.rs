@@ -161,4 +161,16 @@ pub enum ProjectPermission {
     DatasetsRead,
 
     #[serde(rename = "datasets-export")]
-    DatasetsEx
+    DatasetsExport,
+
+    #[serde(rename = "sources-admin")]
+    SourcesAdmin,
+
+    #[serde(rename = "sources-translate")]
+    SourcesTranslate,
+
+    #[serde(rename = "sources-read")]
+    SourcesRead,
+
+    #[serde(rename = "sources-read-sensitive")]
+    SourcesReadSensitive
