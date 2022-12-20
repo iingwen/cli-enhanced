@@ -191,3 +191,18 @@ pub enum ProjectPermission {
     UsersRead,
 
     #[serde(rename = "users-write")]
+    UsersWrite,
+
+    #[serde(rename = "buckets-read")]
+    BucketsRead,
+
+    #[serde(rename = "buckets-write")]
+    BucketsWrite,
+
+    #[serde(rename = "buckets-append")]
+    BucketsAppend,
+
+    #[serde(rename = "files-write")]
+    FilesWrite,
+
+    #[serde(rename = "
