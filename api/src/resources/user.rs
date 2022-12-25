@@ -229,4 +229,18 @@ impl FromStr for ProjectPermission {
                 permission: string.into(),
             }
         })
-    
+    }
+}
+
+#[derive(Debug, Clone, DeserializeFromStr, SerializeDisplay, PartialEq, Eq, Hash)]
+pub enum GlobalPermission {
+    Root,
+    Debug,
+    Demo,
+    SubscriptionsRead,
+    ArtefactsRead,
+    LegacyDialog,
+    SupportTenantAdmin,
+    SupportUsersWrite,
+    DeploymentQuotaWrite,
+    T
