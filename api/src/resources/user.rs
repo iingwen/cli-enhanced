@@ -205,4 +205,19 @@ pub enum ProjectPermission {
     #[serde(rename = "files-write")]
     FilesWrite,
 
-    #[serde(rename = "
+    #[serde(rename = "appliance-config-read")]
+    ApplianceConfigRead,
+
+    #[serde(rename = "appliance-config-write")]
+    ApplianceConfigWrite,
+
+    #[serde(rename = "integrations-read")]
+    IntegrationsRead,
+
+    #[serde(rename = "integrations-write")]
+    IntegrationsWrite,
+
+    Unknown(Box<str>),
+}
+
+impl Fr
