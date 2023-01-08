@@ -243,4 +243,13 @@ pub enum GlobalPermission {
     SupportTenantAdmin,
     SupportUsersWrite,
     DeploymentQuotaWrite,
-    T
+    TenantAdmin,
+    TenantQuotaWrite,
+    Unknown(Box<str>),
+}
+
+const ROOT_AS_STR: &str = "root";
+const DEBUG_AS_STR: &str = "debug";
+const DEMO_AS_STR: &str = "demo";
+const SUBSCRIPTIONS_READ_AS_STR: &str = "subscriptions-read";
+const ARTEFACTS_READ_AS_STR: &str = "artefacts-re
