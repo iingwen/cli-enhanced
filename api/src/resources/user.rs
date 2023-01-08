@@ -257,4 +257,12 @@ const LEGACY_DIALOG_AS_STR: &str = "dialog";
 const SUPPORT_TENANT_ADMIN_AS_STR: &str = "support-tenant-admin";
 const SUPPORT_USERS_WRITE_AS_STR: &str = "support-users-write";
 const DEPLOYMENT_QUOTA_WRITE_AS_STR: &str = "deployment-quota-write";
-const T
+const TENANT_ADMIN_AS_STR: &str = "tenant-admin";
+const TENANT_QUOTA_WRITE_AS_STR: &str = "tenant-quota-write";
+
+impl FromStr for GlobalPermission {
+    type Err = Error;
+
+    fn from_str(string: &str) -> Result<Self> {
+        Ok(match string {
+            ROOT_AS_STR => GlobalPerm
