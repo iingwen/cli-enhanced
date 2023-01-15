@@ -270,4 +270,8 @@ impl FromStr for GlobalPermission {
             DEMO_AS_STR => GlobalPermission::Demo,
             SUBSCRIPTIONS_READ_AS_STR => GlobalPermission::SubscriptionsRead,
             ARTEFACTS_READ_AS_STR => GlobalPermission::ArtefactsRead,
-            LEGACY_DIALOG
+            LEGACY_DIALOG_AS_STR => GlobalPermission::LegacyDialog,
+            SUPPORT_TENANT_ADMIN_AS_STR => GlobalPermission::SupportTenantAdmin,
+            SUPPORT_USERS_WRITE_AS_STR => GlobalPermission::SupportUsersWrite,
+            TENANT_ADMIN_AS_STR => GlobalPermission::TenantAdmin,
+            TENAN
