@@ -274,4 +274,12 @@ impl FromStr for GlobalPermission {
             SUPPORT_TENANT_ADMIN_AS_STR => GlobalPermission::SupportTenantAdmin,
             SUPPORT_USERS_WRITE_AS_STR => GlobalPermission::SupportUsersWrite,
             TENANT_ADMIN_AS_STR => GlobalPermission::TenantAdmin,
-            TENAN
+            TENANT_QUOTA_WRITE_AS_STR => GlobalPermission::TenantQuotaWrite,
+            DEPLOYMENT_QUOTA_WRITE_AS_STR => GlobalPermission::DeploymentQuotaWrite,
+            value => GlobalPermission::Unknown(value.into()),
+        })
+    }
+}
+
+impl Display for GlobalPermission {
+   
