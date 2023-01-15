@@ -265,4 +265,9 @@ impl FromStr for GlobalPermission {
 
     fn from_str(string: &str) -> Result<Self> {
         Ok(match string {
-            ROOT_AS_STR => GlobalPerm
+            ROOT_AS_STR => GlobalPermission::Root,
+            DEBUG_AS_STR => GlobalPermission::Debug,
+            DEMO_AS_STR => GlobalPermission::Demo,
+            SUBSCRIPTIONS_READ_AS_STR => GlobalPermission::SubscriptionsRead,
+            ARTEFACTS_READ_AS_STR => GlobalPermission::ArtefactsRead,
+            LEGACY_DIALOG
