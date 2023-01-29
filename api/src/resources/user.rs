@@ -293,4 +293,8 @@ impl Display for GlobalPermission {
                 GlobalPermission::SubscriptionsRead => SUBSCRIPTIONS_READ_AS_STR,
                 GlobalPermission::ArtefactsRead => ARTEFACTS_READ_AS_STR,
                 GlobalPermission::LegacyDialog => LEGACY_DIALOG_AS_STR,
-                GlobalPermission::SupportTenantAdmin =>
+                GlobalPermission::SupportTenantAdmin => SUPPORT_TENANT_ADMIN_AS_STR,
+                GlobalPermission::SupportUsersWrite => SUPPORT_USERS_WRITE_AS_STR,
+                GlobalPermission::TenantAdmin => TENANT_ADMIN_AS_STR,
+                GlobalPermission::TenantQuotaWrite => TENANT_QUOTA_WRITE_AS_STR,
+                GlobalPermission
