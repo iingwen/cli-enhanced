@@ -290,4 +290,7 @@ impl Display for GlobalPermission {
                 GlobalPermission::Root => ROOT_AS_STR,
                 GlobalPermission::Debug => DEBUG_AS_STR,
                 GlobalPermission::Demo => DEMO_AS_STR,
-   
+                GlobalPermission::SubscriptionsRead => SUBSCRIPTIONS_READ_AS_STR,
+                GlobalPermission::ArtefactsRead => ARTEFACTS_READ_AS_STR,
+                GlobalPermission::LegacyDialog => LEGACY_DIALOG_AS_STR,
+                GlobalPermission::SupportTenantAdmin =>
