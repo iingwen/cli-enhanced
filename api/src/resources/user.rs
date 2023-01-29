@@ -297,4 +297,13 @@ impl Display for GlobalPermission {
                 GlobalPermission::SupportUsersWrite => SUPPORT_USERS_WRITE_AS_STR,
                 GlobalPermission::TenantAdmin => TENANT_ADMIN_AS_STR,
                 GlobalPermission::TenantQuotaWrite => TENANT_QUOTA_WRITE_AS_STR,
-                GlobalPermission
+                GlobalPermission::DeploymentQuotaWrite => DEPLOYMENT_QUOTA_WRITE_AS_STR,
+                GlobalPermission::Unknown(value) => value.as_ref(),
+            }
+        )
+    }
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq, Deserialize)]
+pub struct UpdateUser {
+    #[serde(skip_serializing_if = "Option::is_n
