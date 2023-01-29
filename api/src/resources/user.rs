@@ -282,4 +282,12 @@ impl FromStr for GlobalPermission {
 }
 
 impl Display for GlobalPermission {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                GlobalPermission::Root => ROOT_AS_STR,
+                GlobalPermission::Debug => DEBUG_AS_STR,
+                GlobalPermission::Demo => DEMO_AS_STR,
    
