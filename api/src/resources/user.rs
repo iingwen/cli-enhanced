@@ -314,4 +314,19 @@ pub struct UpdateUser {
 }
 
 #[derive(Debug, Clone, Serialize, PartialEq, Eq)]
-pub(crate) struct PostUs
+pub(crate) struct PostUserRequest<'request> {
+    pub user: &'request UpdateUser,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+pub struct PostUserResponse {
+    pub user: User,
+}
+
+#[cfg(test)]
+mod tests {
+
+    use super::*;
+
+    #[test]
+    fn test_global_permissions_j
