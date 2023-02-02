@@ -306,4 +306,12 @@ impl Display for GlobalPermission {
 
 #[derive(Debug, Clone, Serialize, PartialEq, Eq, Deserialize)]
 pub struct UpdateUser {
-    #[serde(skip_serializing_if = "Option::is_n
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub organisation_permissions: Option<HashMap<ProjectName, Vec<ProjectPermission>>>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub global_permissions: Option<Vec<GlobalPermission>>,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub(crate) struct PostUs
