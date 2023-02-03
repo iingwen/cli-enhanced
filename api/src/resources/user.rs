@@ -336,4 +336,10 @@ mod tests {
             GlobalPermission::Demo,
             GlobalPermission::SubscriptionsRead,
             GlobalPermission::ArtefactsRead,
-            GlobalPermission::LegacyDi
+            GlobalPermission::LegacyDialog,
+            GlobalPermission::SupportTenantAdmin,
+            GlobalPermission::SupportUsersWrite,
+            GlobalPermission::TenantAdmin,
+            GlobalPermission::TenantQuotaWrite,
+            GlobalPermission::DeploymentQuotaWrite,
+            GlobalPermission::Unkno
