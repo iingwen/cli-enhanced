@@ -329,4 +329,11 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_global_permissions_j
+    fn test_global_permissions_json_round_trip() {
+        let global_permissions = vec![
+            GlobalPermission::Root,
+            GlobalPermission::Debug,
+            GlobalPermission::Demo,
+            GlobalPermission::SubscriptionsRead,
+            GlobalPermission::ArtefactsRead,
+            GlobalPermission::LegacyDi
