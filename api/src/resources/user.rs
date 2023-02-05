@@ -342,4 +342,8 @@ mod tests {
             GlobalPermission::TenantAdmin,
             GlobalPermission::TenantQuotaWrite,
             GlobalPermission::DeploymentQuotaWrite,
-            GlobalPermission::Unkno
+            GlobalPermission::Unknown("new-perm".to_string().into_boxed_str()),
+        ];
+        let global_permissions_as_json_str = serde_json::to_string(&global_permissions).unwrap();
+
+        assert_eq!("[\"root\",\"debug\",\"demo\",\"subscriptions-read\",\"artefacts-read\",\"dialog\",\"support-tenant-admin\",\"support-users-write\",
