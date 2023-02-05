@@ -346,4 +346,9 @@ mod tests {
         ];
         let global_permissions_as_json_str = serde_json::to_string(&global_permissions).unwrap();
 
-        assert_eq!("[\"root\",\"debug\",\"demo\",\"subscriptions-read\",\"artefacts-read\",\"dialog\",\"support-tenant-admin\",\"support-users-write\",
+        assert_eq!("[\"root\",\"debug\",\"demo\",\"subscriptions-read\",\"artefacts-read\",\"dialog\",\"support-tenant-admin\",\"support-users-write\",\"tenant-admin\",\"tenant-quota-write\",\"deployment-quota-write\",\"new-perm\"]", global_permissions_as_json_str);
+
+        let global_permissions_from_json_str: Vec<GlobalPermission> =
+            serde_json::from_str(&global_permissions_as_json_str).unwrap();
+
+        assert_eq!(global_perm
