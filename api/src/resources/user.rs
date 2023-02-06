@@ -351,4 +351,10 @@ mod tests {
         let global_permissions_from_json_str: Vec<GlobalPermission> =
             serde_json::from_str(&global_permissions_as_json_str).unwrap();
 
-        assert_eq!(global_perm
+        assert_eq!(global_permissions, global_permissions_from_json_str);
+    }
+    #[test]
+    fn unknown_project_permission_roundtrips() {
+        let unknown_permission = ProjectPermission::from_str("unknown").unwrap();
+        match &unknown_permission {
+            ProjectPermission::Unknown(error) =>
