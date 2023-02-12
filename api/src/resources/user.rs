@@ -369,4 +369,10 @@ mod tests {
 
     #[test]
     #[should_panic]
-    fn specific_
+    fn specific_project_permission_roundtrips() {
+        // TODO(jcalero)[RE-978] This test was written to showcase bug RE-978. It demonstrates that
+        // deserialization of an `ProjectPermission` does not parse correctly.
+        let permission = ProjectPermission::DatasetsRead;
+
+        assert_eq!(
+            &serde_json::ser::to_
