@@ -357,4 +357,16 @@ mod tests {
     fn unknown_project_permission_roundtrips() {
         let unknown_permission = ProjectPermission::from_str("unknown").unwrap();
         match &unknown_permission {
-            ProjectPermission::Unknown(error) =>
+            ProjectPermission::Unknown(error) => assert_eq!(&**error, "unknown"),
+            _ => panic!("Expected error to be parsed as Unknown(..)"),
+        }
+
+        assert_eq!(
+            &serde_json::ser::to_string(&unknown_permission).unwrap(),
+            "\"unknown\""
+        )
+    }
+
+    #[test]
+    #[should_panic]
+    fn specific_
