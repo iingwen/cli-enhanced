@@ -375,4 +375,13 @@ mod tests {
         let permission = ProjectPermission::DatasetsRead;
 
         assert_eq!(
-            &serde_json::ser::to_
+            &serde_json::ser::to_string(&permission).unwrap(),
+            "\"voc-readonly\""
+        )
+    }
+
+    #[test]
+    fn unknown_global_permission_roundtrips() {
+        let unknown_permission = GlobalPermission::from_str("unknown").unwrap();
+        match &unknown_permission {
+            GlobalPermis
