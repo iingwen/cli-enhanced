@@ -1,2 +1,10 @@
 [package]
-na
+name = "reinfer-cli"
+version = "0.26.0"
+description = "Command line interface for Re:infer, the conversational data intelligence platform"
+homepage = "https://github.com/reinfer/cli"
+readme = "README.md"
+authors = ["reinfer Ltd. <eng@reinfer.io>"]
+license = "Apache-2.0"
+edition = "2021"
+autotests = fal
