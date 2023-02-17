@@ -7,4 +7,20 @@ readme = "README.md"
 authors = ["reinfer Ltd. <eng@reinfer.io>"]
 license = "Apache-2.0"
 edition = "2021"
-autotests = fal
+autotests = false
+
+[[bin]]
+name = "re"
+path = "src/main.rs"
+
+[[test]]
+name = "tests"
+
+[dependencies]
+anyhow = "1.0.66"
+chrono = "0.4.22"
+colored = "2.0.0"
+dirs = "4.0.0"
+env_logger = "0.10.0"
+indicatif = "0.17.1"
+log = { version = "0.4.17", default-features = false, features = ["release_
