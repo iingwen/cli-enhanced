@@ -16,4 +16,11 @@ build_and_upload() {
   cargo build --release --target "$target"
 
   # Upload executables if they do not already exist
-  export VERSIONED_GS_PATH="gs://rein
+  export VERSIONED_GS_PATH="gs://reinfer-public/cli/bin/${target}/${CLI_VERSION}/$artefact"
+  export LATEST_GS_PATH="gs://reinfer-public/cli/bin/${target}/latest/$artefact"
+
+  if ! gsutil -q stat "$VERSIONED_GS_PATH"; then
+    gsutil cp "../target/${target}/release/$artefact" "$VERSIONED_GS_PATH"
+  fi
+
+  # TODO (tommmiligan) Disable until we can ove
