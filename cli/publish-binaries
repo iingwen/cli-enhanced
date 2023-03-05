@@ -8,4 +8,12 @@ cd "$(dirname "$0")"
 CLI_VERSION="$(python -c 'import toml; fh = open("Cargo.toml"); data = toml.load(fh); print(data["package"]["version"])')"
 export CLI_VERSION
 
-build_an
+build_and_upload() {
+  local target="$1"
+  local artefact="$2"
+  echo "Building version $CLI_VERSION ($target: $artefact)"
+
+  cargo build --release --target "$target"
+
+  # Upload executables if they do not already exist
+  export VERSIONED_GS_PATH="gs://rein
