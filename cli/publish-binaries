@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+cd "$(dirname "$0")"
+
+# requires toml package (apt-get install python3-toml)
+CLI_VERSION="$(python -c 'import toml; fh = open("Cargo.toml"); data = toml.load(fh); print(data["package"]["version"])')"
+export CLI_VERSION
+
+build_an
