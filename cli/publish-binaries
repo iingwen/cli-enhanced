@@ -23,4 +23,13 @@ build_and_upload() {
     gsutil cp "../target/${target}/release/$artefact" "$VERSIONED_GS_PATH"
   fi
 
-  # TODO (tommmiligan) Disable until we can ove
+  # TODO (tommmiligan) Disable until we can overwrite files from CI
+  # if ! gsutil -q stat "$LATEST_GS_PATH"; then
+  #   gsutil cp "../target/${target}/release/$artefact" "$LATEST_GS_PATH"
+  # fi
+}
+
+case $BUILD_PLATFORM in
+  "ubuntu-20.04")
+    build_and_upload "x86_64-unknown-linux-musl" "re"
+    build_and_upload "x86_64-unknown-linux-gn
