@@ -40,4 +40,11 @@ case $BUILD_PLATFORM in
     cargo deb --output "$LOCAL_DEB_PATH"
 
     export VERSIONED_DEB_PATH="gs://reinfer-public/cli/debian/reinfer-cli_${CLI_VERSION}_amd64.deb"
-    export LA
+    export LATEST_DEB_PATH="gs://reinfer-public/cli/debian/reinfer-cli_latest_amd64.deb"
+
+    if ! gsutil -q stat "$VERSIONED_DEB_PATH"; then
+            gsutil cp "$LOCAL_DEB_PATH" "$VERSIONED_DEB_PATH"
+    fi
+
+    # TODO (tommmiligan) Disable until we can overwrite files from CI
+    # if ! gsutil -q stat "$LATES
