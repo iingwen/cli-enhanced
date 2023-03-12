@@ -47,4 +47,14 @@ case $BUILD_PLATFORM in
     fi
 
     # TODO (tommmiligan) Disable until we can overwrite files from CI
-    # if ! gsutil -q stat "$LATES
+    # if ! gsutil -q stat "$LATEST_DEB_PATH"; then
+    #         gsutil cp "../target/debian/reinfer-cli_${CLI_VERSION}_amd64.deb" "$LATEST_DEB_PATH"
+    # fi
+    ;;
+  "macos-12")
+    build_and_upload "x86_64-apple-darwin" "re"
+    build_and_upload "x86_64-pc-windows-gnu" "re.exe"
+
+    ;;
+  *)
+    >&2 echo "fatal: unknown 
