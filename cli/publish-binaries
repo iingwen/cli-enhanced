@@ -57,4 +57,7 @@ case $BUILD_PLATFORM in
 
     ;;
   *)
-    >&2 echo "fatal: unknown 
+    >&2 echo "fatal: unknown BUILD_PLATFORM '$BUILD_PLATFORM'"
+    exit 1
+    ;;
+esac
