@@ -342,3 +342,18 @@ impl Statistics {
 
 fn basic_statistics(statistics: &Statistics) -> (u64, String) {
     let bytes_read = statistics.bytes_read();
+    let num_annotations = statistics.num_annotations();
+    (
+        bytes_read as u64,
+        format!("{} {}", num_annotations, "annotations".dimmed(),),
+    )
+}
+
+fn progress_bar(total_bytes: u64, statistics: &Arc<Statistics>) -> Progress {
+    Progress::new(
+        basic_statistics,
+        statistics,
+        Some(total_bytes),
+        ProgressOptions { bytes_units: true },
+    )
+}
