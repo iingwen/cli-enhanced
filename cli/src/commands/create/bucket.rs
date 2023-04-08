@@ -6,4 +6,13 @@ use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
 pub struct CreateBucketArgs {
-    #[s
+    #[structopt(name = "bucket-name")]
+    /// Full name of the new bucket <owner>/<name>
+    name: BucketFullName,
+
+    #[structopt(long = "title")]
+    /// Set the title of the new bucket
+    title: Option<String>,
+
+    #[structopt(default_value, long = "type")]
+    /// Set the type of the new bucket. Currently,
