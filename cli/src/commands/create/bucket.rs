@@ -15,4 +15,17 @@ pub struct CreateBucketArgs {
     title: Option<String>,
 
     #[structopt(default_value, long = "type")]
-    /// Set the type of the new bucket. Currently,
+    /// Set the type of the new bucket. Currently, this must be "emails".
+    bucket_type: BucketType,
+}
+
+pub fn create(client: &Client, args: &CreateBucketArgs, printer: &Printer) -> Result<()> {
+    let CreateBucketArgs {
+        name,
+        title,
+        bucket_type,
+    } = args;
+
+    let bucket = client
+        .create_bucket(
+            name
