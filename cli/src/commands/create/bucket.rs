@@ -28,4 +28,13 @@ pub fn create(client: &Client, args: &CreateBucketArgs, printer: &Printer) -> Re
 
     let bucket = client
         .create_bucket(
-            name
+            name,
+            NewBucket {
+                title: title.as_deref(),
+                bucket_type: *bucket_type,
+            },
+        )
+        .context("Operation to create a bucket has failed")?;
+    info!(
+        "New bucket `{}` [id: {}] created successfully",
+     
