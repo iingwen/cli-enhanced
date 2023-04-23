@@ -37,4 +37,9 @@ pub fn create(client: &Client, args: &CreateBucketArgs, printer: &Printer) -> Re
         .context("Operation to create a bucket has failed")?;
     info!(
         "New bucket `{}` [id: {}] created successfully",
-     
+        bucket.full_name(),
+        bucket.id,
+    );
+    printer.print_resources(&[bucket])?;
+    Ok(())
+}
