@@ -10,4 +10,12 @@ use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
 pub struct CreateDatasetArgs {
-    #
+    #[structopt(name = "owner-name/dataset-name")]
+    /// Full name of the new dataset <owner>/<name>
+    name: DatasetFullName,
+
+    #[structopt(long = "title")]
+    /// Set the title of the new dataset
+    title: Option<String>,
+
+    #[structopt(long = "description")
