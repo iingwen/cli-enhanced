@@ -471,3 +471,152 @@ impl AnnotationStatistic for Statistics {
     fn add_annotation(&self) {
         self.annotations.fetch_add(1, Ordering::SeqCst);
     }
+}
+
+impl Statistics {
+    fn new() -> Self {
+        Self {
+            bytes_read: AtomicUsize::new(0),
+            uploaded: AtomicUsize::new(0),
+            new: AtomicUsize::new(0),
+            updated: AtomicUsize::new(0),
+            unchanged: AtomicUsize::new(0),
+            annotations: AtomicUsize::new(0),
+        }
+    }
+
+    #[inline]
+    fn add_bytes_read(&self, bytes_read: usize) {
+        self.bytes_read.fetch_add(bytes_read, Ordering::SeqCst);
+    }
+
+    #[inline]
+    fn add_comments(&self, update: StatisticsUpdate) {
+        self.uploaded.fetch_add(update.uploaded, Ordering::SeqCst);
+        self.new.fetch_add(update.new, Ordering::SeqCst);
+        self.updated.fetch_add(update.updated, Ordering::SeqCst);
+        self.unchanged.fetch_add(update.unchanged, Ordering::SeqCst);
+    }
+
+    #[inline]
+    fn bytes_read(&self) -> usize {
+        self.bytes_read.load(Ordering::SeqCst)
+    }
+
+    #[inline]
+    fn num_uploaded(&self) -> usize {
+        self.uploaded.load(Ordering::SeqCst)
+    }
+
+    #[inline]
+    fn num_new(&self) -> usize {
+        self.new.load(Ordering::SeqCst)
+    }
+
+    #[inline]
+    fn num_updated(&self) -> usize {
+        self.updated.load(Ordering::SeqCst)
+    }
+
+    #[inline]
+    fn num_unchanged(&self) -> usize {
+        self.unchanged.load(Ordering::SeqCst)
+    }
+
+    #[inline]
+    fn num_annotations(&self) -> usize {
+        self.annotations.load(Ordering::SeqCst)
+    }
+}
+
+/// Detailed statistics - only make sense if using --overwrite (i.e. exclusively sync endpoint)
+/// as the PUT endpoint doesn't return any statistics.
+fn detailed_statistics(statistics: &Statistics) -> (u64, String) {
+    let bytes_read = statistics.bytes_read();
+    let num_uploaded = statistics.num_uploaded();
+    let num_new = statistics.num_new();
+    let num_updated = statistics.num_updated();
+    let num_unchanged = statistics.num_unchanged();
+    let num_annotations = statistics.num_annotations();
+    (
+        bytes_read as u64,
+        format!(
+            "{} {}: {} {} {} {} {} {} [{} {}]",
+            num_uploaded.to_string().bold(),
+            "comments".dimmed(),
+            num_new,
+            "new".dimmed(),
+            num_updated,
+            "upd".dimmed(),
+            num_unchanged,
+            "nop".dimmed(),
+            num_annotations,
+            "annotations".dimmed(),
+        ),
+    )
+}
+
+/// Basic statistics always applicable (just counts of quantities sent to the platform).
+fn basic_statistics(statistics: &Statistics) -> (u64, String) {
+    let bytes_read = statistics.bytes_read();
+    let num_uploaded = statistics.num_uploaded();
+    let num_annotations = statistics.num_annotations();
+    (
+        bytes_read as u64,
+        format!(
+            "{} {} [{} {}]",
+            num_uploaded.to_string().bold(),
+            "comments".dimmed(),
+            num_annotations,
+            "annotations".dimmed(),
+        ),
+    )
+}
+
+fn progress_bar(
+    total_bytes: u64,
+    statistics: &Arc<Statistics>,
+    use_detailed_statistics: bool,
+) -> Progress {
+    Progress::new(
+        if use_detailed_statistics {
+            detailed_statistics
+        } else {
+            basic_statistics
+        },
+        statistics,
+        Some(total_bytes),
+        ProgressOptions { bytes_units: true },
+    )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{check_no_duplicate_ids, read_comments_iter, Statistics};
+    use std::io::{BufReader, Cursor};
+
+    const SAMPLE_DUPLICATES: &str = include_str!("../../../tests/samples/duplicates.jsonl");
+
+    #[test]
+    fn test_read_comments_iter() {
+        let reader = BufReader::new(Cursor::new(SAMPLE_DUPLICATES));
+        let statistics = Statistics::new();
+
+        let comments_iter = read_comments_iter(reader, Some(&statistics));
+
+        assert_eq!(comments_iter.count(), 5);
+        assert_eq!(statistics.bytes_read(), SAMPLE_DUPLICATES.len());
+    }
+
+    #[test]
+    fn check_detects_duplicates() {
+        let reader = BufReader::new(Cursor::new(SAMPLE_DUPLICATES));
+        let result = check_no_duplicate_ids(reader);
+
+        assert!(result.is_err());
+        assert!(result
+            .unwrap_err()
+            .to_string()
+            .contains("Duplicate comments with id"));
+    }
+}
