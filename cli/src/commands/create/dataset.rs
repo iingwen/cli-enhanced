@@ -18,4 +18,12 @@ pub struct CreateDatasetArgs {
     /// Set the title of the new dataset
     title: Option<String>,
 
-    #[structopt(long = "description")
+    #[structopt(long = "description")]
+    /// Set the description of the new dataset
+    description: Option<String>,
+
+    #[structopt(
+        long = "has-sentiment",
+        help = "Enable sentiment prediction for the dataset [default: false]"
+    )]
+    /// Enable sentiment prediction for the 
