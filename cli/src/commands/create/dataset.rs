@@ -26,4 +26,12 @@ pub struct CreateDatasetArgs {
         long = "has-sentiment",
         help = "Enable sentiment prediction for the dataset [default: false]"
     )]
-    /// Enable sentiment prediction for the 
+    /// Enable sentiment prediction for the dataset
+    has_sentiment: Option<bool>,
+
+    #[structopt(short = "s", long = "source")]
+    /// Names or ids of the sources in the dataset
+    sources: Vec<SourceIdentifier>,
+
+    #[structopt(short = "e", long = "entity-defs", default_value = "[]")]
+    /// Entity defs to create at
