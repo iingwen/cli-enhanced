@@ -34,4 +34,10 @@ pub struct CreateDatasetArgs {
     sources: Vec<SourceIdentifier>,
 
     #[structopt(short = "e", long = "entity-defs", default_value = "[]")]
-    /// Entity defs to create at
+    /// Entity defs to create at dataset creation, as json
+    entity_defs: VecExt<NewEntityDef>,
+
+    #[structopt(long = "label-defs", default_value = "[]")]
+    /// Label defs to create at dataset creation, as json.
+    /// Only used if label_groups is not provided.
+    label_defs: VecExt<NewLabelDef>
