@@ -40,4 +40,12 @@ pub struct CreateDatasetArgs {
     #[structopt(long = "label-defs", default_value = "[]")]
     /// Label defs to create at dataset creation, as json.
     /// Only used if label_groups is not provided.
-    label_defs: VecExt<NewLabelDef>
+    label_defs: VecExt<NewLabelDef>,
+
+    #[structopt(long = "label-groups", default_value = "[]")]
+    /// Label groups to create at dataset creation, as json
+    label_groups: VecExt<NewLabelGroup>,
+
+    #[structopt(long = "model-family")]
+    /// Model family to use for the new dataset
+    model_family:
