@@ -48,4 +48,12 @@ pub struct CreateDatasetArgs {
 
     #[structopt(long = "model-family")]
     /// Model family to use for the new dataset
-    model_family:
+    model_family: Option<String>,
+
+    /// Dataset ID of the dataset to copy annotations from
+    #[structopt(long = "copy-annotations-from")]
+    copy_annotations_from: Option<String>,
+}
+
+pub fn create(client: &Client, args: &CreateDatasetArgs, printer: &Printer) -> Result<()> {
+    let CreateDatasetArgs {
