@@ -57,3 +57,17 @@ pub struct CreateDatasetArgs {
 
 pub fn create(client: &Client, args: &CreateDatasetArgs, printer: &Printer) -> Result<()> {
     let CreateDatasetArgs {
+        name,
+        title,
+        description,
+        has_sentiment,
+        sources,
+        entity_defs,
+        label_defs,
+        label_groups,
+        model_family,
+        copy_annotations_from,
+    } = args;
+
+    let source_ids = {
+        let mut source_ids = Vec::w
