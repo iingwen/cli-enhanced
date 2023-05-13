@@ -70,4 +70,12 @@ pub fn create(client: &Client, args: &CreateDatasetArgs, printer: &Printer) -> R
     } = args;
 
     let source_ids = {
-        let mut source_ids = Vec::w
+        let mut source_ids = Vec::with_capacity(sources.len());
+        for source in sources.iter() {
+            source_ids.push(
+                client
+                    .get_source(source.clone())
+                    .context("Operation to get source has failed")?
+                    .id,
+            );
+        
