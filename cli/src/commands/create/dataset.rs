@@ -78,4 +78,12 @@ pub fn create(client: &Client, args: &CreateDatasetArgs, printer: &Printer) -> R
                     .context("Operation to get source has failed")?
                     .id,
             );
-        
+        }
+        source_ids
+    };
+
+    // Unwrap the inner values, we only need the outer for argument parsing
+    let entity_defs = &entity_defs.0;
+    let label_groups = &label_groups.0;
+    let label_defs = match (!&label_defs.0.is_empty(), !label_groups.is_empty()) {
+        /
