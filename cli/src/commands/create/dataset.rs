@@ -86,4 +86,12 @@ pub fn create(client: &Client, args: &CreateDatasetArgs, printer: &Printer) -> R
     let entity_defs = &entity_defs.0;
     let label_groups = &label_groups.0;
     let label_defs = match (!&label_defs.0.is_empty(), !label_groups.is_empty()) {
-        /
+        // if we only have label defs, then use them
+        (true, false) => Some(&label_defs.0[..]),
+        // otherwise, we either don't have defs or have groups, so don't use them
+        _ => None,
+    };
+    let dataset = client
+        .create_dataset(
+            name,
+            
