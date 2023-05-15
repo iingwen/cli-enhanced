@@ -99,4 +99,13 @@ pub fn create(client: &Client, args: &CreateDatasetArgs, printer: &Printer) -> R
                 title: title.as_deref(),
                 description: description.as_deref(),
                 has_sentiment: Some(has_sentiment.unwrap_or(false)),
-                entity_defs: if entity_defs.is_em
+                entity_defs: if entity_defs.is_empty() {
+                    None
+                } else {
+                    Some(entity_defs)
+                },
+                label_defs,
+                label_groups: if label_groups.is_empty() {
+                    None
+                } else {
+              
