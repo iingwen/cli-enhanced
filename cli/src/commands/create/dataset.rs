@@ -94,4 +94,9 @@ pub fn create(client: &Client, args: &CreateDatasetArgs, printer: &Printer) -> R
     let dataset = client
         .create_dataset(
             name,
-            
+            NewDataset {
+                source_ids: &source_ids,
+                title: title.as_deref(),
+                description: description.as_deref(),
+                has_sentiment: Some(has_sentiment.unwrap_or(false)),
+                entity_defs: if entity_defs.is_em
