@@ -108,4 +108,12 @@ pub fn create(client: &Client, args: &CreateDatasetArgs, printer: &Printer) -> R
                 label_groups: if label_groups.is_empty() {
                     None
                 } else {
-              
+                    Some(&label_groups[..])
+                },
+                model_family: model_family.as_deref(),
+                copy_annotations_from: copy_annotations_from.as_deref(),
+            },
+        )
+        .context("Operation to create a dataset has failed.")?;
+    info!(
+        "New dataset `{}`
