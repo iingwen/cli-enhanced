@@ -129,4 +129,10 @@ struct VecExt<T>(pub Vec<T>);
 
 /// Utility type for foreign trait interactions.
 ///
-/// For act
+/// For actual api interactions, `Vec<T>` is fine.
+impl<T: serde::de::DeserializeOwned> FromStr for VecExt<T> {
+    type Err = Error;
+
+    fn from_str(string: &str) -> Result<Self> {
+        serde_json::from_str(string).map_err(|source| {
+            // We do a map_err -> anyhow here
