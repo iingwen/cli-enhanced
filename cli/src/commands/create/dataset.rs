@@ -116,4 +116,17 @@ pub fn create(client: &Client, args: &CreateDatasetArgs, printer: &Printer) -> R
         )
         .context("Operation to create a dataset has failed.")?;
     info!(
-        "New dataset `{}`
+        "New dataset `{}` [id: {}] created successfully",
+        dataset.full_name().0,
+        dataset.id.0,
+    );
+    printer.print_resources(&[dataset])?;
+    Ok(())
+}
+
+#[derive(Debug, Deserialize)]
+struct VecExt<T>(pub Vec<T>);
+
+/// Utility type for foreign trait interactions.
+///
+/// For act
