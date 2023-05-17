@@ -135,4 +135,10 @@ impl<T: serde::de::DeserializeOwned> FromStr for VecExt<T> {
 
     fn from_str(string: &str) -> Result<Self> {
         serde_json::from_str(string).map_err(|source| {
-            // We do a map_err -> anyhow here
+            // We do a map_err -> anyhow here, because we need the details inlined
+            // for when the error message is shown on the cli without backtrace
+            anyhow!(
+                "Expected valid json for type. Got: '{}', which failed because: '{}'",
+                string.to_owned(),
+                source
+       
