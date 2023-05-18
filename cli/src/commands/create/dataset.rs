@@ -141,4 +141,7 @@ impl<T: serde::de::DeserializeOwned> FromStr for VecExt<T> {
                 "Expected valid json for type. Got: '{}', which failed because: '{}'",
                 string.to_owned(),
                 source
-       
+            )
+        })
+    }
+}
