@@ -20,3 +20,16 @@ pub struct CreateIntegrationArgs {
     /// Name of the new integration
     name: IntegrationFullName,
 
+    #[structopt(long)]
+    /// Whether to overwrite an existing integration with the same name
+    overwrite: bool,
+}
+
+pub fn create(client: &Client, args: &CreateIntegrationArgs) -> Result<()> {
+    let CreateIntegrationArgs {
+        path,
+        name,
+        overwrite,
+    } = args;
+
+    
