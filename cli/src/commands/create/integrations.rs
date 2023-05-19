@@ -11,4 +11,12 @@ use reinfer_client::{
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
-p
+pub struct CreateIntegrationArgs {
+    #[structopt(short = "f", long = "file", parse(from_os_str))]
+    /// Path to JSON file with integration
+    path: PathBuf,
+
+    #[structopt(name = "name")]
+    /// Name of the new integration
+    name: IntegrationFullName,
+
