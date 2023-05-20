@@ -59,4 +59,12 @@ fn overwrite_integration(
     name: &IntegrationFullName,
     new_integration: &NewIntegration,
     old_integration: &Integration,
-) -> Re
+) -> Result<()> {
+    let old_integration: NewIntegration =
+        serde_json::from_str(&serde_json::to_string(old_integration)?)?;
+
+    if *new_integration == old_integration {
+        bail!("New integration is same as existing integration")
+    }
+
+    let old_json_str = serde_json:
