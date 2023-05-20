@@ -40,4 +40,11 @@ pub fn create(client: &Client, args: &CreateIntegrationArgs) -> Result<()> {
         .retain(|integration| format!("{}/{}", integration.owner.0, integration.name.0) == name.0);
 
     if let Some(existing) = integrations.first() {
-       
+        if *overwrite {
+            overwrite_integration(client, name, &new_integration, existing)?;
+            info!("Updated integration {}", name.0);
+        } else {
+            bail!("Provide the `--overwrite` flag to update an existing integration")
+        }
+    } else {
+        c
