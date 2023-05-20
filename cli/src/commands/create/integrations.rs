@@ -47,4 +47,16 @@ pub fn create(client: &Client, args: &CreateIntegrationArgs) -> Result<()> {
             bail!("Provide the `--overwrite` flag to update an existing integration")
         }
     } else {
-        c
+        client.put_integration(name, &new_integration)?;
+        info!("Created new integration {}", name.0);
+    }
+
+    Ok(())
+}
+
+fn overwrite_integration(
+    client: &Client,
+    name: &IntegrationFullName,
+    new_integration: &NewIntegration,
+    old_integration: &Integration,
+) -> Re
