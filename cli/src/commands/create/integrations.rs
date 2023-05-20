@@ -32,4 +32,12 @@ pub fn create(client: &Client, args: &CreateIntegrationArgs) -> Result<()> {
         overwrite,
     } = args;
 
-    
+    let new_integration = read_integration(path)?;
+
+    let mut integrations = client.get_integrations()?;
+
+    integrations
+        .retain(|integration| format!("{}/{}", integration.owner.0, integration.name.0) == name.0);
+
+    if let Some(existing) = integrations.first() {
+       
