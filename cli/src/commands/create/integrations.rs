@@ -67,4 +67,9 @@ fn overwrite_integration(
         bail!("New integration is same as existing integration")
     }
 
-    let old_json_str = serde_json:
+    let old_json_str = serde_json::to_string_pretty(&old_integration)?;
+    let new_json_str = serde_json::to_string_pretty(&new_integration)?;
+
+    for diff in diff::lines(&old_json_str, &new_json_str) {
+        match diff {
+            diff::Result::Left(l) => println!("{}", forma
