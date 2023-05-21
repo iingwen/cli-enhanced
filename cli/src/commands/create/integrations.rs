@@ -80,4 +80,15 @@ fn overwrite_integration(
 
     if Confirm::new()
         .with_prompt(
-            "Above is a summary of the 
+            "Above is a summary of the changes that are about to made, do you want to continue?",
+        )
+        .interact()?
+    {
+        client.post_integration(name, new_integration)?;
+        Ok(())
+    } else {
+        bail!("Operation aborted by user")
+    }
+}
+
+fn read_integration(path: &PathBuf) 
