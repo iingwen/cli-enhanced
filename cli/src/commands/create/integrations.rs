@@ -91,4 +91,10 @@ fn overwrite_integration(
     }
 }
 
-fn read_integration(path: &PathBuf) 
+fn read_integration(path: &PathBuf) -> Result<NewIntegration> {
+    let integration_str = std::fs::read_to_string(path)
+        .with_context(|| format!("Could not open file `{}`", path.display()))?;
+
+    serde_json::from_str::<NewIntegration>(&integration_str)
+        .with_context(|| "Could not parse integration".to_string())
+}
