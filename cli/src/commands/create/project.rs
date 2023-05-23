@@ -23,4 +23,15 @@ pub struct CreateProjectArgs {
     user_ids: Vec<UserId>,
 }
 
-pub fn create(cl
+pub fn create(client: &Client, args: &CreateProjectArgs, printer: &Printer) -> Result<()> {
+    let CreateProjectArgs {
+        name,
+        title,
+        description,
+        user_ids,
+    } = args;
+
+    let project = client
+        .create_project(
+            name,
+            NewProject 
