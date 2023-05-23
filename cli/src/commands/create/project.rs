@@ -14,4 +14,13 @@ pub struct CreateProjectArgs {
     /// Set the title of the new project
     title: Option<String>,
 
-    #[structo
+    #[structopt(long = "description")]
+    /// Set the description of the new project
+    description: Option<String>,
+
+    #[structopt(long = "user-ids", required = true)]
+    /// The ids of users to be given initial control of the new project
+    user_ids: Vec<UserId>,
+}
+
+pub fn create(cl
