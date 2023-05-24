@@ -41,4 +41,7 @@ pub fn create(client: &Client, args: &CreateProjectArgs, printer: &Printer) -> R
             user_ids,
         )
         .context("Operation to create a project has failed")?;
-    info!("New project `{}` created successfully", project.name.0,)
+    info!("New project `{}` created successfully", project.name.0,);
+    printer.print_resources(&[project])?;
+    Ok(())
+}
