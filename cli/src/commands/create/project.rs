@@ -34,4 +34,11 @@ pub fn create(client: &Client, args: &CreateProjectArgs, printer: &Printer) -> R
     let project = client
         .create_project(
             name,
-            NewProject 
+            NewProject {
+                title: title.as_deref(),
+                description: description.as_deref(),
+            },
+            user_ids,
+        )
+        .context("Operation to create a project has failed")?;
+    info!("New project `{}` created successfully", project.name.0,)
