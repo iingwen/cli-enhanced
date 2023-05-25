@@ -17,4 +17,13 @@ pub struct CreateStreamExceptionArgs {
     r#type: String,
 
     #[structopt(long = "uid")]
-    /
+    /// The uid of the comment that should be tagged as an exception.
+    uid: CommentUid,
+}
+
+pub fn create(client: &Client, args: &CreateStreamExceptionArgs, _printer: &Printer) -> Result<()> {
+    let CreateStreamExceptionArgs {
+        stream,
+        r#type,
+        uid,
+    } 
