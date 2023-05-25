@@ -26,4 +26,15 @@ pub fn create(client: &Client, args: &CreateStreamExceptionArgs, _printer: &Prin
         stream,
         r#type,
         uid,
-    } 
+    } = args;
+
+    client
+        .tag_stream_exceptions(
+            stream,
+            &[StreamException {
+                metadata: StreamExceptionMetadata { r#type },
+                uid,
+            }],
+        )
+        .context("Operation to create a stream exception has failed")?;
+    info!("Ne
