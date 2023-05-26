@@ -37,4 +37,6 @@ pub fn create(client: &Client, args: &CreateStreamExceptionArgs, _printer: &Prin
             }],
         )
         .context("Operation to create a stream exception has failed")?;
-    info!("Ne
+    info!("New stream exception created successfully");
+    Ok(())
+}
