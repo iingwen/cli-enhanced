@@ -13,4 +13,13 @@ pub struct CreateUserArgs {
     /// Username for the new user
     username: Username,
 
-    #[structopt(name = "e
+    #[structopt(name = "email")]
+    /// Email address of the new user
+    email: Email,
+
+    #[structopt(long = "global-permissions")]
+    /// Global permissions to give to the new user
+    global_permissions: Vec<GlobalPermission>,
+
+    #[structopt(short = "p", long = "project")]
+   
