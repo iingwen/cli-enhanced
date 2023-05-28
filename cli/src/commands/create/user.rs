@@ -22,4 +22,11 @@ pub struct CreateUserArgs {
     global_permissions: Vec<GlobalPermission>,
 
     #[structopt(short = "p", long = "project")]
-   
+    /// Add the user to this project with the permissions provided with --project-permissions
+    project: Option<ProjectName>,
+
+    #[structopt(long = "project-permissions")]
+    /// Project permissions, required if --project is used
+    project_permissions_list: Vec<ProjectPermission>,
+
+    #[structopt(short = "w", long = "send-welc
