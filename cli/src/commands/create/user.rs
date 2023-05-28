@@ -29,4 +29,15 @@ pub struct CreateUserArgs {
     /// Project permissions, required if --project is used
     project_permissions_list: Vec<ProjectPermission>,
 
-    #[structopt(short = "w", long = "send-welc
+    #[structopt(short = "w", long = "send-welcome-email")]
+    /// Send the user a welcome email
+    send_welcome_email: bool,
+}
+
+pub fn create(client: &Client, args: &CreateUserArgs, printer: &Printer) -> Result<()> {
+    let CreateUserArgs {
+        username,
+        email,
+        global_permissions,
+        project,
+        pro
