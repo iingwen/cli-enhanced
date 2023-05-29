@@ -40,4 +40,10 @@ pub fn create(client: &Client, args: &CreateUserArgs, printer: &Printer) -> Resu
         email,
         global_permissions,
         project,
-        pro
+        project_permissions_list,
+        send_welcome_email,
+    } = args;
+
+    let project_permissions = match (project, project_permissions_list) {
+        (Some(project), permissions) if !permissions.is_empty() => maplit::hashmap!(
+            project.clone() => permissions.iter()
