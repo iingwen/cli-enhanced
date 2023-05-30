@@ -53,4 +53,16 @@ pub fn create(client: &Client, args: &CreateUserArgs, printer: &Printer) -> Resu
             anyhow::bail!(
                 "Arguments `--project` and `--project-permissions` have to be both specified or neither"
             );
-      
+        }
+    };
+
+    let user = client
+        .create_user(NewUser {
+            username,
+            email,
+            global_permissions,
+            project_permissions: &project_permissions,
+        })
+        .context("Operation to create a user has failed")?;
+    log::info!(
+        "New user `{}` with email `{}` [id: {}] cre
