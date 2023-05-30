@@ -65,4 +65,14 @@ pub fn create(client: &Client, args: &CreateUserArgs, printer: &Printer) -> Resu
         })
         .context("Operation to create a user has failed")?;
     log::info!(
-        "New user `{}` with email `{}` [id: {}] cre
+        "New user `{}` with email `{}` [id: {}] created successfully",
+        user.username.0,
+        user.email.0,
+        user.id.0
+    );
+
+    if *send_welcome_email {
+        client
+            .send_welcome_email(user.id.clone())
+            .context("Operation to send welcome email failed")?;
+        log::info!("Welcome email sent for user '{}'
