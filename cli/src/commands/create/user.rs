@@ -46,4 +46,11 @@ pub fn create(client: &Client, args: &CreateUserArgs, printer: &Printer) -> Resu
 
     let project_permissions = match (project, project_permissions_list) {
         (Some(project), permissions) if !permissions.is_empty() => maplit::hashmap!(
-            project.clone() => permissions.iter()
+            project.clone() => permissions.iter().cloned().collect()
+        ),
+        (None, permissions) if permissions.is_empty() => HashMap::new(),
+        _ => {
+            anyhow::bail!(
+                "Arguments `--project` and `--project-permissions` have to be both specified or neither"
+            );
+      
