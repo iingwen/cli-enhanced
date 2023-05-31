@@ -17,4 +17,15 @@ use crate::progress::{Options as ProgressOptions, Progress};
 
 #[derive(Debug, StructOpt)]
 pub enum DeleteArgs {
-    #[str
+    #[structopt(name = "source")]
+    /// Delete a source
+    Source {
+        #[structopt(name = "source")]
+        /// Name or id of the source to delete
+        source: SourceIdentifier,
+    },
+
+    #[structopt(name = "comments")]
+    /// Delete comments by id in a source.
+    Comments {
+ 
