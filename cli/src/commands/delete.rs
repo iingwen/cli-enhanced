@@ -28,4 +28,13 @@ pub enum DeleteArgs {
     #[structopt(name = "comments")]
     /// Delete comments by id in a source.
     Comments {
- 
+        #[structopt(short = "s", long = "source")]
+        /// Name or id of the source to delete comments from
+        source: SourceIdentifier,
+
+        #[structopt(name = "comment id")]
+        /// Ids of the comments to delete
+        comments: Vec<CommentId>,
+    },
+
+    #[structop
