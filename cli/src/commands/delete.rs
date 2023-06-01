@@ -37,4 +37,12 @@ pub enum DeleteArgs {
         comments: Vec<CommentId>,
     },
 
-    #[structop
+    #[structopt(name = "bulk")]
+    /// Delete all comments in a given time range.
+    BulkComments {
+        #[structopt(short = "s", long = "source")]
+        /// Name or id of the source to delete comments from
+        source: SourceIdentifier,
+
+        #[structopt(long, parse(try_from_str))]
+      
