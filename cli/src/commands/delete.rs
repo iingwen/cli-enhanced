@@ -45,4 +45,10 @@ pub enum DeleteArgs {
         source: SourceIdentifier,
 
         #[structopt(long, parse(try_from_str))]
-      
+        /// Whether to delete comments that are annotated in any of the datasets
+        /// containing this source.
+        /// Use --include-annotated=false to keep any annotated comments in the given range.
+        /// Use --include-annotated=true to delete all comments.
+        include_annotated: bool,
+
+        #[
