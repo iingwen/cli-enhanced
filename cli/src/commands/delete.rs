@@ -57,4 +57,16 @@ pub enum DeleteArgs {
         from_timestamp: Option<DateTime<Utc>>,
 
         #[structopt(long)]
-        /// Ending timestamp for comments to delete (inclusi
+        /// Ending timestamp for comments to delete (inclusive). Should be in
+        /// RFC 3339 format, e.g. 1970-01-02T03:04:05Z
+        to_timestamp: Option<DateTime<Utc>>,
+
+        #[structopt(long)]
+        /// Don't display a progress bar
+        no_progress: bool,
+    },
+
+    #[structopt(name = "bucket")]
+    /// Delete a bucket
+    Bucket {
+   
