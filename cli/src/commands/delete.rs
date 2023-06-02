@@ -51,4 +51,10 @@ pub enum DeleteArgs {
         /// Use --include-annotated=true to delete all comments.
         include_annotated: bool,
 
-        #[
+        #[structopt(long)]
+        /// Starting timestamp for comments to delete (inclusive). Should be in
+        /// RFC 3339 format, e.g. 1970-01-02T03:04:05Z
+        from_timestamp: Option<DateTime<Utc>>,
+
+        #[structopt(long)]
+        /// Ending timestamp for comments to delete (inclusi
