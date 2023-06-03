@@ -103,4 +103,10 @@ pub enum DeleteArgs {
     },
 }
 
-pub fn run(d
+pub fn run(delete_args: &DeleteArgs, client: Client) -> Result<()> {
+    match delete_args {
+        DeleteArgs::Source { source } => {
+            client
+                .delete_source(source.clone())
+                .context("Operation to delete source has failed.")?;
+            log::info!("Deleted
