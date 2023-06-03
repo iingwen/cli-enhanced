@@ -69,4 +69,14 @@ pub enum DeleteArgs {
     #[structopt(name = "bucket")]
     /// Delete a bucket
     Bucket {
-   
+        #[structopt(name = "bucket")]
+        /// Name or id of the bucket to delete
+        bucket: BucketIdentifier,
+    },
+
+    #[structopt(name = "dataset")]
+    /// Delete a dataset
+    Dataset {
+        #[structopt(name = "dataset")]
+        /// Name or id of the dataset to delete
+        dataset: DatasetIde
