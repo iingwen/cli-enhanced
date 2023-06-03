@@ -92,4 +92,15 @@ pub enum DeleteArgs {
 
     #[structopt(name = "project")]
     /// Delete a project
-    Projec
+    Project {
+        #[structopt(name = "project")]
+        /// Name or id of the project to delete
+        project: ProjectName,
+
+        #[structopt(long)]
+        /// Force deletion of the project, even if it's not empty.
+        force: bool,
+    },
+}
+
+pub fn run(d
