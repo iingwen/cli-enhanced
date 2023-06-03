@@ -79,4 +79,17 @@ pub enum DeleteArgs {
     Dataset {
         #[structopt(name = "dataset")]
         /// Name or id of the dataset to delete
-        dataset: DatasetIde
+        dataset: DatasetIdentifier,
+    },
+
+    #[structopt(name = "user")]
+    /// Delete a user
+    User {
+        #[structopt(name = "user")]
+        /// Username or id of the user to delete
+        user: UserIdentifier,
+    },
+
+    #[structopt(name = "project")]
+    /// Delete a project
+    Projec
