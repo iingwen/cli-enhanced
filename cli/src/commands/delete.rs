@@ -109,4 +109,12 @@ pub fn run(delete_args: &DeleteArgs, client: Client) -> Result<()> {
             client
                 .delete_source(source.clone())
                 .context("Operation to delete source has failed.")?;
-            log::info!("Deleted
+            log::info!("Deleted source.");
+        }
+        DeleteArgs::User { user } => {
+            client
+                .delete_user(user.clone())
+                .context("Operation to delete user has failed.")?;
+            log::info!("Deleted user.");
+        }
+        DeleteArgs::Comments { source, comm
