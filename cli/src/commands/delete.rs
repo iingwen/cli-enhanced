@@ -125,4 +125,12 @@ pub fn run(delete_args: &DeleteArgs, client: Client) -> Result<()> {
         }
         DeleteArgs::BulkComments {
             source: source_identifier,
-            includ
+            include_annotated,
+            from_timestamp,
+            to_timestamp,
+            no_progress,
+        } => {
+            let source = client.get_source(source_identifier.clone())?;
+            let show_progress = !no_progress;
+            delete_comments_in_period(
+           
