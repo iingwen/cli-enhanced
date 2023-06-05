@@ -142,4 +142,10 @@ pub fn run(delete_args: &DeleteArgs, client: Client) -> Result<()> {
                 },
                 show_progress,
             )
-  
+            .context("Operation to delete comments has failed.")?;
+        }
+        DeleteArgs::Dataset { dataset } => {
+            client
+                .delete_dataset(dataset.clone())
+                .context("Operation to delete dataset has failed.")?;
+            log::info
