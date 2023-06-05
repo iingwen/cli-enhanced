@@ -133,4 +133,13 @@ pub fn run(delete_args: &DeleteArgs, client: Client) -> Result<()> {
             let source = client.get_source(source_identifier.clone())?;
             let show_progress = !no_progress;
             delete_comments_in_period(
-           
+                &client,
+                source,
+                *include_annotated,
+                CommentsIterTimerange {
+                    from: *from_timestamp,
+                    to: *to_timestamp,
+                },
+                show_progress,
+            )
+  
