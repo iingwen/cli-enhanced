@@ -117,4 +117,12 @@ pub fn run(delete_args: &DeleteArgs, client: Client) -> Result<()> {
                 .context("Operation to delete user has failed.")?;
             log::info!("Deleted user.");
         }
-        DeleteArgs::Comments { source, comm
+        DeleteArgs::Comments { source, comments } => {
+            client
+                .delete_comments(source.clone(), comments)
+                .context("Operation to delete comments has failed.")?;
+            log::info!("Deleted comments.");
+        }
+        DeleteArgs::BulkComments {
+            source: source_identifier,
+            includ
