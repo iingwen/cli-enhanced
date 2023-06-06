@@ -148,4 +148,12 @@ pub fn run(delete_args: &DeleteArgs, client: Client) -> Result<()> {
             client
                 .delete_dataset(dataset.clone())
                 .context("Operation to delete dataset has failed.")?;
-            log::info
+            log::info!("Deleted dataset.");
+        }
+        DeleteArgs::Bucket { bucket } => {
+            client
+                .delete_bucket(bucket.clone())
+                .context("Operation to delete bucket has failed.")?;
+            log::info!("Deleted bucket.");
+        }
+        DeleteArgs::Project { project
