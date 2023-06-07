@@ -164,4 +164,17 @@ pub fn run(delete_args: &DeleteArgs, client: Client) -> Result<()> {
             };
             client
                 .delete_project(project, force_delete)
-                .context("Operation to delete project has 
+                .context("Operation to delete project has failed.")?;
+            log::info!("Deleted project.");
+        }
+    };
+    Ok(())
+}
+
+fn delete_comments_in_period(
+    client: &Client,
+    source: Source,
+    include_annotated: bool,
+    timerange: CommentsIterTimerange,
+    show_progress: bool,
+) -> Res
