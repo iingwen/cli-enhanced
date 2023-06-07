@@ -156,4 +156,12 @@ pub fn run(delete_args: &DeleteArgs, client: Client) -> Result<()> {
                 .context("Operation to delete bucket has failed.")?;
             log::info!("Deleted bucket.");
         }
-        DeleteArgs::Project { project
+        DeleteArgs::Project { project, force } => {
+            let force_delete = if *force {
+                ForceDeleteProject::Yes
+            } else {
+                ForceDeleteProject::No
+            };
+            client
+                .delete_project(project, force_delete)
+                .context("Operation to delete project has 
