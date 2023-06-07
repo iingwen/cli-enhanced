@@ -177,4 +177,10 @@ fn delete_comments_in_period(
     include_annotated: bool,
     timerange: CommentsIterTimerange,
     show_progress: bool,
-) -> Res
+) -> Result<()> {
+    log::info!(
+        "Deleting comments in source `{}`{} (include-annotated: {})",
+        source.full_name().0,
+        match (timerange.from, timerange.to) {
+            (None, None) => "".into(),
+            (Some(start), None) => format!(
