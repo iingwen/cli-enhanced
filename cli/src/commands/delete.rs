@@ -202,4 +202,11 @@ fn delete_comments_in_period(
         // This is the maximum number of comments which the API permits deleting in a single call.
         const DELETION_BATCH_SIZE: usize = 32;
         // Buffer to store comment IDs to delete - allow it to be slightly larger than the deletion
-        // batch size so that if there's an incomplete page it'll increase th
+        // batch size so that if there's an incomplete page it'll increase the counts.
+        let mut comments_to_delete =
+            Vec::with_capacity(DELETION_BATCH_SIZE + CommentsIter::MAX_PAGE_SIZE);
+
+        let delete_batch = |comment_ids: Vec<CommentId>| -> Result<()> {
+            client
+                .delete_comments(&source, &comment_ids)
+                
