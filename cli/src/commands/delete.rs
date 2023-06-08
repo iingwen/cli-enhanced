@@ -209,4 +209,13 @@ fn delete_comments_in_period(
         let delete_batch = |comment_ids: Vec<CommentId>| -> Result<()> {
             client
                 .delete_comments(&source, &comment_ids)
-                
+                .context("Operation to delete comments failed")?;
+            statistics.increment_deleted(comment_ids.len());
+            Ok(())
+        };
+
+        client
+            .get_comments_iter(
+                &source.full_name(),
+                Some(CommentsIter::MAX_PAGE_SIZE),
+                tim
