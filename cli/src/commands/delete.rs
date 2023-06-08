@@ -191,4 +191,12 @@ fn delete_comments_in_period(
     );
     let statistics = Arc::new(Statistics::new());
     {
-        // 
+        // Deleting comments in a block to ensure `_progress` is dropped before
+        // logging any further
+        let _progress = if show_progress {
+            Some(delete_comments_progress_bar(&statistics))
+        } else {
+            None
+        };
+
+        // This is the maximum number of
