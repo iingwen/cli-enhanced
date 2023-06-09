@@ -218,4 +218,11 @@ fn delete_comments_in_period(
             .get_comments_iter(
                 &source.full_name(),
                 Some(CommentsIter::MAX_PAGE_SIZE),
-                tim
+                timerange,
+            )
+            .try_for_each(|page| -> Result<()> {
+                let page = page.context("Operation to get comments failed")?;
+                let num_comments = page.len();
+                let comment_ids = page
+                    .into_iter()
+                    .filter_map(|comment| 
