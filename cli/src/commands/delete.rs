@@ -234,4 +234,9 @@ fn delete_comments_in_period(
                     })
                     .collect::<Vec<_>>();
 
-         
+                let num_skipped = num_comments - comment_ids.len();
+                statistics.increment_skipped(num_skipped);
+
+                comments_to_delete.extend(comment_ids);
+                while comments_to_delete.len() >= DELETION_BATCH_SIZE {
+       
