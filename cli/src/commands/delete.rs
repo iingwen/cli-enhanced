@@ -245,4 +245,11 @@ fn delete_comments_in_period(
                 Ok(())
             })?;
 
-        // Delete 
+        // Delete any comments left over in any potential last partial batch.
+        if !comments_to_delete.is_empty() {
+            assert!(comments_to_delete.len() < DELETION_BATCH_SIZE);
+            delete_batch(comments_to_delete)?;
+        }
+    }
+    log::info!(
+        "D
