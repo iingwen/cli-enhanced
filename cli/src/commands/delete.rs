@@ -225,4 +225,13 @@ fn delete_comments_in_period(
                 let num_comments = page.len();
                 let comment_ids = page
                     .into_iter()
-                    .filter_map(|comment| 
+                    .filter_map(|comment| {
+                        if !include_annotated && comment.has_annotations {
+                            None
+                        } else {
+                            Some(comment.id)
+                        }
+                    })
+                    .collect::<Vec<_>>();
+
+         
