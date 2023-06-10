@@ -239,4 +239,10 @@ fn delete_comments_in_period(
 
                 comments_to_delete.extend(comment_ids);
                 while comments_to_delete.len() >= DELETION_BATCH_SIZE {
-       
+                    let remainder = comments_to_delete.split_off(DELETION_BATCH_SIZE);
+                    delete_batch(std::mem::replace(&mut comments_to_delete, remainder))?;
+                }
+                Ok(())
+            })?;
+
+        // Delete 
