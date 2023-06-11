@@ -252,4 +252,20 @@ fn delete_comments_in_period(
         }
     }
     log::info!(
-        "D
+        "Deleted {} comments (skipped {}).",
+        statistics.deleted(),
+        statistics.skipped()
+    );
+    Ok(())
+}
+
+#[derive(Debug)]
+pub struct Statistics {
+    deleted: AtomicUsize,
+    skipped: AtomicUsize,
+}
+
+impl Statistics {
+    fn new() -> Self {
+        Self {
+   
