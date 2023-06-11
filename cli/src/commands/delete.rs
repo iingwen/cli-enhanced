@@ -268,4 +268,15 @@ pub struct Statistics {
 impl Statistics {
     fn new() -> Self {
         Self {
-   
+            deleted: AtomicUsize::new(0),
+            skipped: AtomicUsize::new(0),
+        }
+    }
+
+    #[inline]
+    fn increment_deleted(&self, num_deleted: usize) {
+        self.deleted.fetch_add(num_deleted, Ordering::SeqCst);
+    }
+
+    #[inline]
+    fn increment_skipped(&self, num_skipp
