@@ -294,4 +294,11 @@ impl Statistics {
     }
 }
 
-fn d
+fn delete_comments_progress_bar(statistics: &Arc<Statistics>) -> Progress {
+    Progress::new(
+        move |statistics| {
+            let num_deleted = statistics.deleted() as u64;
+            let num_skipped = statistics.skipped() as u64;
+            (
+                num_deleted + num_skipped,
+ 
