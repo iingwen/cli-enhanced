@@ -279,4 +279,19 @@ impl Statistics {
     }
 
     #[inline]
-    fn increment_skipped(&self, num_skipp
+    fn increment_skipped(&self, num_skipped: usize) {
+        self.skipped.fetch_add(num_skipped, Ordering::SeqCst);
+    }
+
+    #[inline]
+    fn deleted(&self) -> usize {
+        self.deleted.load(Ordering::SeqCst)
+    }
+
+    #[inline]
+    fn skipped(&self) -> usize {
+        self.skipped.load(Ordering::SeqCst)
+    }
+}
+
+fn d
