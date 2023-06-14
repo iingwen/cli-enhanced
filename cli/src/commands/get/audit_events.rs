@@ -13,4 +13,14 @@ pub struct GetAuditEventsArgs {
     minimum_timestamp: Option<DateTime<Utc>>,
 
     #[structopt(short = "M", long = "maximum")]
-    /
+    /// Maximum Timestamp for audit events
+    maximum_timestamp: Option<DateTime<Utc>>,
+}
+
+pub fn get(client: &Client, args: &GetAuditEventsArgs, printer: &Printer) -> Result<()> {
+    let GetAuditEventsArgs {
+        minimum_timestamp,
+        maximum_timestamp,
+    } = args;
+
+    let mut cont
