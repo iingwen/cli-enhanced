@@ -39,4 +39,9 @@ pub fn get(client: &Client, args: &GetAuditEventsArgs, printer: &Printer) -> Res
             break;
         } else {
             info!("Downloaded {} events", all_printable_events.len());
-        
+            continuation = audit_events.continuation
+        }
+    }
+
+    printer.print_resources(all_printable_events.iter())
+}
