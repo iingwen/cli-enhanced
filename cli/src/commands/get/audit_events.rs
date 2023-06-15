@@ -31,4 +31,12 @@ pub fn get(client: &Client, args: &GetAuditEventsArgs, printer: &Printer) -> Res
         let audit_events =
             client.get_audit_events(*minimum_timestamp, *maximum_timestamp, continuation)?;
         let mut printable_events: Vec<PrintableAuditEvent> =
-            a
+            audit_events.clone().into_iter_printable().collect();
+
+        all_printable_events.append(&mut printable_events);
+
+        if audit_events.continuation.is_none() {
+            break;
+        } else {
+            info!("Downloaded {} events", all_printable_events.len());
+        
