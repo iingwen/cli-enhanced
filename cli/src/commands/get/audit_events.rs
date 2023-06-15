@@ -23,4 +23,12 @@ pub fn get(client: &Client, args: &GetAuditEventsArgs, printer: &Printer) -> Res
         maximum_timestamp,
     } = args;
 
-    let mut cont
+    let mut continuation = None;
+
+    let mut all_printable_events = Vec::new();
+
+    loop {
+        let audit_events =
+            client.get_audit_events(*minimum_timestamp, *maximum_timestamp, continuation)?;
+        let mut printable_events: Vec<PrintableAuditEvent> =
+            a
