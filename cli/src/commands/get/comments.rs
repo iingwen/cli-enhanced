@@ -370,3 +370,278 @@ pub fn get_many(client: &Client, args: &GetManyCommentsArgs) -> Result<()> {
                 Vec::new(),
                 Vec::new(),
             )
+        }),
+    };
+
+    let download_options = CommentDownloadOptions {
+        dataset_identifier: dataset.clone(),
+        include_predictions: include_predictions.unwrap_or(false),
+        model_version: *model_version,
+        reviewed_only,
+        timerange: CommentsIterTimerange {
+            from: *from_timestamp,
+            to: *to_timestamp,
+        },
+        show_progress: !no_progress,
+        label_attribute_filter,
+        user_properties_filter,
+        attachment_property_types_filter,
+        messages_filter: Some(messages_filter),
+    };
+
+    if let Some(file) = file {
+        download_comments(client, source.clone(), file, download_options)
+    } else {
+        download_comments(
+            client,
+            source.clone(),
+            io::stdout().lock(),
+            download_options,
+        )
+    }
+}
+
+fn get_label_attribute_filter(
+    client: &Client,
+    dataset_id: DatasetIdentifier,
+    filter: &Regex,
+) -> Result<Option<AttributeFilter>> {
+    let dataset = client.get_dataset(dataset_id)?;
+
+    let label_names: Vec<String> = dataset
+        .label_defs
+        .into_iter()
+        .filter(|label_def| filter.is_match(&label_def.name.0))
+        .map(|label_def| label_def.name.0)
+        .collect();
+
+    if label_names.is_empty() {
+        info!("No label names matching the filter '{}'", filter);
+        Ok(None)
+    } else {
+        info!("Filtering on label(s):\n- {}", label_names.join("\n- "));
+        Ok(Some(AttributeFilter {
+            attribute: Attribute::Labels,
+            filter: AttributeFilterEnum::StringAnyOf {
+                any_of: label_names,
+            },
+        }))
+    }
+}
+
+struct CommentDownloadOptions {
+    dataset_identifier: Option<DatasetIdentifier>,
+    include_predictions: bool,
+    model_version: Option<u32>,
+    reviewed_only: bool,
+    timerange: CommentsIterTimerange,
+    show_progress: bool,
+    label_attribute_filter: Option<AttributeFilter>,
+    attachment_property_types_filter: Option<AttributeFilter>,
+    user_properties_filter: Option<UserPropertiesFilter>,
+    messages_filter: Option<MessagesFilter>,
+}
+
+impl CommentDownloadOptions {
+    fn get_attribute_filters(&self) -> Vec<AttributeFilter> {
+        let mut filters: Vec<AttributeFilter> = Vec::new();
+
+        if let Some(label_attribute_filter) = &self.label_attribute_filter {
+            filters.push(label_attribute_filter.clone());
+        }
+
+        if let Some(attachment_types_attribute_filter) = &self.attachment_property_types_filter {
+            filters.push(attachment_types_attribute_filter.clone())
+        }
+
+        filters
+    }
+}
+
+fn download_comments(
+    client: &Client,
+    source_identifier: SourceIdentifier,
+    mut writer: impl Write,
+    options: CommentDownloadOptions,
+) -> Result<()> {
+    let source = client
+        .get_source(source_identifier)
+        .context("Operation to get source has failed.")?;
+    let statistics = Arc::new(Statistics::new());
+
+    let make_progress = |dataset_name: Option<&DatasetFullName>| -> Result<Progress> {
+        let comment_filter = CommentFilter {
+            timestamp: Some(CommentTimestampFilter {
+                minimum: options.timerange.from,
+                maximum: options.timerange.to,
+            }),
+            sources: vec![source.id.clone()],
+            reviewed: if options.reviewed_only {
+                Some(ReviewedFilterEnum::OnlyReviewed)
+            } else {
+                None
+            },
+            user_properties: options.user_properties_filter.clone(),
+            messages: options.messages_filter.clone(),
+        };
+
+        Ok(get_comments_progress_bar(
+            if let Some(dataset_name) = dataset_name {
+                *client
+                    .get_dataset_statistics(
+                        dataset_name,
+                        &DatasetStatisticsRequestParams {
+                            comment_filter,
+                            attribute_filters: options.get_attribute_filters(),
+                            ..Default::default()
+                        },
+                    )
+                    .context("Operation to get dataset comment count has failed..")?
+                    .num_comments as u64
+            } else {
+                *client
+                    .get_source_statistics(
+                        &source.full_name(),
+                        &SourceStatisticsRequestParams { comment_filter },
+                    )
+                    .context("Operation to get source comment count has failed..")?
+                    .num_comments as u64
+            },
+            &statistics,
+            dataset_name.is_some(),
+        ))
+    };
+
+    if let Some(dataset_identifier) = &options.dataset_identifier {
+        let dataset = client
+            .get_dataset(dataset_identifier.clone())
+            .context("Operation to get dataset has failed.")?;
+        let dataset_name = dataset.full_name();
+        let _progress = if options.show_progress {
+            Some(make_progress(Some(&dataset_name))?)
+        } else {
+            None
+        };
+
+        if options.reviewed_only {
+            get_reviewed_comments_in_bulk(
+                client,
+                dataset_name,
+                source,
+                &statistics,
+                options.include_predictions,
+                writer,
+            )?;
+        } else {
+            get_comments_from_uids(
+                client,
+                dataset_name,
+                source,
+                &statistics,
+                options.include_predictions,
+                options.model_version,
+                writer,
+                &options,
+            )?;
+        }
+    } else {
+        let _progress = if options.show_progress {
+            Some(make_progress(None)?)
+        } else {
+            None
+        };
+        client
+            .get_comments_iter(&source.full_name(), None, options.timerange)
+            .try_for_each(|page| {
+                let page = page.context("Operation to get comments has failed.")?;
+                statistics.add_comments(page.len());
+                print_resources_as_json(
+                    page.into_iter().map(|comment| AnnotatedComment {
+                        comment,
+                        labelling: None,
+                        entities: None,
+                        thread_properties: None,
+                        moon_forms: None,
+                        label_properties: None,
+                    }),
+                    &mut writer,
+                )
+            })?;
+    }
+    log::info!(
+        "Successfully downloaded {} comments [{} annotated].",
+        statistics.num_downloaded(),
+        statistics.num_annotated(),
+    );
+    Ok(())
+}
+
+const DEFAULT_QUERY_PAGE_SIZE: usize = 128;
+
+#[allow(clippy::too_many_arguments)]
+fn get_comments_from_uids(
+    client: &Client,
+    dataset_name: DatasetFullName,
+    source: Source,
+    statistics: &Arc<Statistics>,
+    include_predictions: bool,
+    model_version: Option<u32>,
+    mut writer: impl Write,
+    options: &CommentDownloadOptions,
+) -> Result<()> {
+    let mut params = QueryRequestParams {
+        attribute_filters: options.get_attribute_filters(),
+        continuation: None,
+        filter: CommentFilter {
+            reviewed: None,
+            timestamp: Some(CommentTimestampFilter {
+                minimum: options.timerange.from,
+                maximum: options.timerange.to,
+            }),
+            user_properties: options.user_properties_filter.clone(),
+            sources: vec![source.id],
+            messages: options.messages_filter.clone(),
+        },
+        limit: DEFAULT_QUERY_PAGE_SIZE,
+        order: OrderEnum::Recent,
+    };
+
+    client
+        .get_dataset_query_iter(&dataset_name, &mut params)
+        .try_for_each(|page| {
+            let page = page.context("Operation to get comments has failed.")?;
+            if page.is_empty() {
+                return Ok(());
+            }
+
+            statistics.add_comments(page.len());
+
+            if let Some(model_version) = &model_version {
+                let predictions = client
+                    .get_comment_predictions(
+                        &dataset_name,
+                        &ModelVersion(*model_version),
+                        page.iter().map(|comment| &comment.comment.uid),
+                    )
+                    .context("Operation to get predictions has failed.")?;
+                // since predict-comments endpoint doesn't return some fields,
+                // they are set to None or [] here
+                let comments =
+                    page.into_iter()
+                        .zip(predictions.into_iter())
+                        .map(|(comment, prediction)| AnnotatedComment {
+                            comment: comment.comment,
+                            labelling: Some(vec![Labelling {
+                                group: DEFAULT_LABEL_GROUP_NAME.clone(),
+                                assigned: Vec::new(),
+                                dismissed: Vec::new(),
+                                predicted: prediction.labels.map(|auto_threshold_labels| {
+                                    auto_threshold_labels
+                                        .iter()
+                                        .map(|auto_threshold_label| PredictedLabel {
+                                            name: PredictedLabelName::String(LabelName(
+                                                auto_threshold_label.name.join(" > "),
+                                            )),
+                                            sentiment: None,
+                                            probability: auto_threshold_label.probability,
+                                            auto_thresholds: Some(
