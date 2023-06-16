@@ -645,3 +645,124 @@ fn get_comments_from_uids(
                                             sentiment: None,
                                             probability: auto_threshold_label.probability,
                                             auto_thresholds: Some(
+                                                auto_threshold_label.auto_thresholds.to_vec(),
+                                            ),
+                                        })
+                                        .collect()
+                                }),
+                            }]),
+                            entities: Some(Entities {
+                                assigned: Vec::new(),
+                                dismissed: Vec::new(),
+                                predicted: prediction.entities,
+                            }),
+                            thread_properties: None,
+                            moon_forms: None,
+                            label_properties: None,
+                        });
+                print_resources_as_json(comments, &mut writer)
+            } else {
+                let comments = page.into_iter().map(|mut annotated_comment| {
+                    if !include_predictions {
+                        annotated_comment = annotated_comment.without_predictions();
+                    }
+                    if annotated_comment.has_annotations() {
+                        statistics.add_annotated(1);
+                    }
+                    annotated_comment
+                });
+                print_resources_as_json(comments, &mut writer)
+            }
+        })?;
+    Ok(())
+}
+
+fn get_reviewed_comments_in_bulk(
+    client: &Client,
+    dataset_name: DatasetFullName,
+    source: Source,
+    statistics: &Arc<Statistics>,
+    include_predictions: bool,
+    mut writer: impl Write,
+) -> Result<()> {
+    client
+        .get_labellings_iter(&dataset_name, &source.id, include_predictions, None)
+        .try_for_each(|page| {
+            let page = page.context("Operation to get labellings has failed.")?;
+            statistics.add_comments(page.len());
+            statistics.add_annotated(page.len());
+            let comments = page.into_iter().map(|comment| {
+                if !include_predictions {
+                    comment.without_predictions()
+                } else {
+                    comment
+                }
+            });
+            print_resources_as_json(comments, &mut writer)
+        })?;
+    Ok(())
+}
+
+#[derive(Debug)]
+pub struct Statistics {
+    downloaded: AtomicUsize,
+    annotated: AtomicUsize,
+}
+
+impl Statistics {
+    fn new() -> Self {
+        Self {
+            downloaded: AtomicUsize::new(0),
+            annotated: AtomicUsize::new(0),
+        }
+    }
+
+    #[inline]
+    fn add_comments(&self, num_downloaded: usize) {
+        self.downloaded.fetch_add(num_downloaded, Ordering::SeqCst);
+    }
+
+    #[inline]
+    fn add_annotated(&self, num_downloaded: usize) {
+        self.annotated.fetch_add(num_downloaded, Ordering::SeqCst);
+    }
+
+    #[inline]
+    fn num_downloaded(&self) -> usize {
+        self.downloaded.load(Ordering::SeqCst)
+    }
+
+    #[inline]
+    fn num_annotated(&self) -> usize {
+        self.annotated.load(Ordering::SeqCst)
+    }
+}
+
+fn get_comments_progress_bar(
+    total_bytes: u64,
+    statistics: &Arc<Statistics>,
+    show_annotated: bool,
+) -> Progress {
+    Progress::new(
+        move |statistics| {
+            let num_downloaded = statistics.num_downloaded();
+            let num_annotated = statistics.num_annotated();
+            (
+                num_downloaded as u64,
+                format!(
+                    "{} {}{}",
+                    num_downloaded.to_string().bold(),
+                    "comments".dimmed(),
+                    if show_annotated {
+                        format!(" [{} {}]", num_annotated, "annotated".dimmed())
+                    } else {
+                        "".into()
+                    }
+                ),
+            )
+        },
+        statistics,
+        Some(total_bytes),
+        ProgressOptions { bytes_units: false },
+    )
+}
