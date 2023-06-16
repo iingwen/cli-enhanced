@@ -12,4 +12,14 @@ use crate::printer::Printer;
 pub struct GetDatasetsArgs {
     #[structopt(name = "dataset")]
     /// If specified, only list this dataset (name or id)
-    dataset: Opti
+    dataset: Option<DatasetIdentifier>,
+
+    #[structopt(long = "stats")]
+    /// Whether to include dataset statistics in response
+    include_stats: bool,
+}
+
+pub fn get(client: &Client, args: &GetDatasetsArgs, printer: &Printer) -> Result<()> {
+    let GetDatasetsArgs {
+        dataset,
+        include_st
