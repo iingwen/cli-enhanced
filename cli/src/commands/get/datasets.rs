@@ -40,4 +40,8 @@ pub fn get(client: &Client, args: &GetDatasetsArgs, printer: &Printer) -> Result
 
     let mut dataset_stats = Vec::new();
     if *include_stats {
-       
+        datasets.iter().try_for_each(|dataset| -> Result<()> {
+            info!("Getting statistics for dataset {}", dataset.full_name().0);
+            let unfiltered_stats = client
+                .get_dataset_statistics(
+                    &dataset.full_nam
