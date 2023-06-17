@@ -22,4 +22,13 @@ pub struct GetDatasetsArgs {
 pub fn get(client: &Client, args: &GetDatasetsArgs, printer: &Printer) -> Result<()> {
     let GetDatasetsArgs {
         dataset,
-        include_st
+        include_stats,
+    } = args;
+    let datasets = if let Some(dataset) = dataset {
+        vec![client
+            .get_dataset(dataset.clone())
+            .context("Operation to list datasets has failed.")?]
+    } else {
+        let mut datasets = client
+            .get_datasets()
+           
