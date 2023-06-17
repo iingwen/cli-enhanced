@@ -31,4 +31,13 @@ pub fn get(client: &Client, args: &GetDatasetsArgs, printer: &Printer) -> Result
     } else {
         let mut datasets = client
             .get_datasets()
-           
+            .context("Operation to list datasets has failed.")?;
+        datasets.sort_unstable_by(|lhs, rhs| {
+            (&lhs.owner.0, &lhs.name.0).cmp(&(&rhs.owner.0, &rhs.name.0))
+        });
+        datasets
+    };
+
+    let mut dataset_stats = Vec::new();
+    if *include_stats {
+       
