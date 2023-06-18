@@ -44,4 +44,13 @@ pub fn get(client: &Client, args: &GetDatasetsArgs, printer: &Printer) -> Result
             info!("Getting statistics for dataset {}", dataset.full_name().0);
             let unfiltered_stats = client
                 .get_dataset_statistics(
-                    &dataset.full_nam
+                    &dataset.full_name(),
+                    &StatisticsRequestParams {
+                        ..Default::default()
+                    },
+                )
+                .context("Could not get statistics for dataset")?;
+
+            let reviewed_stats = client
+                .get_dataset_statistics(
+                    &dat
