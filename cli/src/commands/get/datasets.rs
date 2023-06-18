@@ -53,4 +53,9 @@ pub fn get(client: &Client, args: &GetDatasetsArgs, printer: &Printer) -> Result
 
             let reviewed_stats = client
                 .get_dataset_statistics(
-                    &dat
+                    &dataset.full_name(),
+                    &StatisticsRequestParams {
+                        comment_filter: CommentFilter {
+                            reviewed:Some(reinfer_client::resources::comment::ReviewedFilterEnum::OnlyReviewed),
+                            ..Default::default()
+        
