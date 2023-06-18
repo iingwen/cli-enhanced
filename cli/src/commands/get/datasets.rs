@@ -58,4 +58,13 @@ pub fn get(client: &Client, args: &GetDatasetsArgs, printer: &Printer) -> Result
                         comment_filter: CommentFilter {
                             reviewed:Some(reinfer_client::resources::comment::ReviewedFilterEnum::OnlyReviewed),
                             ..Default::default()
-        
+                        },
+                        ..Default::default()
+                    },
+                )
+                .context("Could not get statistics for dataset")?;
+
+            let dataset_and_stats = DatasetAndStats {
+                dataset: dataset.clone(),
+                stats: DatasetStats {
+         
