@@ -67,4 +67,13 @@ pub fn get(client: &Client, args: &GetDatasetsArgs, printer: &Printer) -> Result
             let dataset_and_stats = DatasetAndStats {
                 dataset: dataset.clone(),
                 stats: DatasetStats {
-         
+                    num_reviewed: reviewed_stats.num_comments,
+                    total_verbatims: unfiltered_stats.num_comments
+                }
+            };
+            dataset_stats.push(dataset_and_stats);
+            Ok(())
+        })?;
+        printer.print_resources(&dataset_stats)
+    } else {
+        pri
