@@ -76,4 +76,6 @@ pub fn get(client: &Client, args: &GetDatasetsArgs, printer: &Printer) -> Result
         })?;
         printer.print_resources(&dataset_stats)
     } else {
-        pri
+        printer.print_resources(&datasets)
+    }
+}
