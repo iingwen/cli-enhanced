@@ -49,3 +49,13 @@ pub fn get_many(client: &Client, args: &GetManyEmailsArgs) -> Result<()> {
 }
 
 fn download_emails(
+    client: &Client,
+    bucket_identifier: BucketIdentifier,
+    mut writer: impl Write,
+) -> Result<()> {
+    let bucket = client
+        .get_bucket(bucket_identifier)
+        .context("Operation to get bucket has failed.")?;
+
+    let bucket_statistics = client
+        .get_bu
