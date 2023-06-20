@@ -36,4 +36,16 @@ pub fn get_many(client: &Client, args: &GetManyEmailsArgs) -> Result<()> {
         Some(path) => Some(
             File::create(path)
                 .with_context(|| format!("Could not open file for writing `{}`", path.display()))
- 
+                .map(BufWriter::new)?,
+        ),
+        None => None,
+    };
+
+    if let Some(file) = file {
+        download_emails(client, bucket.clone(), file)
+    } else {
+        download_emails(client, bucket.clone(), io::stdout().lock())
+    }
+}
+
+fn download_emails(
