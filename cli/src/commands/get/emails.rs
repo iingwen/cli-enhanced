@@ -26,4 +26,14 @@ pub struct GetManyEmailsArgs {
 
     #[structopt(short = "f", long = "file", parse(from_os_str))]
     /// Path where to write comments as JSON. If not specified, stdout will be used.
-    path: Option<PathBuf>
+    path: Option<PathBuf>,
+}
+
+pub fn get_many(client: &Client, args: &GetManyEmailsArgs) -> Result<()> {
+    let GetManyEmailsArgs { bucket, path } = args;
+
+    let file = match path {
+        Some(path) => Some(
+            File::create(path)
+                .with_context(|| format!("Could not open file for writing `{}`", path.display()))
+ 
