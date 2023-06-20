@@ -20,4 +20,10 @@ use crate::{
 
 #[derive(Debug, StructOpt)]
 pub struct GetManyEmailsArgs {
-    #
+    #[structopt(name = "bucket")]
+    /// Bucket name or id
+    bucket: BucketIdentifier,
+
+    #[structopt(short = "f", long = "file", parse(from_os_str))]
+    /// Path where to write comments as JSON. If not specified, stdout will be used.
+    path: Option<PathBuf>
