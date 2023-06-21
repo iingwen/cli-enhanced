@@ -66,4 +66,10 @@ fn download_emails(
     let _progress = get_emails_progress_bar(bucket_statistics.count as u64, &statistics);
 
     client
-        .get_
+        .get_emails_iter(&bucket.full_name(), None)
+        .try_for_each(|page| {
+            let page = page.context("Operation to get emails has failed.")?;
+            statistics.add_emails(page.len());
+            print_resources_as_json(page.into_iter(), &mut writer)
+        })?;
+  
