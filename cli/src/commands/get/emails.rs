@@ -72,4 +72,19 @@ fn download_emails(
             statistics.add_emails(page.len());
             print_resources_as_json(page.into_iter(), &mut writer)
         })?;
-  
+    log::info!(
+        "Successfully downloaded {} emails.",
+        statistics.num_downloaded(),
+    );
+    Ok(())
+}
+
+#[derive(Debug)]
+pub struct Statistics {
+    downloaded: AtomicUsize,
+}
+
+impl Statistics {
+    fn new() -> Self {
+        Self {
+            downloaded: AtomicUsi
