@@ -87,4 +87,19 @@ pub struct Statistics {
 impl Statistics {
     fn new() -> Self {
         Self {
-            downloaded: AtomicUsi
+            downloaded: AtomicUsize::new(0),
+        }
+    }
+
+    #[inline]
+    fn add_emails(&self, num_downloaded: usize) {
+        self.downloaded.fetch_add(num_downloaded, Ordering::SeqCst);
+    }
+
+    #[inline]
+    fn num_downloaded(&self) -> usize {
+        self.downloaded.load(Ordering::SeqCst)
+    }
+}
+
+fn get_emails_pro
