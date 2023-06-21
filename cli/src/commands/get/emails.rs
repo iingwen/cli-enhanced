@@ -58,4 +58,12 @@ fn download_emails(
         .context("Operation to get bucket has failed.")?;
 
     let bucket_statistics = client
-        .get_bu
+        .get_bucket_statistics(&bucket.full_name())
+        .context("Could not get bucket statistics")?;
+
+    let statistics = Arc::new(Statistics::new());
+
+    let _progress = get_emails_progress_bar(bucket_statistics.count as u64, &statistics);
+
+    client
+        .get_
