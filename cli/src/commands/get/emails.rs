@@ -102,4 +102,10 @@ impl Statistics {
     }
 }
 
-fn get_emails_pro
+fn get_emails_progress_bar(total_bytes: u64, statistics: &Arc<Statistics>) -> Progress {
+    Progress::new(
+        move |statistics| {
+            let num_downloaded = statistics.num_downloaded();
+            (
+                num_downloaded as u64,
+             
