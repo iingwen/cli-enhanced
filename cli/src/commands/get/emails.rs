@@ -119,3 +119,4 @@ fn get_emails_progress_bar(total_bytes: u64, statistics: &Arc<Statistics>) -> Pr
         Some(total_bytes),
         ProgressOptions { bytes_units: false },
     )
+}
