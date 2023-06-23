@@ -108,4 +108,14 @@ fn get_emails_progress_bar(total_bytes: u64, statistics: &Arc<Statistics>) -> Pr
             let num_downloaded = statistics.num_downloaded();
             (
                 num_downloaded as u64,
-             
+                format!(
+                    "{} {}",
+                    num_downloaded.to_string().bold(),
+                    "emails".dimmed(),
+                ),
+            )
+        },
+        statistics,
+        Some(total_bytes),
+        ProgressOptions { bytes_units: false },
+    )
