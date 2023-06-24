@@ -13,4 +13,13 @@ pub struct GetIntegrationsArgs {
     name: Option<IntegrationFullName>,
 
     #[structopt(short = "f", long = "file", parse(from_os_str))]
-    /// Path where to 
+    /// Path where to write integrations as JSON. If not specified, stdout will be used.
+    path: Option<PathBuf>,
+}
+
+pub fn get(client: &Client, args: &GetIntegrationsArgs, printer: &Printer) -> Result<()> {
+    let GetIntegrationsArgs { name, path } = args;
+
+    let integrations: Vec<Integration>;
+
+    
