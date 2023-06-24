@@ -22,4 +22,13 @@ pub fn get(client: &Client, args: &GetIntegrationsArgs, printer: &Printer) -> Re
 
     let integrations: Vec<Integration>;
 
-    
+    if let Some(name) = name {
+        integrations = vec![client.get_integration(name)?];
+    } else {
+        integrations = client.get_integrations()?;
+    }
+
+    match path {
+        Some(path) => {
+            let file = File::create(path)
+                .with_context(|| form
