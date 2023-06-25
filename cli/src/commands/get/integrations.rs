@@ -31,4 +31,11 @@ pub fn get(client: &Client, args: &GetIntegrationsArgs, printer: &Printer) -> Re
     match path {
         Some(path) => {
             let file = File::create(path)
-                .with_context(|| form
+                .with_context(|| format!("Could not open file for writing `{}`", path.display()))
+                .map(BufWriter::new)?;
+
+            print_resources_as_json(integrations, file)
+        }
+        None => printer.print_resources(&integrations),
+    }
+}
