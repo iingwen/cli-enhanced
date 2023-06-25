@@ -14,4 +14,11 @@ pub struct GetProjectsArgs {
 pub fn get(client: &Client, args: &GetProjectsArgs, printer: &Printer) -> Result<()> {
     let GetProjectsArgs { project } = args;
     let projects = if let Some(project) = project {
-       
+        vec![client
+            .get_project(project)
+            .context("Operation to list projects has failed.")?]
+    } else {
+        let mut projects = client
+            .get_projects()
+            .context("Operation to list projects has failed.")?;
+        projects.sort_unstable_by(|lhs, rhs| lhs.name.0.cmp(&rh
