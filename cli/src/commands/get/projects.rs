@@ -21,4 +21,8 @@ pub fn get(client: &Client, args: &GetProjectsArgs, printer: &Printer) -> Result
         let mut projects = client
             .get_projects()
             .context("Operation to list projects has failed.")?;
-        projects.sort_unstable_by(|lhs, rhs| lhs.name.0.cmp(&rh
+        projects.sort_unstable_by(|lhs, rhs| lhs.name.0.cmp(&rhs.name.0));
+        projects
+    };
+    printer.print_resources(&projects)
+}
