@@ -15,3 +15,14 @@ pub struct GetSourcesArgs {
     #[structopt(long = "stats")]
     /// Whether to include source statistics in response
     include_stats: bool,
+}
+
+pub fn get(client: &Client, args: &GetSourcesArgs, printer: &Printer) -> Result<()> {
+    let GetSourcesArgs {
+        source,
+        include_stats,
+    } = args;
+
+    let sources = if let Some(source) = source {
+        vec![client
+            .get_source(source.clone())
