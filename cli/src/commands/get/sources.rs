@@ -26,3 +26,10 @@ pub fn get(client: &Client, args: &GetSourcesArgs, printer: &Printer) -> Result<
     let sources = if let Some(source) = source {
         vec![client
             .get_source(source.clone())
+            .context("Operation to list sources has failed.")?]
+    } else {
+        let mut sources = client
+            .get_sources()
+            .context("Operation to list sources has failed.")?;
+        sources.sort_unstable_by(|lhs, rhs| {
+            (&lhs.owner.0, &lhs
