@@ -32,4 +32,14 @@ pub fn get(client: &Client, args: &GetSourcesArgs, printer: &Printer) -> Result<
             .get_sources()
             .context("Operation to list sources has failed.")?;
         sources.sort_unstable_by(|lhs, rhs| {
-            (&lhs.owner.0, &lhs
+            (&lhs.owner.0, &lhs.name.0).cmp(&(&rhs.owner.0, &rhs.name.0))
+        });
+        sources
+    };
+
+    let buckets: HashMap<_, _> = client
+        .get_buckets()
+        .context("Operation to list buckets has failed.")?
+        .into_iter()
+        .map(|bucket| (bucket.id.clone(), bucket))
+        .collect();
