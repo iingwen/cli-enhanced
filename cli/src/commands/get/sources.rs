@@ -7,3 +7,11 @@ use structopt::StructOpt;
 use crate::printer::{PrintableSource, Printer};
 
 #[derive(Debug, StructOpt)]
+pub struct GetSourcesArgs {
+    #[structopt(name = "source")]
+    /// If specified, only list this source (name or id)
+    source: Option<SourceIdentifier>,
+
+    #[structopt(long = "stats")]
+    /// Whether to include source statistics in response
+    include_stats: bool,
