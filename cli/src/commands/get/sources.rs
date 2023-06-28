@@ -43,3 +43,10 @@ pub fn get(client: &Client, args: &GetSourcesArgs, printer: &Printer) -> Result<
         .into_iter()
         .map(|bucket| (bucket.id.clone(), bucket))
         .collect();
+
+    let mut source_stats: HashMap<_, _> = HashMap::new();
+    if *include_stats {
+        sources.iter().try_for_each(|source| -> Result<()> {
+            info!("Getting statistics for source {}", source.full_name().0);
+            let stats = client
+                .get_source
