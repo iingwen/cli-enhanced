@@ -49,4 +49,10 @@ pub fn get(client: &Client, args: &GetSourcesArgs, printer: &Printer) -> Result<
         sources.iter().try_for_each(|source| -> Result<()> {
             info!("Getting statistics for source {}", source.full_name().0);
             let stats = client
-                .get_source
+                .get_source_statistics(
+                    &source.full_name(),
+                    &StatisticsRequestParams {
+                        comment_filter: Default::default(),
+                    },
+                )
+                .context("Could not get statistics for source")
