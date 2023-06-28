@@ -55,4 +55,17 @@ pub fn get(client: &Client, args: &GetSourcesArgs, printer: &Printer) -> Result<
                         comment_filter: Default::default(),
                     },
                 )
-                .context("Could not get statistics for source")
+                .context("Could not get statistics for source")?;
+
+            source_stats.insert(source.id.clone(), stats);
+            Ok(())
+        })?;
+    };
+
+    let printable_sources: Vec<PrintableSource> = sources
+        .into_iter()
+        .map(|source| {
+            let bucket = source
+                .bucket_id
+                .as_ref()
+            
