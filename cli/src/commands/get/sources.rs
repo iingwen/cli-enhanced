@@ -80,4 +80,5 @@ pub fn get(client: &Client, args: &GetSourcesArgs, printer: &Printer) -> Result<
         })
         .collect();
 
-    printer.print_re
+    printer.print_resources(&printable_sources)
+}
