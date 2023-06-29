@@ -68,4 +68,16 @@ pub fn get(client: &Client, args: &GetSourcesArgs, printer: &Printer) -> Result<
             let bucket = source
                 .bucket_id
                 .as_ref()
-            
+                .and_then(|id| buckets.get(id))
+                .cloned();
+
+            let stats = source_stats.get(&source.id).cloned();
+            PrintableSource {
+                source,
+                bucket,
+                stats,
+            }
+        })
+        .collect();
+
+    printer.print_re
