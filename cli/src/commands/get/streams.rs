@@ -26,4 +26,14 @@ use crate::printer::{print_resources_as_json, DisplayTable, Printer};
 pub struct GetStreamsArgs {
     #[structopt(short = "d", long = "dataset")]
     /// The dataset name or id
-    d
+    dataset: DatasetIdentifier,
+
+    #[structopt(short = "f", long = "file", parse(from_os_str))]
+    /// Path where to write streams as JSON.
+    path: Option<PathBuf>,
+}
+
+#[derive(Debug, StructOpt)]
+pub struct GetStreamCommentsArgs {
+    #[structopt(long = "stream")]
+    /// The full stream name `<o
