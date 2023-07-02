@@ -44,4 +44,12 @@ pub struct GetStreamCommentsArgs {
     size: u32,
 
     #[structopt(long = "listen")]
-    /// If set, the command will run forever polling every N sec
+    /// If set, the command will run forever polling every N seconds and advancing the stream.
+    listen: Option<f64>,
+
+    #[structopt(long = "individual-advance")]
+    /// If set, the command will acknowledge each comment in turn, rather than full batches.
+    individual_advance: bool,
+}
+
+#[derive(Debug, StructO
