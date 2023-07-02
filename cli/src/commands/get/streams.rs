@@ -36,4 +36,12 @@ pub struct GetStreamsArgs {
 #[derive(Debug, StructOpt)]
 pub struct GetStreamCommentsArgs {
     #[structopt(long = "stream")]
-    /// The full stream name `<o
+    /// The full stream name `<owner>/<dataset>/<stream>`.
+    stream: StreamFullName,
+
+    #[structopt(long = "size", default_value = "16")]
+    /// The max number of comments to return per batch.
+    size: u32,
+
+    #[structopt(long = "listen")]
+    /// If set, the command will run forever polling every N sec
