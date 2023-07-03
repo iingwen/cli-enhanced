@@ -67,4 +67,11 @@ pub struct GetStreamStatsArgs {
     compare_to_dataset: Option<DatasetFullName>,
 }
 
-pub fn get(client: &Client, args: &GetStreamsArgs, printer: &Printer) -> 
+pub fn get(client: &Client, args: &GetStreamsArgs, printer: &Printer) -> Result<()> {
+    let GetStreamsArgs { dataset, path } = args;
+
+    let file: Option<Box<dyn Write>> = match path {
+        Some(path) => Some(Box::new(
+            File::create(path)
+                .with_context(|| format!("Could not open file for writing `{}`", path.display()))
+                .map(BufW
