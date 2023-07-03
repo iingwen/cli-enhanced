@@ -74,4 +74,15 @@ pub fn get(client: &Client, args: &GetStreamsArgs, printer: &Printer) -> Result<
         Some(path) => Some(Box::new(
             File::create(path)
                 .with_context(|| format!("Could not open file for writing `{}`", path.display()))
-                .map(BufW
+                .map(BufWriter::new)?,
+        )),
+        None => None,
+    };
+
+    let dataset_name = client
+        .get_dataset(dataset.clone())
+        .context("Operation to get dataset has failed.")?
+        .full_name();
+    let mut streams = client
+        .get_streams(&dataset_name)
+        .context("Op
