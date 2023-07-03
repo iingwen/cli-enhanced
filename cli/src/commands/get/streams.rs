@@ -60,4 +60,11 @@ pub struct GetStreamStatsArgs {
 
     #[structopt(long = "compare-version", short = "v")]
     /// The model version to compare stats with
-    com
+    compare_to_model_version: Option<ModelVersion>,
+
+    #[structopt(long = "compare-dataset", short = "d")]
+    /// The dataset to compare stats with
+    compare_to_dataset: Option<DatasetFullName>,
+}
+
+pub fn get(client: &Client, args: &GetStreamsArgs, printer: &Printer) -> 
