@@ -52,4 +52,12 @@ pub struct GetStreamCommentsArgs {
     individual_advance: bool,
 }
 
-#[derive(Debug, StructO
+#[derive(Debug, StructOpt)]
+pub struct GetStreamStatsArgs {
+    #[structopt(name = "stream")]
+    /// The full stream name `<owner>/<dataset>/<stream>`.
+    stream_full_name: StreamFullName,
+
+    #[structopt(long = "compare-version", short = "v")]
+    /// The model version to compare stats with
+    com
