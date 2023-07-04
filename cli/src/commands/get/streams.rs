@@ -85,4 +85,15 @@ pub fn get(client: &Client, args: &GetStreamsArgs, printer: &Printer) -> Result<
         .full_name();
     let mut streams = client
         .get_streams(&dataset_name)
-        .context("Op
+        .context("Operation to list streams has failed.")?;
+    streams.sort_unstable_by(|lhs, rhs| lhs.name.0.cmp(&rhs.name.0));
+
+    if let Some(file) = file {
+        print_resources_as_json(streams, file)
+    } else {
+        printer.print_resources(&streams)
+    }
+}
+
+#[derive(Serialize)]
+pub struct StreamS
