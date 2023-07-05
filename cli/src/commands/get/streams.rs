@@ -96,4 +96,12 @@ pub fn get(client: &Client, args: &GetStreamsArgs, printer: &Printer) -> Result<
 }
 
 #[derive(Serialize)]
-pub struct StreamS
+pub struct StreamStat {
+    label_name: LabelName,
+    threshold: NotNan<f64>,
+    precision: NotNan<f64>,
+    recall: NotNan<f64>,
+    compare_to_precision: Option<NotNan<f64>>,
+    compare_to_recall: Option<NotNan<f64>>,
+    maintain_recall_precision: Option<NotNan<f64>>,
+    
