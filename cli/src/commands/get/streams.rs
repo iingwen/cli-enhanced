@@ -104,4 +104,12 @@ pub struct StreamStat {
     compare_to_precision: Option<NotNan<f64>>,
     compare_to_recall: Option<NotNan<f64>>,
     maintain_recall_precision: Option<NotNan<f64>>,
-    
+    maintain_recall_threshold: Option<NotNan<f64>>,
+    maintain_precision_recall: Option<NotNan<f64>>,
+    maintain_precision_threshold: Option<NotNan<f64>>,
+}
+impl DisplayTable for StreamStat {
+    fn to_table_headers() -> prettytable::Row {
+        row![
+            "Name",
+         
