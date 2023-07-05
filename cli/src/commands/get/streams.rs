@@ -112,4 +112,15 @@ impl DisplayTable for StreamStat {
     fn to_table_headers() -> prettytable::Row {
         row![
             "Name",
-         
+            "Threshold (T)",
+            "Precision (P)",
+            "Recall (R)",
+            "P at same T",
+            "R at same T",
+            "P at same R",
+            "R at same P",
+            "T at same R",
+            "T at same P"
+        ]
+    }
+    fn to_table_row(&self) -> prettytabl
