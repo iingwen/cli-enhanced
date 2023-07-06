@@ -123,4 +123,11 @@ impl DisplayTable for StreamStat {
             "T at same P"
         ]
     }
-    fn to_table_row(&self) -> prettytabl
+    fn to_table_row(&self) -> prettytable::Row {
+        row![
+            self.label_name.0,
+            format!("{:.3}", self.threshold),
+            format!("{:.3}", self.precision),
+            format!("{:.3}", self.recall),
+            if let Some(precision) = self.compare_to_precision {
+                red_if_lo
