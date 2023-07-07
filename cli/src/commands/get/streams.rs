@@ -138,4 +138,10 @@ impl DisplayTable for StreamStat {
                 red_if_lower_green_otherwise(recall, self.recall)
             } else {
                 "none".dimmed()
-  
+            },
+            if let Some(precision) = self.maintain_recall_precision {
+                red_if_lower_green_otherwise(precision, self.precision)
+            } else {
+                "none".dimmed()
+            },
+            if let Some(recal
