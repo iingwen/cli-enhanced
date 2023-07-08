@@ -150,4 +150,17 @@ impl DisplayTable for StreamStat {
                 "none".dimmed()
             },
             if let Some(threshold) = self.maintain_recall_threshold {
-                format!("{:.5}", threshold).no
+                format!("{:.5}", threshold).normal()
+            } else {
+                "none".dimmed()
+            },
+            if let Some(threshold) = self.maintain_precision_threshold {
+                format!("{:.5}", threshold).normal()
+            } else {
+                "none".dimmed()
+            }
+        ]
+    }
+}
+
+fn red_
