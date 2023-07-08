@@ -170,4 +170,16 @@ fn red_if_lower_green_otherwise(test: NotNan<f64>, threshold: NotNan<f64>) -> Co
 
     match test {
         test if test < threshold => format!("{test_str} ({diff:+.3})").red(),
-        test if 
+        test if test > threshold => format!("{test_str} ({diff:+.3})").green(),
+        _ => test_str.green(),
+    }
+}
+
+#[derive(Default)]
+struct ThresholdAndPrecision {
+    threshold: Option<NotNan<f64>>,
+    precision: Option<NotNan<f64>>,
+}
+
+fn get_threshold_and_precision_for_recall(
+    recall: NotN
