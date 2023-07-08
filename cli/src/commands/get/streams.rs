@@ -144,4 +144,10 @@ impl DisplayTable for StreamStat {
             } else {
                 "none".dimmed()
             },
-            if let Some(recal
+            if let Some(recall) = self.maintain_precision_recall {
+                red_if_lower_green_otherwise(recall, self.recall)
+            } else {
+                "none".dimmed()
+            },
+            if let Some(threshold) = self.maintain_recall_threshold {
+                format!("{:.5}", threshold).no
