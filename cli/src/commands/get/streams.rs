@@ -163,4 +163,11 @@ impl DisplayTable for StreamStat {
     }
 }
 
-fn red_
+fn red_if_lower_green_otherwise(test: NotNan<f64>, threshold: NotNan<f64>) -> ColoredString {
+    let test_str = format!("{:.3}", test);
+
+    let diff = test - threshold;
+
+    match test {
+        test if test < threshold => format!("{test_str} ({diff:+.3})").red(),
+        test if 
