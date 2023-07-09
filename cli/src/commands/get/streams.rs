@@ -203,4 +203,14 @@ fn get_threshold_and_precision_for_recall(
 }
 
 #[derive(Default)]
-s
+struct ThresholdAndRecall {
+    threshold: Option<NotNan<f64>>,
+    recall: Option<NotNan<f64>>,
+}
+
+fn get_threshold_and_recall_for_precision(
+    precision: NotNan<f64>,
+    label_name: &LabelName,
+    label_validation: &LabelValidation,
+) -> Result<ThresholdAndRecall> {
+    // Get lowest index 
