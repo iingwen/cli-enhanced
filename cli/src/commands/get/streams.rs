@@ -190,4 +190,17 @@ fn get_threshold_and_precision_for_recall(
         .recalls
         .iter()
         .position(|&val_recall| val_recall >= recall)
-        .context(format!("Could not get recall fo
+        .context(format!("Could not get recall for label {}", label_name.0))?;
+
+    let precision = label_validation.precisions.get(recall_index);
+
+    let threshold = label_validation.thresholds.get(recall_index);
+
+    Ok(ThresholdAndPrecision {
+        threshold: threshold.cloned(),
+        precision: precision.cloned(),
+    })
+}
+
+#[derive(Default)]
+s
