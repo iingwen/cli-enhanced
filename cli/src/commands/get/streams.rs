@@ -213,4 +213,13 @@ fn get_threshold_and_recall_for_precision(
     label_name: &LabelName,
     label_validation: &LabelValidation,
 ) -> Result<ThresholdAndRecall> {
-    // Get lowest index 
+    // Get lowest index with greater than or equal precision
+    let mut precision_index = None;
+    label_validation
+        .precisions
+        .iter()
+        .enumerate()
+        .for_each(|(idx, val_precision)| {
+            if val_precision >= &precision {
+                precision_index = Some(idx);
+    
