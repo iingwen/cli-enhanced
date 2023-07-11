@@ -222,4 +222,15 @@ fn get_threshold_and_recall_for_precision(
         .for_each(|(idx, val_precision)| {
             if val_precision >= &precision {
                 precision_index = Some(idx);
-    
+            }
+        });
+
+    let precision_index = precision_index.context(format!(
+        "Could not get precision index for label {}",
+        label_name.0
+    ))?;
+
+    let recall = label_validation.recalls.get(precision_index);
+    let threshold = label_validation.thresholds.get(precision_index);
+
+ 
