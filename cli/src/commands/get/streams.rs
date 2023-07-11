@@ -246,4 +246,13 @@ struct PrecisionAndRecall {
 }
 
 fn get_precision_and_recall_for_threshold(
-    thresho
+    threshold: NotNan<f64>,
+    label_name: &LabelName,
+    label_validation: &LabelValidation,
+) -> Result<PrecisionAndRecall> {
+    let threshold_index = label_validation
+        .thresholds
+        .iter()
+        .position(|&val_threshold| val_threshold <= threshold)
+        .context(format!(
+  
