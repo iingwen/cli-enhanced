@@ -233,4 +233,17 @@ fn get_threshold_and_recall_for_precision(
     let recall = label_validation.recalls.get(precision_index);
     let threshold = label_validation.thresholds.get(precision_index);
 
- 
+    Ok(ThresholdAndRecall {
+        threshold: threshold.cloned(),
+        recall: recall.cloned(),
+    })
+}
+
+#[derive(Default)]
+struct PrecisionAndRecall {
+    precision: NotNan<f64>,
+    recall: NotNan<f64>,
+}
+
+fn get_precision_and_recall_for_threshold(
+    thresho
