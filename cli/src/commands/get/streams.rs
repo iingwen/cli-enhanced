@@ -275,4 +275,15 @@ fn get_precision_and_recall_for_threshold(
 }
 
 #[derive(Clone)]
-struct CompareConfig 
+struct CompareConfig {
+    validation: ValidationResponse,
+    dataset_name: DatasetFullName,
+    model_version: ModelVersion,
+}
+
+impl CompareConfig {
+    pub fn get_label_def(&self, label_name: &LabelName) -> Result<Option<&LabelDef>> {
+        Ok(self
+            .validation
+            .get_default_label_group()
+   
