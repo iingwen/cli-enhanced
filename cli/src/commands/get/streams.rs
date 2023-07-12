@@ -255,4 +255,13 @@ fn get_precision_and_recall_for_threshold(
         .iter()
         .position(|&val_threshold| val_threshold <= threshold)
         .context(format!(
-  
+            "Could not find threshold for label {}",
+            label_name.0
+        ))?;
+
+    let precision = *label_validation
+        .precisions
+        .get(threshold_index)
+        .context(format!(
+            "Could not get precision for label {}",
+            
