@@ -264,4 +264,15 @@ fn get_precision_and_recall_for_threshold(
         .get(threshold_index)
         .context(format!(
             "Could not get precision for label {}",
-            
+            label_name.0
+        ))?;
+    let recall = *label_validation
+        .recalls
+        .get(threshold_index)
+        .context(format!("Could not get recall for label {}", label_name.0))?;
+
+    Ok(PrecisionAndRecall { precision, recall })
+}
+
+#[derive(Clone)]
+struct CompareConfig 
