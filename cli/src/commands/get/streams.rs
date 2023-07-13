@@ -296,4 +296,13 @@ impl CompareConfig {
 fn get_compare_config(
     client: &Client,
     model_version: &Option<ModelVersion>,
-    dataset_name: &Option<Dat
+    dataset_name: &Option<DatasetFullName>,
+    stream_name: &StreamFullName,
+) -> Result<Option<CompareConfig>> {
+    if model_version.is_none() && dataset_name.is_none() {
+        return Ok(None);
+    }
+
+    let dataset_name = if let Some(dataset_name) = dataset_name {
+        dataset_name
+    } e
