@@ -305,4 +305,15 @@ fn get_compare_config(
 
     let dataset_name = if let Some(dataset_name) = dataset_name {
         dataset_name
-    } e
+    } else {
+        &stream_name.dataset
+    };
+
+    let model_version = model_version
+        .clone()
+        .context("No compare to model version provided")?;
+
+    info!("Getting validation for {}", dataset_name.0);
+    let validation = client.get_validation(dataset_name, &model_version)?;
+
+    Ok(Som
