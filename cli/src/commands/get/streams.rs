@@ -316,4 +316,15 @@ fn get_compare_config(
     info!("Getting validation for {}", dataset_name.0);
     let validation = client.get_validation(dataset_name, &model_version)?;
 
-    Ok(Som
+    Ok(Some(CompareConfig {
+        validation,
+        dataset_name: dataset_name.clone(),
+        model_version,
+    }))
+}
+
+fn get_stream_stat(
+    label_threshold: &StreamLabelThreshold,
+    stream_full_name: &StreamFullName,
+    model: &StreamModel,
+    compare_config: &Option
