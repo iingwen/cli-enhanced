@@ -286,4 +286,14 @@ impl CompareConfig {
         Ok(self
             .validation
             .get_default_label_group()
-   
+            .context("Compare to dataset does not have a default label group")?
+            .label_defs
+            .iter()
+            .find(|label| label.name == *label_name))
+    }
+}
+
+fn get_compare_config(
+    client: &Client,
+    model_version: &Option<ModelVersion>,
+    dataset_name: &Option<Dat
