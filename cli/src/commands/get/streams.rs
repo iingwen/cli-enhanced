@@ -327,4 +327,14 @@ fn get_stream_stat(
     label_threshold: &StreamLabelThreshold,
     stream_full_name: &StreamFullName,
     model: &StreamModel,
-    compare_config: &Option
+    compare_config: &Option<CompareConfig>,
+    client: &Client,
+) -> Result<StreamStat> {
+    let label_name = reinfer_client::LabelName(label_threshold.name.join(" > "));
+
+    info!(
+        "Getting label validation for {} in dataset {}",
+        label_name.0, stream_full_name.dataset.0
+    );
+    let label_validation =
+   
