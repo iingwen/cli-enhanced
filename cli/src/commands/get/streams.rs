@@ -337,4 +337,10 @@ fn get_stream_stat(
         label_name.0, stream_full_name.dataset.0
     );
     let label_validation =
+        client.get_label_validation(&label_name, &stream_full_name.dataset, &model.version)?;
+
+    let PrecisionAndRecall { precision, recall } = get_precision_and_recall_for_threshold(
+        label_threshold.threshold,
+        &label_name.clone(),
+        &label_validation,
    
