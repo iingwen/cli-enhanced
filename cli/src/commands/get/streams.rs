@@ -343,4 +343,14 @@ fn get_stream_stat(
         label_threshold.threshold,
         &label_name.clone(),
         &label_validation,
-   
+    )?;
+
+    let mut stream_stat = StreamStat {
+        label_name: label_name.clone(),
+        threshold: label_threshold.threshold,
+        precision,
+        recall,
+        compare_to_precision: None,
+        compare_to_recall: None,
+        maintain_recall_precision: None,
+        ma
