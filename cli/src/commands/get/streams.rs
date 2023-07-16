@@ -353,4 +353,11 @@ fn get_stream_stat(
         compare_to_precision: None,
         compare_to_recall: None,
         maintain_recall_precision: None,
-        ma
+        maintain_recall_threshold: None,
+        maintain_precision_recall: None,
+        maintain_precision_threshold: None,
+    };
+
+    if let Some(ref compare_config) = compare_config {
+        if compare_config.get_label_def(&label_name)?.is_some() {
+            info!
