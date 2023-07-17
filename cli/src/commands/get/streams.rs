@@ -367,4 +367,13 @@ fn get_stream_stat(
             let compare_to_label_validation = client.get_label_validation(
                 &label_name,
                 &compare_config.dataset_name,
-                &c
+                &compare_config.model_version,
+            )?;
+
+            let same_threshold_precision_and_recall = get_precision_and_recall_for_threshold(
+                label_threshold.threshold,
+                &label_name,
+                &compare_to_label_validation,
+            )?;
+
+            
