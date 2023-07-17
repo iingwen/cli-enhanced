@@ -360,4 +360,11 @@ fn get_stream_stat(
 
     if let Some(ref compare_config) = compare_config {
         if compare_config.get_label_def(&label_name)?.is_some() {
-            info!
+            info!(
+                "Getting label validation for {} in dataset {}",
+                label_name.0, compare_config.dataset_name.0
+            );
+            let compare_to_label_validation = client.get_label_validation(
+                &label_name,
+                &compare_config.dataset_name,
+                &c
