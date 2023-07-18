@@ -383,4 +383,11 @@ fn get_stream_stat(
             )
             .unwrap_or_default();
 
-            let maintain_precision_threshold_and_recall = get
+            let maintain_precision_threshold_and_recall = get_threshold_and_recall_for_precision(
+                precision,
+                &label_name,
+                &compare_to_label_validation,
+            )
+            .unwrap_or_default();
+
+            stream_stat.compare_to_precision = Some(same_threshold_precision_and_recall.prec
