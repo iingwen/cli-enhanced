@@ -376,4 +376,11 @@ fn get_stream_stat(
                 &compare_to_label_validation,
             )?;
 
-            
+            let maintain_recall_threshold_and_precision = get_threshold_and_precision_for_recall(
+                recall,
+                &label_name,
+                &compare_to_label_validation,
+            )
+            .unwrap_or_default();
+
+            let maintain_precision_threshold_and_recall = get
