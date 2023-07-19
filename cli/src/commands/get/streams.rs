@@ -395,4 +395,8 @@ fn get_stream_stat(
             stream_stat.maintain_recall_precision =
                 maintain_recall_threshold_and_precision.precision;
             stream_stat.maintain_recall_threshold =
-            
+                maintain_recall_threshold_and_precision.threshold;
+            stream_stat.maintain_precision_recall = maintain_precision_threshold_and_recall.recall;
+            stream_stat.maintain_precision_threshold =
+                maintain_precision_threshold_and_recall.threshold;
+   
