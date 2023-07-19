@@ -399,4 +399,19 @@ fn get_stream_stat(
             stream_stat.maintain_precision_recall = maintain_precision_threshold_and_recall.recall;
             stream_stat.maintain_precision_threshold =
                 maintain_precision_threshold_and_recall.threshold;
-   
+        }
+    }
+    Ok(stream_stat)
+}
+
+pub fn get_stream_stats(
+    client: &Client,
+    args: &GetStreamStatsArgs,
+    printer: &Printer,
+    pool: &mut Pool,
+) -> Result<()> {
+    let GetStreamStatsArgs {
+        stream_full_name,
+        compare_to_model_version,
+        compare_to_dataset,
+  
