@@ -414,4 +414,13 @@ pub fn get_stream_stats(
         stream_full_name,
         compare_to_model_version,
         compare_to_dataset,
-  
+    } = args;
+
+    if compare_to_dataset.is_some() && compare_to_model_version.is_none() {
+        return Err(anyhow!(
+            "You cannot provide `compare_to_dataset` without `compare_to_model_version`"
+        ));
+    }
+
+    info!("Getting Stream");
+    let stre
