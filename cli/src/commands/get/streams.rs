@@ -390,4 +390,9 @@ fn get_stream_stat(
             )
             .unwrap_or_default();
 
-            stream_stat.compare_to_precision = Some(same_threshold_precision_and_recall.prec
+            stream_stat.compare_to_precision = Some(same_threshold_precision_and_recall.precision);
+            stream_stat.compare_to_recall = Some(same_threshold_precision_and_recall.recall);
+            stream_stat.maintain_recall_precision =
+                maintain_recall_threshold_and_precision.precision;
+            stream_stat.maintain_recall_threshold =
+            
