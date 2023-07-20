@@ -423,4 +423,12 @@ pub fn get_stream_stats(
     }
 
     info!("Getting Stream");
-    let stre
+    let stream = client.get_stream(stream_full_name)?;
+    let model = stream.model.context("No model associated with stream.")?;
+
+    let compare_config = get_compare_config(
+        client,
+        compare_to_model_version,
+        compare_to_dataset,
+        stream_full_name,
+    )
