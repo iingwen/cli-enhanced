@@ -431,4 +431,13 @@ pub fn get_stream_stats(
         compare_to_model_version,
         compare_to_dataset,
         stream_full_name,
-    )
+    )?;
+
+    let mut stream_stats = Vec::new();
+
+    let (sender, receiver) = channel();
+
+    pool.scoped(|scope| {
+        for label_threshold in &model.label_thresholds {
+            if label_threshold.threshold >= NotNan::new(1.0).expect("Could not create NotNan") {
+                // As the precision
