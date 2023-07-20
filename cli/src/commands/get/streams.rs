@@ -440,4 +440,12 @@ pub fn get_stream_stats(
     pool.scoped(|scope| {
         for label_threshold in &model.label_thresholds {
             if label_threshold.threshold >= NotNan::new(1.0).expect("Could not create NotNan") {
-                // As the precision
+                // As the precision and recall will always be 0
+                continue;
+            }
+            let sender = sender.clone();
+            let model = model.clone();
+            let compare_config = compare_config.clone();
+
+            scope.execute(move || {
+                let result = g
