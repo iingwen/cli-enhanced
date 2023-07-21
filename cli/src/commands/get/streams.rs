@@ -461,4 +461,13 @@ pub fn get_stream_stats(
     });
 
     drop(sender);
-  
+    let results: Vec<Result<StreamStat>> = receiver.iter().collect();
+
+    for result in results {
+        let stream_stat = result?;
+        stream_stats.push(stream_stat)
+    }
+
+    stream_stats.sort_by(|a, b| a.label_name.0.cmp(&b.label_name.0));
+
+    printer.print_resources(&stream_
