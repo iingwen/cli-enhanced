@@ -470,4 +470,17 @@ pub fn get_stream_stats(
 
     stream_stats.sort_by(|a, b| a.label_name.0.cmp(&b.label_name.0));
 
-    printer.print_resources(&stream_
+    printer.print_resources(&stream_stats)?;
+    Ok(())
+}
+
+pub fn get_stream_comments(client: &Client, args: &GetStreamCommentsArgs) -> Result<()> {
+    let GetStreamCommentsArgs {
+        stream,
+        size,
+        listen,
+        individual_advance,
+    } = args;
+
+    match listen {
+        Some(d
