@@ -448,4 +448,17 @@ pub fn get_stream_stats(
             let compare_config = compare_config.clone();
 
             scope.execute(move || {
-                let result = g
+                let result = get_stream_stat(
+                    label_threshold,
+                    stream_full_name,
+                    &model,
+                    &compare_config,
+                    client,
+                );
+                sender.send(result).expect("Could not send result");
+            });
+        }
+    });
+
+    drop(sender);
+  
