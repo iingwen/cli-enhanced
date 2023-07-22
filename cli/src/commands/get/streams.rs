@@ -489,4 +489,10 @@ pub fn get_stream_comments(client: &Client, args: &GetStreamCommentsArgs) -> Res
                 .context("Operation to fetch stream comments failed.")?;
             if batch.results.is_empty() {
                 if batch.filtered == 0 {
-                    std::thre
+                    std::thread::sleep(std::time::Duration::from_secs_f64(*delay));
+                } else {
+                    client
+                        .advance_stream(stream, batch.sequence_id)
+                        .context("Operation to advance stream for batch failed.")?;
+                }
+                c
