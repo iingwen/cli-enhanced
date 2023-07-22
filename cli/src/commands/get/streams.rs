@@ -495,4 +495,11 @@ pub fn get_stream_comments(client: &Client, args: &GetStreamCommentsArgs) -> Res
                         .advance_stream(stream, batch.sequence_id)
                         .context("Operation to advance stream for batch failed.")?;
                 }
-                c
+                continue;
+            }
+            let needs_final_advance = !individual_advance
+                || batch.sequence_id != batch.results.last().unwrap().sequence_id;
+            for result in batch.results {
+                print_resources_as_json(Some(&result), io::stdout().lock())?;
+
+          
