@@ -502,4 +502,10 @@ pub fn get_stream_comments(client: &Client, args: &GetStreamCommentsArgs) -> Res
             for result in batch.results {
                 print_resources_as_json(Some(&result), io::stdout().lock())?;
 
-          
+                if *individual_advance {
+                    client
+                        .advance_stream(stream, result.sequence_id)
+                        .context("Operation to advance stream for comment failed.")?;
+                }
+            }
+            if ne
