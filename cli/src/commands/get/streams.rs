@@ -483,4 +483,10 @@ pub fn get_stream_comments(client: &Client, args: &GetStreamCommentsArgs) -> Res
     } = args;
 
     match listen {
-        Some(d
+        Some(delay) => loop {
+            let batch = client
+                .fetch_stream_comments(stream, *size)
+                .context("Operation to fetch stream comments failed.")?;
+            if batch.results.is_empty() {
+                if batch.filtered == 0 {
+                    std::thre
