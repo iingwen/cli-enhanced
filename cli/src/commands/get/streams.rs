@@ -516,4 +516,9 @@ pub fn get_stream_comments(client: &Client, args: &GetStreamCommentsArgs) -> Res
         },
         None => {
             let batch = client
-         
+                .fetch_stream_comments(stream, *size)
+                .context("Operation to fetch stream comments failed.")?;
+            print_resources_as_json(Some(&batch), io::stdout().lock())
+        }
+    }
+}
