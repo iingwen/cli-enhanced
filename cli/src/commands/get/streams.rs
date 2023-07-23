@@ -508,4 +508,12 @@ pub fn get_stream_comments(client: &Client, args: &GetStreamCommentsArgs) -> Res
                         .context("Operation to advance stream for comment failed.")?;
                 }
             }
-            if ne
+            if needs_final_advance {
+                client
+                    .advance_stream(stream, batch.sequence_id)
+                    .context("Operation to advance stream for batch failed.")?;
+            }
+        },
+        None => {
+            let batch = client
+         
