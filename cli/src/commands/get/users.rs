@@ -47,4 +47,16 @@ pub fn get(client: &Client, args: &GetUsersArgs, printer: &Printer) -> Result<()
             user.project_permissions
                 .get(project_name)
                 .is_some_and(|user_permissions| {
-                    if let Some(project_permission) = project_permission
+                    if let Some(project_permission) = project_permission_filter {
+                        user_permissions.contains(project_permission)
+                    } else {
+                        true
+                    }
+                })
+        })
+    }
+
+    printer.print_resources(&users)
+}
+
+pub fn get_current_user(client: &Client, prin
