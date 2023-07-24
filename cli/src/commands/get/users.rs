@@ -39,4 +39,12 @@ pub fn get(client: &Client, args: &GetUsersArgs, printer: &Printer) -> Result<()
         }
         None => client
             .get_users()
-            .context("Operation to list users ha
+            .context("Operation to list users has failed.")?,
+    };
+
+    if let Some(project_name) = project_name_filter {
+        users.retain(|user| {
+            user.project_permissions
+                .get(project_name)
+                .is_some_and(|user_permissions| {
+                    if let Some(project_permission) = project_permission
