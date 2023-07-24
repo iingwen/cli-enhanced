@@ -19,4 +19,13 @@ pub struct GetUsersArgs {
     project_permission_filter: Option<ProjectPermission>,
 }
 
-pub fn get(client: &Client, args: &GetUsersArgs, printe
+pub fn get(client: &Client, args: &GetUsersArgs, printer: &Printer) -> Result<()> {
+    let GetUsersArgs {
+        user,
+        project_name_filter,
+        project_permission_filter,
+    } = args;
+
+    if project_name_filter.is_none() && project_permission_filter.is_some() {
+        bail!("You cannot filter on `permission` without a `project`")
+    
