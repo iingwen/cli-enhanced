@@ -28,4 +28,15 @@ pub fn get(client: &Client, args: &GetUsersArgs, printer: &Printer) -> Result<()
 
     if project_name_filter.is_none() && project_permission_filter.is_some() {
         bail!("You cannot filter on `permission` without a `project`")
-    
+    }
+
+    let mut users = match user {
+        Some(user_id) => {
+            let user = client
+                .get_user(user_id.clone())
+                .context("Operation to get user has failed.")?;
+            vec![user]
+        }
+        None => client
+            .get_users()
+            .context("Operation to list users ha
