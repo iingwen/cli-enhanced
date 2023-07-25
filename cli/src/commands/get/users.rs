@@ -59,4 +59,9 @@ pub fn get(client: &Client, args: &GetUsersArgs, printer: &Printer) -> Result<()
     printer.print_resources(&users)
 }
 
-pub fn get_current_user(client: &Client, prin
+pub fn get_current_user(client: &Client, printer: &Printer) -> Result<()> {
+    let user = client
+        .get_current_user()
+        .context("Operation to get the current user has failed.")?;
+    printer.print_resources(&[user])
+}
