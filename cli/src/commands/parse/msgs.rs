@@ -3,4 +3,14 @@ use crate::{
     parse::{get_files_in_directory, Statistics},
 };
 use anyhow::{anyhow, Context, Result};
-use cfb::Compound
+use cfb::CompoundFile;
+use colored::Colorize;
+use log::error;
+use once_cell::sync::Lazy;
+use regex::Regex;
+use std::{io::Read, sync::Arc};
+
+use reinfer_client::{
+    resources::{
+        documents::{Document, RawEmail, RawEmailBody, RawEmailHeaders},
+        email::AttachmentMetad
