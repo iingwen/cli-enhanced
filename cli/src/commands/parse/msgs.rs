@@ -13,4 +13,19 @@ use std::{io::Read, sync::Arc};
 use reinfer_client::{
     resources::{
         documents::{Document, RawEmail, RawEmailBody, RawEmailHeaders},
-        email::AttachmentMetad
+        email::AttachmentMetadata,
+    },
+    Client, PropertyMap, SourceIdentifier, TransformTag,
+};
+use std::{
+    fs::File,
+    path::{Path, PathBuf},
+};
+use structopt::StructOpt;
+
+use crate::{
+    commands::ensure_uip_user_consents_to_ai_unit_charge,
+    progress::{Options as ProgressOptions, Progress},
+};
+
+use super::upl
