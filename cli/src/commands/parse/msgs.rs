@@ -39,4 +39,9 @@ static CONTENT_TYPE_MIME_HEADER_RX: Lazy<Regex> =
 static CONTENT_TRANSFER_ENCODING_MIME_HEADER_RX: Lazy<Regex> =
     Lazy::new(|| Regex::new(r"Content-Transfer-Encoding:((\s)+.+\n)+").unwrap());
 static STREAM_PATH_MESSAGE_BODY_PLAIN: Lazy<PathBuf> =
-    Lazy::new(|| PathBuf::from("__substg1.0_1000
+    Lazy::new(|| PathBuf::from("__substg1.0_1000001F"));
+static STREAM_PATH_MESSAGE_HEADER: Lazy<PathBuf> =
+    Lazy::new(|| PathBuf::from("__substg1.0_007d001F"));
+static STREAM_PATH_ATTACHMENT_FILENAME: Lazy<PathBuf> =
+    Lazy::new(|| PathBuf::from("__substg1.0_3707001F"));
+static STREAM_PATH_ATTACHMENT_EXTENSION: Lazy<PathBuf> =
