@@ -35,4 +35,8 @@ const STREAM_PATH_ATTACHMENT_STORE_PREFIX: &str = "__attach_version1.0_#";
 const UPLOAD_BATCH_SIZE: usize = 128;
 
 static CONTENT_TYPE_MIME_HEADER_RX: Lazy<Regex> =
-    Lazy::new(|| Regex::new
+    Lazy::new(|| Regex::new(r"Content-Type:((\s)+.+\n)+").unwrap());
+static CONTENT_TRANSFER_ENCODING_MIME_HEADER_RX: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r"Content-Transfer-Encoding:((\s)+.+\n)+").unwrap());
+static STREAM_PATH_MESSAGE_BODY_PLAIN: Lazy<PathBuf> =
+    Lazy::new(|| PathBuf::from("__substg1.0_1000
