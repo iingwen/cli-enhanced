@@ -52,4 +52,15 @@ static STREAM_PATH_ATTACHMENT_DATA: Lazy<PathBuf> =
 #[derive(Debug, StructOpt)]
 pub struct ParseMsgArgs {
     #[structopt(short = "d", long = "dir", parse(from_os_str))]
-    /// Directory conta
+    /// Directory containing the msgs
+    directory: PathBuf,
+
+    #[structopt(short = "s", long = "source")]
+    /// Source name or id
+    source: SourceIdentifier,
+
+    #[structopt(long = "transform-tag")]
+    /// Transform tag to use.
+    transform_tag: Option<TransformTag>,
+
+    #[structopt(short = "n", long = "no-charge
