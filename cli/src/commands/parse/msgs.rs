@@ -45,3 +45,11 @@ static STREAM_PATH_MESSAGE_HEADER: Lazy<PathBuf> =
 static STREAM_PATH_ATTACHMENT_FILENAME: Lazy<PathBuf> =
     Lazy::new(|| PathBuf::from("__substg1.0_3707001F"));
 static STREAM_PATH_ATTACHMENT_EXTENSION: Lazy<PathBuf> =
+    Lazy::new(|| PathBuf::from("__substg1.0_3703001F"));
+static STREAM_PATH_ATTACHMENT_DATA: Lazy<PathBuf> =
+    Lazy::new(|| PathBuf::from("__substg1.0_37010102"));
+
+#[derive(Debug, StructOpt)]
+pub struct ParseMsgArgs {
+    #[structopt(short = "d", long = "dir", parse(from_os_str))]
+    /// Directory conta
