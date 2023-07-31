@@ -63,4 +63,13 @@ pub struct ParseMsgArgs {
     /// Transform tag to use.
     transform_tag: Option<TransformTag>,
 
-    #[structopt(short = "n", long = "no-charge
+    #[structopt(short = "n", long = "no-charge")]
+    /// Whether to attempt to bypass billing (internal only)
+    no_charge: bool,
+
+    #[structopt(short = "y", long = "yes")]
+    /// Consent to ai unit charge. Suppresses confirmation prompt.
+    yes: bool,
+}
+
+fn read_stream(stream_path: &Path, compound_file: &m
