@@ -72,4 +72,16 @@ pub struct ParseMsgArgs {
     yes: bool,
 }
 
-fn read_stream(stream_path: &Path, compound_file: &m
+fn read_stream(stream_path: &Path, compound_file: &mut CompoundFile<File>) -> Result<Vec<u8>> {
+    let data = {
+        let mut stream = compound_file.open_stream(stream_path)?;
+        let mut buffer = Vec::new();
+        stream.read_to_end(&mut buffer)?;
+        buffer
+    };
+
+    Ok(data)
+}
+
+fn read_unicode_stream_to_string(
+    stream_
