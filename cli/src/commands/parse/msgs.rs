@@ -101,3 +101,9 @@ fn read_unicode_stream_to_string(
 
 // Decode a UTF-16LE data stream, given as raw bytes of Vec<u8>
 fn utf16le_stream_to_string(data: &[u8]) -> String {
+    let mut decoder = encoding_rs::UTF_16LE.new_decoder();
+
+    // The amount of memory to reserve for writing at a time
+    // We should only require one or two blocks for the vast majority of cases
+    let block_length = data.len();
+    let mut buffer: String = String::with_capacity(block_leng
