@@ -84,4 +84,10 @@ fn read_stream(stream_path: &Path, compound_file: &mut CompoundFile<File>) -> Re
 }
 
 fn read_unicode_stream_to_string(
-    stream_
+    stream_path: &Path,
+    compound_file: &mut CompoundFile<File>,
+) -> Result<String> {
+    if !compound_file.is_stream(stream_path) {
+        return Err(anyhow!(
+            "Could not find stream {}. Please check that you are using unicode msgs",
+            stream_path.to_string_l
