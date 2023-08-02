@@ -90,4 +90,14 @@ fn read_unicode_stream_to_string(
     if !compound_file.is_stream(stream_path) {
         return Err(anyhow!(
             "Could not find stream {}. Please check that you are using unicode msgs",
-            stream_path.to_string_l
+            stream_path.to_string_lossy()
+        ));
+    }
+
+    // Stream data is a UTF16 string encoded as Vec[u8]
+    let data = read_stream(stream_path, compound_file)?;
+    Ok(utf16le_stream_to_string(&data))
+}
+
+// Decode a UTF-16LE data stream, given as raw bytes of Vec<u8>
+fn utf16le_stream_to_string(data: &[u8]) -> String {
