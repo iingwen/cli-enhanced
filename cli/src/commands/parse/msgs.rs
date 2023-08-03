@@ -106,4 +106,11 @@ fn utf16le_stream_to_string(data: &[u8]) -> String {
     // The amount of memory to reserve for writing at a time
     // We should only require one or two blocks for the vast majority of cases
     let block_length = data.len();
-    let mut buffer: String = String::with_capacity(block_leng
+    let mut buffer: String = String::with_capacity(block_length);
+
+    loop {
+        let (coder_result, _, _) = decoder.decode_to_string(data, &mut buffer, true);
+        use encoding_rs::CoderResult;
+        match coder_result {
+            // The output buffer was not big enough - increase and retry
+            CoderResult::O
