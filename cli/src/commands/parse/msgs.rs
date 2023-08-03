@@ -113,4 +113,13 @@ fn utf16le_stream_to_string(data: &[u8]) -> String {
         use encoding_rs::CoderResult;
         match coder_result {
             // The output buffer was not big enough - increase and retry
-            CoderResult::O
+            CoderResult::OutputFull => buffer.reserve(block_length),
+            CoderResult::InputEmpty => return buffer,
+        }
+    }
+}
+
+fn get_attachment_store_path(attachment_number: usize) -> PathBuf {
+    PathBuf::from(format!(
+        "{}{:08}",
+        STREAM_PATH_ATTACHMENT_STORE_PREFI
