@@ -147,3 +147,14 @@ fn read_attachment(
         name,
         content_type,
         size: data.len() as u64,
+    })
+}
+
+fn remove_content_headers(headers_string: String) -> Result<String> {
+    let mut clean_headers_string: String;
+
+    clean_headers_string = CONTENT_TYPE_MIME_HEADER_RX
+        .replace(&headers_string, "")
+        .to_string();
+
+    clean_headers_string = CONTENT_TRANSFER_ENCODI
