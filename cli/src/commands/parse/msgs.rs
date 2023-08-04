@@ -122,4 +122,13 @@ fn utf16le_stream_to_string(data: &[u8]) -> String {
 fn get_attachment_store_path(attachment_number: usize) -> PathBuf {
     PathBuf::from(format!(
         "{}{:08}",
-        STREAM_PATH_ATTACHMENT_STORE_PREFI
+        STREAM_PATH_ATTACHMENT_STORE_PREFIX, attachment_number
+    ))
+}
+
+fn read_attachment(
+    attachment_path: PathBuf,
+    compound_file: &mut CompoundFile<File>,
+) -> Result<AttachmentMetadata> {
+    let mut attachment_name_path = attachment_path.clone();
+    attachment_name_path.push(&*STREAM_PATH_ATTACHMEN
