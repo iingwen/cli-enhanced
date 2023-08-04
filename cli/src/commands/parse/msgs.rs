@@ -131,4 +131,12 @@ fn read_attachment(
     compound_file: &mut CompoundFile<File>,
 ) -> Result<AttachmentMetadata> {
     let mut attachment_name_path = attachment_path.clone();
-    attachment_name_path.push(&*STREAM_PATH_ATTACHMEN
+    attachment_name_path.push(&*STREAM_PATH_ATTACHMENT_FILENAME);
+
+    let mut content_type_path = attachment_path.clone();
+    content_type_path.push(&*STREAM_PATH_ATTACHMENT_EXTENSION);
+
+    let mut data_path = attachment_path.clone();
+    data_path.push(&*STREAM_PATH_ATTACHMENT_DATA);
+
+    let name = read_unicode_stream_to_s
