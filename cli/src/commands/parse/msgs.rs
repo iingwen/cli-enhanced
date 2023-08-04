@@ -139,4 +139,11 @@ fn read_attachment(
     let mut data_path = attachment_path.clone();
     data_path.push(&*STREAM_PATH_ATTACHMENT_DATA);
 
-    let name = read_unicode_stream_to_s
+    let name = read_unicode_stream_to_string(&attachment_name_path, compound_file)?;
+    let content_type = read_unicode_stream_to_string(&content_type_path, compound_file)?;
+    let data = read_stream(&data_path, compound_file)?;
+
+    Ok(AttachmentMetadata {
+        name,
+        content_type,
+        size: data.len() as u64,
