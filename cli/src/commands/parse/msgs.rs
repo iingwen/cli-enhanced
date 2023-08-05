@@ -157,4 +157,16 @@ fn remove_content_headers(headers_string: String) -> Result<String> {
         .replace(&headers_string, "")
         .to_string();
 
-    clean_headers_string = CONTENT_TRANSFER_ENCODI
+    clean_headers_string = CONTENT_TRANSFER_ENCODING_MIME_HEADER_RX
+        .replace(&clean_headers_string, "")
+        .to_string();
+
+    Ok(clean_headers_string)
+}
+
+fn read_msg_to_document(path: &PathBuf) -> Result<Document> {
+    if !path.is_file() {
+        return Err(anyhow!("No such file: {:?}", path));
+    }
+
+    let mut compound_file = c
