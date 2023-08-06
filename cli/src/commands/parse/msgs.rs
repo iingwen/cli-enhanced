@@ -185,4 +185,12 @@ fn read_msg_to_document(path: &PathBuf) -> Result<Document> {
     let mut attachment_number = 0;
     let mut attachments = Vec::new();
     loop {
-     
+        let attachment_path = get_attachment_store_path(attachment_number);
+
+        if compound_file.is_storage(&attachment_path) {
+            attachments.push(read_attachment(attachment_path, &mut compound_file)?);
+        } else {
+            break;
+        }
+
+        attachment_num
