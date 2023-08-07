@@ -193,4 +193,13 @@ fn read_msg_to_document(path: &PathBuf) -> Result<Document> {
             break;
         }
 
-        attachment_num
+        attachment_number += 1;
+    }
+
+    // User Properties
+    let mut user_properties = PropertyMap::new();
+    user_properties.insert_string(
+        MSG_NAME_USER_PROPERTY_NAME.to_string(),
+        path.file_name()
+            .context("Could not get file name")?
+            .to_string_los
