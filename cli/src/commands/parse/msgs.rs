@@ -212,4 +212,19 @@ fn read_msg_to_document(path: &PathBuf) -> Result<Document> {
             headers: RawEmailHeaders::Raw(headers_string_no_content_headers),
             attachments,
         },
-        user_propertie
+        user_properties,
+        comment_id: None,
+    })
+}
+
+pub fn parse(client: &Client, args: &ParseMsgArgs) -> Result<()> {
+    let ParseMsgArgs {
+        directory,
+        source,
+        transform_tag,
+        no_charge,
+        yes,
+    } = args;
+
+    if !no_charge && !yes {
+        ensure_
