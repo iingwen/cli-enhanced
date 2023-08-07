@@ -202,4 +202,14 @@ fn read_msg_to_document(path: &PathBuf) -> Result<Document> {
         MSG_NAME_USER_PROPERTY_NAME.to_string(),
         path.file_name()
             .context("Could not get file name")?
-            .to_string_los
+            .to_string_lossy()
+            .to_string(),
+    );
+
+    Ok(Document {
+        raw_email: RawEmail {
+            body: RawEmailBody::Plain(plain_body_string),
+            headers: RawEmailHeaders::Raw(headers_string_no_content_headers),
+            attachments,
+        },
+        user_propertie
