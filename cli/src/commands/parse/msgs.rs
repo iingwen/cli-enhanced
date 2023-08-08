@@ -233,4 +233,12 @@ pub fn parse(client: &Client, args: &ParseMsgArgs) -> Result<()> {
     let msg_paths = get_files_in_directory(directory, "msg", true)?;
     let statistics = Arc::new(Statistics::new());
     let _progress = get_progress_bar(msg_paths.len() as u64, &statistics);
-    let source =
+    let source = client.get_source(source.clone())?;
+    let transform_tag = transform_tag
+        .clone()
+        .unwrap_or(DEFAULT_TRANSFORM_TAG.clone());
+
+    let mut documents = Vec::new();
+    let mut errors = Vec::new();
+
+    let send = |documents: &mut Vec<Document>| ->
