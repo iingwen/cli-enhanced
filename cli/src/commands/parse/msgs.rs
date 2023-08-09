@@ -241,4 +241,17 @@ pub fn parse(client: &Client, args: &ParseMsgArgs) -> Result<()> {
     let mut documents = Vec::new();
     let mut errors = Vec::new();
 
-    let send = |documents: &mut Vec<Document>| ->
+    let send = |documents: &mut Vec<Document>| -> Result<()> {
+        upload_batch_of_documents(
+            client,
+            &source,
+            documents,
+            &transform_tag,
+            *no_charge,
+            &statistics,
+        )?;
+        documents.clear();
+        Ok(())
+    };
+
+    for path in msg_paths {
