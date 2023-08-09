@@ -255,3 +255,12 @@ pub fn parse(client: &Client, args: &ParseMsgArgs) -> Result<()> {
     };
 
     for path in msg_paths {
+        match read_msg_to_document(&path.path()) {
+            Ok(document) => {
+                documents.push(document);
+
+                if documents.len() >= UPLOAD_BATCH_SIZE {
+                    send(&mut documents)?;
+                }
+                statistics.increment_processed();
+      
