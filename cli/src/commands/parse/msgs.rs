@@ -271,4 +271,20 @@ pub fn parse(client: &Client, args: &ParseMsgArgs) -> Result<()> {
                     error
                 ));
                 statistics.increment_failed();
-                statistics.increment
+                statistics.increment_processed();
+            }
+        }
+    }
+
+    send(&mut documents)?;
+
+    for error in errors {
+        error!("{}", error);
+    }
+
+    Ok(())
+}
+
+fn get_progress_bar(total_bytes: u64, statistics: &Arc<Statistics>) -> Progress {
+    Progress::new(
+        move |statistic
