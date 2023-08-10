@@ -263,4 +263,12 @@ pub fn parse(client: &Client, args: &ParseMsgArgs) -> Result<()> {
                     send(&mut documents)?;
                 }
                 statistics.increment_processed();
-      
+            }
+            Err(error) => {
+                errors.push(format!(
+                    "Failed to process file {}: {}",
+                    path.file_name().to_string_lossy(),
+                    error
+                ));
+                statistics.increment_failed();
+                statistics.increment
