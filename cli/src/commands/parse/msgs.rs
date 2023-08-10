@@ -287,4 +287,11 @@ pub fn parse(client: &Client, args: &ParseMsgArgs) -> Result<()> {
 
 fn get_progress_bar(total_bytes: u64, statistics: &Arc<Statistics>) -> Progress {
     Progress::new(
-        move |statistic
+        move |statistic| {
+            let num_processed = statistic.num_processed();
+            let num_failed = statistic.num_failed();
+            let num_uploaded = statistic.num_uploaded();
+            (
+                num_processed as u64,
+                format!(
+                    "{} {} {} {} {} {}",
