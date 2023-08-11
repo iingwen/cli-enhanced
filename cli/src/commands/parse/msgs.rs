@@ -300,4 +300,20 @@ fn get_progress_bar(total_bytes: u64, statistics: &Arc<Statistics>) -> Progress 
                     num_failed.to_string().bold(),
                     "failed".dimmed(),
                     num_uploaded.to_string().bold(),
-                    "uploaded".dimm
+                    "uploaded".dimmed()
+                ),
+            )
+        },
+        statistics,
+        Some(total_bytes),
+        ProgressOptions { bytes_units: false },
+    )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use pretty_assertions::assert_eq;
+
+    #[test]
+    fn test_read_msg_to_document_non_unicod
