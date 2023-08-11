@@ -295,3 +295,9 @@ fn get_progress_bar(total_bytes: u64, statistics: &Arc<Statistics>) -> Progress 
                 num_processed as u64,
                 format!(
                     "{} {} {} {} {} {}",
+                    num_processed.to_string().bold(),
+                    "processed".dimmed(),
+                    num_failed.to_string().bold(),
+                    "failed".dimmed(),
+                    num_uploaded.to_string().bold(),
+                    "uploaded".dimm
