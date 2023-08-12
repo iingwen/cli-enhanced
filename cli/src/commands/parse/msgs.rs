@@ -323,4 +323,9 @@ mod tests {
     }
 
     #[test]
-  
+    fn test_read_msg_to_document_unicode() {
+        let mut expected_user_properties = PropertyMap::new();
+        expected_user_properties
+            .insert_string("MSG NAME ID".to_string(), "unicode.msg".to_string());
+
+        let expected_headers = "Receive
