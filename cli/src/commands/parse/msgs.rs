@@ -328,4 +328,4 @@ mod tests {
         expected_user_properties
             .insert_string("MSG NAME ID".to_string(), "unicode.msg".to_string());
 
-        let expected_headers = "Receive
+        let expected_headers = "Received: from DB8PR02MB5883.eurprd02.prod.outlook.com (2603:10a6:10:116::17)\r\n by AM6PR02MB4215.eurprd02.prod.outlook.com with HTTPS; Wed, 25 Oct 2023\r\n 17:03:35 +0000\r\nAuthentication-Results: dkim=none (message not signed)\r\n header.d=none;dmarc=none action=none header.from=uipath
