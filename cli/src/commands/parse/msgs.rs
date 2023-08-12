@@ -316,4 +316,11 @@ mod tests {
     use pretty_assertions::assert_eq;
 
     #[test]
-    fn test_read_msg_to_document_non_unicod
+    fn test_read_msg_to_document_non_unicode() {
+        let result = read_msg_to_document(&PathBuf::from("tests/samples/non-unicode.msg"));
+
+        assert_eq!(result.expect_err("Expected Error Result").to_string(), "Could not find stream __substg1.0_007d001F. Please check that you are using unicode msgs");
+    }
+
+    #[test]
+  
