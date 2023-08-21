@@ -334,4 +334,12 @@ mod tests {
 
         let expected_attachments = vec![
             AttachmentMetadata {
-                name: "h
+                name: "hello.txt".to_string(),
+                size: 12,
+                content_type: ".txt".to_string(),
+            },
+            AttachmentMetadata {
+                name: "world.pdf".to_string(),
+                size: 7302,
+                content_type: ".pdf".to_string(),
+            
