@@ -350,4 +350,12 @@ mod tests {
             raw_email: RawEmail {
                 body: RawEmailBody::Plain(expected_body.to_string()),
                 headers: RawEmailHeaders::Raw(expected_headers.to_string()),
-  
+                attachments: expected_attachments,
+            },
+            user_properties: expected_user_properties,
+        };
+
+        let actual_document = read_msg_to_document(&PathBuf::from("tests/samples/unicode.msg"))
+            .expect("Failed to read msg");
+
+        as
