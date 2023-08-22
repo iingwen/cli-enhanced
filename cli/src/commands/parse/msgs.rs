@@ -342,4 +342,12 @@ mod tests {
                 name: "world.pdf".to_string(),
                 size: 7302,
                 content_type: ".pdf".to_string(),
-            
+            },
+        ];
+
+        let expected_document = Document {
+            comment_id: None,
+            raw_email: RawEmail {
+                body: RawEmailBody::Plain(expected_body.to_string()),
+                headers: RawEmailHeaders::Raw(expected_headers.to_string()),
+  
