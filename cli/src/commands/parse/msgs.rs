@@ -358,4 +358,6 @@ mod tests {
         let actual_document = read_msg_to_document(&PathBuf::from("tests/samples/unicode.msg"))
             .expect("Failed to read msg");
 
-        as
+        assert_eq!(expected_document, actual_document);
+    }
+}
