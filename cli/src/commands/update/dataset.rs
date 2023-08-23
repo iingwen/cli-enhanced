@@ -15,4 +15,13 @@ pub struct UpdateDatasetArgs {
     /// Set the title of the dataset
     title: Option<String>,
 
-    #[structopt(long = "de
+    #[structopt(long = "description")]
+    /// Set the description of the dataset
+    description: Option<String>,
+
+    #[structopt(short = "s", long = "source")]
+    /// Names or ids of the sources in the dataset
+    sources: Option<Vec<SourceIdentifier>>,
+}
+
+pub fn update(client: &Client, args: &UpdateD
