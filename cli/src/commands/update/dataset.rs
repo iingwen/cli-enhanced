@@ -24,4 +24,14 @@ pub struct UpdateDatasetArgs {
     sources: Option<Vec<SourceIdentifier>>,
 }
 
-pub fn update(client: &Client, args: &UpdateD
+pub fn update(client: &Client, args: &UpdateDatasetArgs, printer: &Printer) -> Result<()> {
+    let UpdateDatasetArgs {
+        dataset,
+        title,
+        description,
+        sources,
+    } = args;
+
+    let source_ids = sources
+        .as_ref()
+        .map::<Result<Vec<SourceId>>, _>(|sources| {
