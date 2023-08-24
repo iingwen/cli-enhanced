@@ -35,3 +35,13 @@ pub fn update(client: &Client, args: &UpdateDatasetArgs, printer: &Printer) -> R
     let source_ids = sources
         .as_ref()
         .map::<Result<Vec<SourceId>>, _>(|sources| {
+            sources
+                .iter()
+                .map(|source| Ok(client.get_source(source.clone())?.id))
+                .collect()
+        })
+        .transpose()
+        .context("Operation to get sources failed")?;
+
+    let dataset_full_name = match dataset {
+ 
