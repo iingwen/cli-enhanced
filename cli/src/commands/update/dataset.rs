@@ -44,4 +44,11 @@ pub fn update(client: &Client, args: &UpdateDatasetArgs, printer: &Printer) -> R
         .context("Operation to get sources failed")?;
 
     let dataset_full_name = match dataset {
- 
+        DatasetIdentifier::FullName(name) => name.to_owned(),
+        dataset @ DatasetIdentifier::Id(_) => client
+            .get_dataset(dataset.to_owned())
+            .context("Fetching dataset id.")?
+            .full_name(),
+    };
+
+    let dataset = client
