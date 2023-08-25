@@ -52,3 +52,12 @@ pub fn update(client: &Client, args: &UpdateDatasetArgs, printer: &Printer) -> R
     };
 
     let dataset = client
+        .update_dataset(
+            &dataset_full_name,
+            UpdateDataset {
+                source_ids: source_ids.as_deref(),
+                title: title.as_deref(),
+                description: description.as_deref(),
+            },
+        )
+        .co
