@@ -60,4 +60,12 @@ pub fn update(client: &Client, args: &UpdateDatasetArgs, printer: &Printer) -> R
                 description: description.as_deref(),
             },
         )
-        .co
+        .context("Operation to update a dataset has failed.")?;
+    info!(
+        "Dataset `{}` [id: {}] updated successfully",
+        dataset.full_name().0,
+        dataset.id.0,
+    );
+    printer.print_resources(&[dataset])?;
+    Ok(())
+}
