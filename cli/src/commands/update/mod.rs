@@ -14,4 +14,13 @@ use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
 pub enum UpdateArgs {
-    #[
+    #[structopt(name = "source")]
+    /// Update an existing source
+    Source(UpdateSourceArgs),
+
+    #[structopt(name = "dataset")]
+    /// Update an existing dataset
+    Dataset(UpdateDatasetArgs),
+
+    #[structopt(name = "project")]
+    /// Update an e
