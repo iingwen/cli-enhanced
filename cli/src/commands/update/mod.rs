@@ -33,4 +33,7 @@ pub enum UpdateArgs {
 
 pub fn run(update_args: &UpdateArgs, client: Client, printer: &Printer) -> Result<()> {
     match update_args {
-        UpdateArgs::Source(sourc
+        UpdateArgs::Source(source_args) => source::update(&client, source_args, printer),
+        UpdateArgs::Dataset(dataset_args) => dataset::update(&client, dataset_args, printer),
+        UpdateArgs::Project(project_args) => project::update(&client, project_args, printer),
+        UpdateArgs::Users(users_args) => users
