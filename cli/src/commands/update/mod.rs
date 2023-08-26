@@ -23,4 +23,14 @@ pub enum UpdateArgs {
     Dataset(UpdateDatasetArgs),
 
     #[structopt(name = "project")]
-    /// Update an e
+    /// Update an existing project
+    Project(UpdateProjectArgs),
+
+    #[structopt(name = "users")]
+    /// Update existing users
+    Users(UpdateUsersArgs),
+}
+
+pub fn run(update_args: &UpdateArgs, client: Client, printer: &Printer) -> Result<()> {
+    match update_args {
+        UpdateArgs::Source(sourc
