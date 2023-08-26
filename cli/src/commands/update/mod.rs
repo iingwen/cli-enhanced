@@ -36,4 +36,6 @@ pub fn run(update_args: &UpdateArgs, client: Client, printer: &Printer) -> Resul
         UpdateArgs::Source(source_args) => source::update(&client, source_args, printer),
         UpdateArgs::Dataset(dataset_args) => dataset::update(&client, dataset_args, printer),
         UpdateArgs::Project(project_args) => project::update(&client, project_args, printer),
-        UpdateArgs::Users(users_args) => users
+        UpdateArgs::Users(users_args) => users::update(&client, users_args),
+    }
+}
