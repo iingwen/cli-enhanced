@@ -6,4 +6,14 @@ use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
 pub struct UpdateProjectArgs {
-    #[structo
+    #[structopt(name = "project-name")]
+    /// Full name of the project
+    name: ProjectName,
+
+    #[structopt(long = "title")]
+    /// Set the title of the project
+    title: Option<String>,
+
+    #[structopt(long = "description")]
+    /// Set the description of the project
+    description: Optio
