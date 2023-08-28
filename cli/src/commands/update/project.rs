@@ -16,4 +16,17 @@ pub struct UpdateProjectArgs {
 
     #[structopt(long = "description")]
     /// Set the description of the project
-    description: Optio
+    description: Option<String>,
+}
+
+pub fn update(client: &Client, args: &UpdateProjectArgs, printer: &Printer) -> Result<()> {
+    let UpdateProjectArgs {
+        name,
+        title,
+        description,
+    } = args;
+
+    let project = client
+        .update_project(
+            name,
+            UpdateProject {
