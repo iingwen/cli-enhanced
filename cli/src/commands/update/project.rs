@@ -30,3 +30,10 @@ pub fn update(client: &Client, args: &UpdateProjectArgs, printer: &Printer) -> R
         .update_project(
             name,
             UpdateProject {
+                title: title.as_deref(),
+                description: description.as_deref(),
+            },
+        )
+        .context("Operation to update a project has failed")?;
+    info!("Project `{}` updated successfully", project.name.0,);
+    printer.print_resource
