@@ -16,4 +16,14 @@ pub struct UpdateSourceArgs {
 
     #[structopt(long = "description")]
     /// Set the description of the source
-    descripti
+    description: Option<String>,
+
+    #[structopt(long = "should-translate")]
+    /// Enable translation for the source
+    should_translate: Option<bool>,
+
+    #[structopt(long = "bucket")]
+    /// Bucket to pull emails from.
+    bucket: Option<BucketIdentifier>,
+
+    #[str
