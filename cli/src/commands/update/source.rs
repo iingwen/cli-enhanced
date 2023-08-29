@@ -6,4 +6,14 @@ use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
 pub struct UpdateSourceArgs {
-    #[structopt(
+    #[structopt(name = "source")]
+    /// Id or full name of the source to update
+    source: SourceIdentifier,
+
+    #[structopt(long = "title")]
+    /// Set the title of the source
+    title: Option<String>,
+
+    #[structopt(long = "description")]
+    /// Set the description of the source
+    descripti
