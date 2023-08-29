@@ -36,4 +36,6 @@ pub fn update(client: &Client, args: &UpdateProjectArgs, printer: &Printer) -> R
         )
         .context("Operation to update a project has failed")?;
     info!("Project `{}` updated successfully", project.name.0,);
-    printer.print_resource
+    printer.print_resources(&[project])?;
+    Ok(())
+}
