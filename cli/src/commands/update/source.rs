@@ -35,4 +35,14 @@ pub fn update(client: &Client, args: &UpdateSourceArgs, printer: &Printer) -> Re
     let UpdateSourceArgs {
         source,
         title,
-        descriptio
+        description,
+        should_translate,
+        bucket,
+        transform_tag,
+    } = args;
+
+    let bucket_id = match bucket.to_owned() {
+        Some(BucketIdentifier::Id(bucket_id)) => Some(bucket_id),
+        Some(full_name @ BucketIdentifier::FullName(_)) => Some(
+            client
+            
