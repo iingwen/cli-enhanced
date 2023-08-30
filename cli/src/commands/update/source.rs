@@ -26,4 +26,13 @@ pub struct UpdateSourceArgs {
     /// Bucket to pull emails from.
     bucket: Option<BucketIdentifier>,
 
-    #[str
+    #[structopt(long = "transform-tag")]
+    /// Set the transform tag of the source
+    transform_tag: Option<TransformTag>,
+}
+
+pub fn update(client: &Client, args: &UpdateSourceArgs, printer: &Printer) -> Result<()> {
+    let UpdateSourceArgs {
+        source,
+        title,
+        descriptio
