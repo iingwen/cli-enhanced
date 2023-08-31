@@ -45,4 +45,13 @@ pub fn update(client: &Client, args: &UpdateSourceArgs, printer: &Printer) -> Re
         Some(BucketIdentifier::Id(bucket_id)) => Some(bucket_id),
         Some(full_name @ BucketIdentifier::FullName(_)) => Some(
             client
-            
+                .get_bucket(full_name)
+                .context("Fetching bucket for id.")?
+                .id,
+        ),
+        None => None,
+    };
+
+    let source_full_name = match source.to_owned() {
+        SourceIdentifier::FullName(name) => name,
+        source @ SourceIden
