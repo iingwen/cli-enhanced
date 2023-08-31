@@ -65,3 +65,11 @@ pub fn update(client: &Client, args: &UpdateSourceArgs, printer: &Printer) -> Re
             &source_full_name,
             UpdateSource {
                 title: title.as_deref(),
+                description: description.as_deref(),
+                should_translate: *should_translate,
+                bucket_id,
+                sensitive_properties: None,
+                transform_tag: transform_tag.as_ref(),
+            },
+        )
+        .context("Operati
