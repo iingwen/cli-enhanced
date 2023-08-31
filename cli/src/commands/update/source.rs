@@ -54,4 +54,14 @@ pub fn update(client: &Client, args: &UpdateSourceArgs, printer: &Printer) -> Re
 
     let source_full_name = match source.to_owned() {
         SourceIdentifier::FullName(name) => name,
-        source @ SourceIden
+        source @ SourceIdentifier::Id(_) => client
+            .get_source(source)
+            .context("Fetching source id.")?
+            .full_name(),
+    };
+
+    let source = client
+        .update_source(
+            &source_full_name,
+            UpdateSource {
+                title: title.as_deref(),
