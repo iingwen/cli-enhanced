@@ -72,4 +72,12 @@ pub fn update(client: &Client, args: &UpdateSourceArgs, printer: &Printer) -> Re
                 transform_tag: transform_tag.as_ref(),
             },
         )
-        .context("Operati
+        .context("Operation to update a source has failed")?;
+    info!(
+        "Source `{}` [id: {}] updated successfully",
+        source.full_name().0,
+        source.id.0
+    );
+    printer.print_resources(&[source])?;
+    Ok(())
+}
