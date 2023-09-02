@@ -422,3 +422,11 @@ impl Printer {
     where
         T: IntoIterator<Item = Resource> + IntoTable,
         Resource: Serialize,
+    {
+        match self.output {
+            OutputFormat::Table => print_table(resources),
+            OutputFormat::Json => print_resources_as_json(resources, io::stdout().lock())?,
+        };
+        Ok(())
+    }
+}
