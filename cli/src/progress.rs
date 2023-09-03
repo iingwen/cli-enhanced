@@ -29,4 +29,12 @@ pub struct Progress {
 }
 
 impl Progress {
-    pub fn n
+    pub fn new<ProgressFnT, StatisticsT>(
+        progress_fn: ProgressFnT,
+        statistics: &Arc<StatisticsT>,
+        target_value: Option<u64>,
+        options: Options,
+    ) -> Self
+    where
+        ProgressFnT: Fn(&StatisticsT) -> ProgressMessage + Sync + Send + 'static,
+       
