@@ -56,4 +56,17 @@ impl Progress {
 
     pub fn done(&mut self) {
         if let Some(handle) = self.progress_thread.take() {
-  
+            self.report_progress_flag.store(false, Ordering::SeqCst);
+            handle.join().expect("Could not join progress thread.");
+        }
+    }
+}
+
+impl Drop for Progress {
+    fn drop(&mut self) {
+        self.done();
+    }
+}
+
+fn spawn_progress_thread<Statistics, ProgressFn>(
+    s
