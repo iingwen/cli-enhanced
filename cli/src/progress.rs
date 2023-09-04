@@ -45,4 +45,15 @@ impl Progress {
             progress_fn,
             target_value,
             options,
-            Ar
+            Arc::clone(&report_progress_flag),
+        );
+
+        Progress {
+            report_progress_flag,
+            progress_thread: Some(progress_thread),
+        }
+    }
+
+    pub fn done(&mut self) {
+        if let Some(handle) = self.progress_thread.take() {
+  
