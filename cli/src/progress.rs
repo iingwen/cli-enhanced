@@ -37,4 +37,12 @@ impl Progress {
     ) -> Self
     where
         ProgressFnT: Fn(&StatisticsT) -> ProgressMessage + Sync + Send + 'static,
-       
+        StatisticsT: Sync + Send + 'static,
+    {
+        let report_progress_flag = Arc::new(AtomicBool::new(true));
+        let progress_thread = spawn_progress_thread(
+            Arc::clone(statistics),
+            progress_fn,
+            target_value,
+            options,
+            Ar
