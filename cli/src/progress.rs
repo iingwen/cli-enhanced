@@ -69,4 +69,12 @@ impl Drop for Progress {
 }
 
 fn spawn_progress_thread<Statistics, ProgressFn>(
-    s
+    statistics: Arc<Statistics>,
+    progress_fn: ProgressFn,
+    max_progress_value: Option<u64>,
+    options: Options,
+    report_progress: Arc<AtomicBool>,
+) -> thread::JoinHandle<()>
+where
+    ProgressFn: Fn(&Statistics) -> ProgressMessage + Sync + Send + 'static,
+    Statistics: Sync + Send + 'static
