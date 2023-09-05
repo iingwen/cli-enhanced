@@ -99,4 +99,13 @@ where
     progress_bar.set_style(
         ProgressStyle::default_bar()
             .template(&template_str)
-            .e
+            .expect("invalid template string")
+            .progress_chars("#>-"),
+    );
+
+    thread::spawn(move || {
+        let progress_fn = progress_fn;
+        let statistics = Arc::clone(&statistics);
+        let sleep_duration = Duration::from_millis(100);
+
+        while report_prog
