@@ -91,4 +91,12 @@ where
             "{{bar:32.cyan/blue}} {{bytes}} / {{total_bytes}} ({{eta}})"
         )
         .unwrap(),
-        (true, false) => write!(template_str, "{{bar:32.cyan/blue}}
+        (true, false) => write!(template_str, "{{bar:32.cyan/blue}} {{msg}} ({{eta}})").unwrap(),
+        _ => write!(template_str, "{{msg}}").unwrap(),
+    }
+
+    let progress_bar = ProgressBar::new(max_progress_value.unwrap_or(0));
+    progress_bar.set_style(
+        ProgressStyle::default_bar()
+            .template(&template_str)
+            .e
