@@ -77,4 +77,12 @@ fn spawn_progress_thread<Statistics, ProgressFn>(
 ) -> thread::JoinHandle<()>
 where
     ProgressFn: Fn(&Statistics) -> ProgressMessage + Sync + Send + 'static,
-    Statistics: Sync + Send + 'static
+    Statistics: Sync + Send + 'static,
+{
+    use std::ops::Deref;
+    let mut template_str = String::new();
+    write!(template_str, "{} ", LOG_PREFIX_INFO.deref()).unwrap();
+    write!(template_str, "{{spinner:.green}} ").unwrap();
+    write!(template_str, "[{{elapsed_precise}}] {{prefix}} ").unwrap();
+
+    match (max_progr
