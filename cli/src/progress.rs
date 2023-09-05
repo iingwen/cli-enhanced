@@ -85,4 +85,10 @@ where
     write!(template_str, "{{spinner:.green}} ").unwrap();
     write!(template_str, "[{{elapsed_precise}}] {{prefix}} ").unwrap();
 
-    match (max_progr
+    match (max_progress_value.is_some(), options.bytes_units) {
+        (true, true) => write!(
+            template_str,
+            "{{bar:32.cyan/blue}} {{bytes}} / {{total_bytes}} ({{eta}})"
+        )
+        .unwrap(),
+        (true, false) => write!(template_str, "{{bar:32.cyan/blue}}
