@@ -108,4 +108,10 @@ where
         let statistics = Arc::clone(&statistics);
         let sleep_duration = Duration::from_millis(100);
 
-        while report_prog
+        while report_progress.load(Ordering::SeqCst) {
+            thread::sleep(sleep_duration);
+            let (progress_value, message) = progress_fn(&statistics);
+            progress_bar.set_position(progress_value);
+            progress_bar.set_prefix(message);
+            match max_progress_value {
+  
