@@ -114,4 +114,10 @@ where
             progress_bar.set_position(progress_value);
             progress_bar.set_prefix(message);
             match max_progress_value {
-  
+                Some(value) => progress_bar.set_message(format!("{progress_value} / {value}")),
+                None => progress_bar.set_message(format!("{progress_value}")),
+            };
+        }
+
+        progress_bar.finish_and_clear();
+        eprint!("\r");
