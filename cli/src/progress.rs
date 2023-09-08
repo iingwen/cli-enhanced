@@ -121,3 +121,5 @@ where
 
         progress_bar.finish_and_clear();
         eprint!("\r");
+    })
+}
