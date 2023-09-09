@@ -24,4 +24,18 @@ impl Display for Thousands {
             value = quotient;
         }
         write!(
-      
+            formatter,
+            "{}",
+            std::str::from_utf8(&buffer[i_start..]).expect("ascii str built manually")
+        )
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    fn formatted(value: u64) -> String {
+        format!("{}", Thousands(value))
+    }
+
+  
