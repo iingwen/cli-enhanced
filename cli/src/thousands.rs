@@ -38,4 +38,14 @@ mod tests {
         format!("{}", Thousands(value))
     }
 
-  
+    #[test]
+    fn thousands_zero() {
+        assert_eq!(formatted(0), "0");
+    }
+
+    #[test]
+    fn thousands_less_than_one_thousand() {
+        assert_eq!(formatted(1), "1");
+        assert_eq!(formatted(12), "12");
+        assert_eq!(formatted(123), "123");
+    
