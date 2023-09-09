@@ -16,3 +16,12 @@ impl Display for Thousands {
             i_start -= 1;
             if num_digits > 0 && num_digits % 3 == 0 {
                 buffer[i_start] = b',';
+                i_start -= 1;
+            }
+            let (digit, quotient) = (value % 10, value / 10);
+            buffer[i_start] = u8::try_from(digit).expect("digits fit in u8") + b'0';
+            num_digits += 1;
+            value = quotient;
+        }
+        write!(
+      
