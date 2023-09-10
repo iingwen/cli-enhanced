@@ -48,4 +48,13 @@ mod tests {
         assert_eq!(formatted(1), "1");
         assert_eq!(formatted(12), "12");
         assert_eq!(formatted(123), "123");
-    
+        assert_eq!(formatted(999), "999");
+        assert_eq!(formatted(100), "100");
+    }
+
+    #[test]
+    fn thousands_one_comma() {
+        assert_eq!(formatted(1000), "1,000");
+        assert_eq!(formatted(1234), "1,234");
+        assert_eq!(formatted(9999), "9,999");
+        assert_eq!(for
