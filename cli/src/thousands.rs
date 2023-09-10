@@ -57,4 +57,13 @@ mod tests {
         assert_eq!(formatted(1000), "1,000");
         assert_eq!(formatted(1234), "1,234");
         assert_eq!(formatted(9999), "9,999");
-        assert_eq!(for
+        assert_eq!(formatted(12_345), "12,345");
+        assert_eq!(formatted(123_456), "123,456");
+        assert_eq!(formatted(123_000), "123,000");
+        assert_eq!(formatted(100_000), "100,000");
+        assert_eq!(formatted(999_999), "999,999");
+    }
+
+    #[test]
+    fn thousands_three_comma_club() {
+   
