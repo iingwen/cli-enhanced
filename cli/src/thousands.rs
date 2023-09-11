@@ -66,4 +66,12 @@ mod tests {
 
     #[test]
     fn thousands_three_comma_club() {
-   
+        assert_eq!(formatted(1_000_000_000), "1,000,000,000");
+        assert_eq!(formatted(123_456_789_012), "123,456,789,012");
+        assert_eq!(formatted(999_999_999_999), "999,999,999,999");
+    }
+
+    #[test]
+    fn thousands_max_u64() {
+        assert_eq!(
+            formatted(18
