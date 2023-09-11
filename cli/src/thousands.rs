@@ -74,4 +74,8 @@ mod tests {
     #[test]
     fn thousands_max_u64() {
         assert_eq!(
-            formatted(18
+            formatted(18446744073709551615),
+            "18,446,744,073,709,551,615"
+        );
+    }
+}
