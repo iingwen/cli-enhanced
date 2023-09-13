@@ -18,4 +18,10 @@ static REINFER_CLI_TEST_ENDPOINT: Lazy<Option<String>> =
 static REINFER_CLI_TEST_CONTEXT: Lazy<Option<String>> =
     Lazy::new(|| env::var("REINFER_CLI_TEST_CONTEXT").ok());
 static REINFER_CLI_TEST_TOKEN: Lazy<Option<String>> =
-    Lazy::new(|| 
+    Lazy::new(|| env::var("REINFER_CLI_TEST_TOKEN").ok());
+
+static TEST_CLI: Lazy<TestCli> = Lazy::new(|| {
+    let cli_path = std::env::current_exe()
+        .ok()
+        .and_then(|p| Some(p.parent()?.parent()?.join("re")))
+        .expect("Could not resolve CLI executable from tes
