@@ -24,4 +24,20 @@ static TEST_CLI: Lazy<TestCli> = Lazy::new(|| {
     let cli_path = std::env::current_exe()
         .ok()
         .and_then(|p| Some(p.parent()?.parent()?.join("re")))
-        .expect("Could not resolve CLI executable from tes
+        .expect("Could not resolve CLI executable from test executable");
+
+    TestCli { cli_path }
+});
+
+pub struct TestCli {
+    cli_path: PathBuf,
+}
+
+impl TestCli {
+    pub fn get() -> &'static Self {
+        &TEST_CLI
+    }
+
+    pub fn user(&self) -> User {
+        let output = self.run(["--output=json", "get", "current-user"]);
+        serd
