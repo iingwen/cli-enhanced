@@ -40,4 +40,14 @@ impl TestCli {
 
     pub fn user(&self) -> User {
         let output = self.run(["--output=json", "get", "current-user"]);
-        serd
+        serde_json::from_str::<User>(&output).expect("Failed to deserialize user response")
+    }
+
+    pub fn project() -> String {
+        REINFER_CLI_TEST_PROJECT.to_owned()
+    }
+
+    pub fn command(&self) -> Command {
+        let mut command = Command::new(&self.cli_path);
+
+        match (&*REINFER_
