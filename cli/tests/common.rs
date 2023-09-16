@@ -50,4 +50,10 @@ impl TestCli {
     pub fn command(&self) -> Command {
         let mut command = Command::new(&self.cli_path);
 
-        match (&*REINFER_
+        match (&*REINFER_CLI_TEST_CONTEXT, &*REINFER_CLI_TEST_ENDPOINT, &*REINFER_CLI_TEST_TOKEN) {
+            (Some(context), _, _) => {
+                command.arg("--context").arg(context);
+            },
+            (_, Some(endpoint), Some(token)) => {
+                command
+                    .arg(
