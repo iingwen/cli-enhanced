@@ -56,4 +56,12 @@ impl TestCli {
             },
             (_, Some(endpoint), Some(token)) => {
                 command
-                    .arg(
+                    .arg("--endpoint")
+                    .arg(endpoint)
+                    .arg("--token")
+                    .arg(token);
+            },
+            _ => panic!("Either REINFER_CLI_TEST_CONTEXT, or REINFER_CLI_TEST_ENDPOINT and REINFER_CLI_TEST_TOKEN must be set.")
+        }
+
+      
