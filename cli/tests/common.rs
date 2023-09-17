@@ -83,4 +83,16 @@ impl TestCli {
         args: impl IntoIterator<Item = impl AsRef<OsStr>>,
     ) -> Result<String> {
         self.output_result(self.command().args(args))
-    
+    }
+
+    #[track_caller]
+    pub fn run_with_stdin(
+        &self,
+        args: impl IntoIterator<Item = impl AsRef<OsStr>>,
+        stdin: &[u8],
+    ) -> String {
+        let mut process = self
+            .command()
+            .args(args)
+            .stdin(Stdio::piped())
+            .stdout(Stdio:
