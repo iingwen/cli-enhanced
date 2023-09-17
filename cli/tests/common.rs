@@ -64,4 +64,13 @@ impl TestCli {
             _ => panic!("Either REINFER_CLI_TEST_CONTEXT, or REINFER_CLI_TEST_ENDPOINT and REINFER_CLI_TEST_TOKEN must be set.")
         }
 
-      
+        command
+    }
+
+    #[track_caller]
+    pub fn run(&self, args: impl IntoIterator<Item = impl AsRef<OsStr>>) -> String {
+        self.output(self.command().args(args))
+    }
+
+    #[track_caller]
+    pub fn run_and_error(&self, args: impl IntoIterator<Item = impl AsRef<OsStr>>) ->
