@@ -73,4 +73,14 @@ impl TestCli {
     }
 
     #[track_caller]
-    pub fn run_and_error(&self, args: impl IntoIterator<Item = impl AsRef<OsStr>>) ->
+    pub fn run_and_error(&self, args: impl IntoIterator<Item = impl AsRef<OsStr>>) -> String {
+        self.output_error(self.command().args(args))
+    }
+
+    #[track_caller]
+    pub fn run_and_result(
+        &self,
+        args: impl IntoIterator<Item = impl AsRef<OsStr>>,
+    ) -> Result<String> {
+        self.output_result(self.command().args(args))
+    
