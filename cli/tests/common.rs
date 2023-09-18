@@ -95,4 +95,13 @@ impl TestCli {
             .command()
             .args(args)
             .stdin(Stdio::piped())
-            .stdout(Stdio:
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped())
+            .spawn()
+            .unwrap();
+        process.stdin.as_mut().unwrap().write_all(stdin).unwrap();
+        let output = process.wait_with_output().unwrap();
+
+        if !output.status.success() {
+            panic!(
+                "failed to run c
