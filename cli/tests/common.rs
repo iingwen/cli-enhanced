@@ -135,4 +135,15 @@ impl TestCli {
         } else {
             Err(anyhow!(
                 "failed to run command:\n{}",
-                String::from_utf8_lossy(&output.stde
+                String::from_utf8_lossy(&output.stderr)
+            ))
+        }
+    }
+
+    #[track_caller]
+    pub fn output_error(&self, command: &mut Command) -> String {
+        let output = command.output().unwrap();
+
+        if output.status.success() {
+            panic!(
+                "succeeded running command (expected fail
