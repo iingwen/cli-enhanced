@@ -127,4 +127,12 @@ impl TestCli {
     }
 
     #[track_caller]
-    pub fn output_result(&
+    pub fn output_result(&self, command: &mut Command) -> Result<String> {
+        let output = command.output().unwrap();
+
+        if output.status.success() {
+            Ok(String::from_utf8(output.stdout)?)
+        } else {
+            Err(anyhow!(
+                "failed to run command:\n{}",
+                String::from_utf8_lossy(&output.stde
