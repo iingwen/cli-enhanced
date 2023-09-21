@@ -146,4 +146,11 @@ impl TestCli {
 
         if output.status.success() {
             panic!(
-                "succeeded running command (expected fail
+                "succeeded running command (expected failure):\n{}",
+                String::from_utf8_lossy(&output.stdout)
+            );
+        }
+
+        String::from_utf8(output.stderr).unwrap()
+    }
+}
