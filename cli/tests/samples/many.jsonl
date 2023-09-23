@@ -1,0 +1,4 @@
+
+{"comment":{"id":"1","timestamp":"2020-01-01T00:00:00Z","messages":[{"body":{"text":"Comment 1"}}]}}
+{"comment":{"id":"2","timestamp":"2020-01-02T00:00:00Z","messages":[{"body":{"text":"Comment 2"}}]},"labelling":[{"group":"default", "assigned":[{"name":"A","sentiment":"positive"}]}]}
+{"comment":{"id":"3","timestamp":"2020-01-03T00:00:00Z","messages":[{"body":{"text":"Comment 3"}}]},"labelling":[{"group":"default", "assigned":[{"name":"A","sentiment":"positive"}]}]}
