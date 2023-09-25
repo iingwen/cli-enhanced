@@ -1,1 +1,2 @@
-{"comment":{"id":"1","timestamp":"2020-01-01T00:00:00Z","messages":[{"body
+{"comment":{"id":"1","timestamp":"2020-01-01T00:00:00Z","messages":[{"body":{"text":"Comment 1"}}]}}
+{"comment":{"id":"2","timestamp":"2020-01-02T00:00:00Z","messages":[{"body":{"text":"Comment 2"}}]},"labelling":[{"group": "default", "assigned":[{"name":"A","sentiment":"positive"}]}], "moon_forms": [{"group": "default", "assigned": [
