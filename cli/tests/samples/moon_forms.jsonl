@@ -5,4 +5,4 @@
 {"comment":{"id":"5","timestamp":"2020-02-01T00:00:00Z","messages":[{"body":{"text":"Comment 5"}}]}}
 {"comment":{"id":"6","timestamp":"2020-02-02T00:00:00Z","messages":[{"body":{"text":"Comment 6"}}]},"labelling":[{"group": "default", "assigned":[{"name":"C","sentiment":"positive"}]}], "moon_forms": [{"group": "default", "assigned": [{"label": {"name":"C","sentiment":"positive"}, "captures": [{"fields": []}]}]}]}
 {"comment":{"id":"7","timestamp":"2020-02-03T00:00:00Z","messages":[{"body":{"text":"Comment 7"}}]},"labelling":[{"group": "default", "assigned":[{"name":"A","sentiment":"positive"}]}], "moon_forms": [{"group": "default", "assigned": [{"label": {"name":"A","sentiment":"positive"}, "captures": []}]}]}
-{"co
+{"comment":{"id":"8","timestamp":"2020-02-04T00:00:00Z","messages":[{"body":{"text":"Comment 8"}}]},"labelling":[{"group": "default", "assigned":[{"name":"B","sentiment":"positive"}]}], "moon_forms": [{"group": "default", "assigned": [{"label": {"name":"B","sentiment":"positive"}, "c
