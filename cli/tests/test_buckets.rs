@@ -19,4 +19,14 @@ fn test_bucket_lifecycle() {
     let output = cli.run(["delete", "bucket", &new_bucket_name]);
     assert!(output.is_empty(), "{}", output);
 
-    let output = cli.run(["get"
+    let output = cli.run(["get", "buckets"]);
+    assert!(!output.contains(&new_bucket_name), "{}", output);
+}
+
+#[test]
+fn test_create_without_org_fails() {
+    let cli = TestCli::get();
+
+    let output = cli.run_and_error(["create", "bucket", "bucket-name-without-org"]);
+    assert!(
+        output.c
