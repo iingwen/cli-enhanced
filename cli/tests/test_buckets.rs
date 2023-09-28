@@ -29,4 +29,15 @@ fn test_create_without_org_fails() {
 
     let output = cli.run_and_error(["create", "bucket", "bucket-name-without-org"]);
     assert!(
-        output.c
+        output.contains("Expected <owner>/<name>, got: bucket-name-without-org"),
+        "{}",
+        output
+    );
+}
+
+#[test]
+fn test_create_with_empty_org_fails() {
+    let cli = TestCli::get();
+
+    let output = cli.run_and_error(["create", "bucket", "/bucket-name-with-empty-org"]);
+    a
