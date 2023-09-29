@@ -63,4 +63,10 @@ fn test_create_with_empty_bucket_name_fails() {
 fn test_create_with_too_many_seperators_fails() {
     let cli = TestCli::get();
 
-    let output = c
+    let output = cli.run_and_error(["create", "bucket", "Bucket/Name/with/too/many/seperators/"]);
+    assert!(
+        output.contains("Expected <owner>/<name>, got: Bucket/Name/with/too/many/seperators"),
+        "{}",
+        output
+    );
+}
