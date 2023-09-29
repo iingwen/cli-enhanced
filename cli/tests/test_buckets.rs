@@ -51,4 +51,16 @@ fn test_create_with_empty_org_fails() {
 fn test_create_with_empty_bucket_name_fails() {
     let cli = TestCli::get();
 
-    let output = cli.run_and_error(["create", "bucket", "org-wit
+    let output = cli.run_and_error(["create", "bucket", "org-without-bucket-name/"]);
+    assert!(
+        output.contains("Expected <owner>/<name>, got: org-without-bucket-name/"),
+        "{}",
+        output
+    );
+}
+
+#[test]
+fn test_create_with_too_many_seperators_fails() {
+    let cli = TestCli::get();
+
+    let output = c
