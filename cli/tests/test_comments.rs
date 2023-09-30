@@ -14,4 +14,10 @@ fn test_comments_lifecycle_basic() {
 #[test]
 fn test_comments_lifecycle_labellings() {
     const SAMPLE_LABELLING: &str = include_str!("./samples/labelling.jsonl");
-    check_comments_lifecycle(SAMPLE_LABELLING, vec!["--allow
+    check_comments_lifecycle(SAMPLE_LABELLING, vec!["--allow-duplicates", "--yes"]);
+}
+
+#[test]
+fn test_comments_lifecycle_legacy_labelling() {
+    const SAMPLE_LEGACY_LABELLING: &str = include_str!("./samples/legacy_labelling.jsonl");
+    check_comments_lifecycle(SAMPLE_LEGACY_LABELLING, vec!["--allow-du
