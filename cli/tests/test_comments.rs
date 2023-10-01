@@ -28,4 +28,14 @@ fn test_comments_lifecycle_moon_forms() {
     const SAMPLE_MOON_LABELLING: &str = include_str!("./samples/moon_forms.jsonl");
     // check without moon forms
     check_comments_lifecycle(SAMPLE_MOON_LABELLING, vec!["--allow-duplicates", "--yes"]);
-    // and with moon
+    // and with moon forms
+    check_comments_lifecycle(
+        SAMPLE_MOON_LABELLING,
+        vec!["--allow-duplicates", "--yes", "--use-moon-forms"],
+    );
+}
+
+#[test]
+fn test_comments_lifecycle_audio() {
+    const SAMPLE_AUDIO: &str = include_str!("./samples/audio.jsonl");
+    check_com
