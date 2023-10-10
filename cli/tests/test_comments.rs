@@ -38,4 +38,11 @@ fn test_comments_lifecycle_moon_forms() {
 #[test]
 fn test_comments_lifecycle_audio() {
     const SAMPLE_AUDIO: &str = include_str!("./samples/audio.jsonl");
-    check_com
+    check_comments_lifecycle(SAMPLE_AUDIO, vec!["--allow-duplicates", "--yes"]);
+}
+
+fn check_comments_lifecycle(comments_str: &str, args: Vec<&str>) {
+    let annotated_comments: Vec<NewAnnotatedComment> = comments_str
+        .lines()
+        .map(serde_json::from_str)
+        .c
