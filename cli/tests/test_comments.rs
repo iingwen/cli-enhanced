@@ -57,3 +57,13 @@ fn check_comments_lifecycle(comments_str: &str, args: Vec<&str>) {
             "create",
             "comments",
             &format!("--source={}", source.identifier()),
+        ]
+        .into_iter()
+        .chain(args))
+        .collect::<Vec<&str>>(),
+        comments_str.as_bytes(),
+    );
+    assert!(output.is_empty());
+
+    let output = cli.run(["get", "comments", source.identifier()]);
+    assert_eq!(output.lines().count()
