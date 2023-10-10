@@ -45,4 +45,15 @@ fn check_comments_lifecycle(comments_str: &str, args: Vec<&str>) {
     let annotated_comments: Vec<NewAnnotatedComment> = comments_str
         .lines()
         .map(serde_json::from_str)
-        .c
+        .collect::<Result<_, _>>()
+        .unwrap();
+
+    let cli = TestCli::get();
+    let source = TestSource::new();
+
+    // Upload our test data
+    let output = cli.run_with_stdin(
+        ([
+            "create",
+            "comments",
+            &format!("--source={}", source.identifier()),
