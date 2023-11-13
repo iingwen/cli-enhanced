@@ -66,4 +66,10 @@ fn check_comments_lifecycle(comments_str: &str, args: Vec<&str>) {
     assert!(output.is_empty());
 
     let output = cli.run(["get", "comments", source.identifier()]);
-    assert_eq!(output.lines().count()
+    assert_eq!(output.lines().count(), annotated_comments.len());
+
+    // Assert that all output comments have the same content as the input comments
+    let mut output_comments: Vec<Comment> = output
+        .lines()
+        .map(|line| serde_json::from_str(line).expect("invalid comment"))
+        .map(|annotated_co
