@@ -80,4 +80,9 @@ fn check_comments_lifecycle(comments_str: &str, args: Vec<&str>) {
         .iter()
         .map(|annotated_comment| annotated_comment.comment.clone())
         .collect::<Vec<NewComment>>();
-    inp
+    input_comments.sort_by(|a, b| a.id.cmp(&b.id));
+
+    for (input_comment, output_comment) in input_comments.iter().zip(output_comments.iter()) {
+        assert_eq!(input_comment.id, output_comment.id);
+        assert_eq!(input_comment.messages, output_comment.messages);
+        assert_e
