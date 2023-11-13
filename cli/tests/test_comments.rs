@@ -72,4 +72,12 @@ fn check_comments_lifecycle(comments_str: &str, args: Vec<&str>) {
     let mut output_comments: Vec<Comment> = output
         .lines()
         .map(|line| serde_json::from_str(line).expect("invalid comment"))
-        .map(|annotated_co
+        .map(|annotated_comment: AnnotatedComment| annotated_comment.comment)
+        .collect();
+    output_comments.sort_by(|a, b| a.id.cmp(&b.id));
+
+    let mut input_comments = annotated_comments
+        .iter()
+        .map(|annotated_comment| annotated_comment.comment.clone())
+        .collect::<Vec<NewComment>>();
+    inp
