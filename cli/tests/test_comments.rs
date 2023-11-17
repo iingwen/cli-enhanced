@@ -85,4 +85,13 @@ fn check_comments_lifecycle(comments_str: &str, args: Vec<&str>) {
     for (input_comment, output_comment) in input_comments.iter().zip(output_comments.iter()) {
         assert_eq!(input_comment.id, output_comment.id);
         assert_eq!(input_comment.messages, output_comment.messages);
-        assert_e
+        assert_eq!(input_comment.timestamp, output_comment.timestamp);
+    }
+
+    // Test getting a comment by id to check the content matches
+    let test_comment = annotated_comments.first().unwrap().comment.clone();
+    let output = cli.run([
+        "get",
+        "comment",
+        &format!("--source={}", source.identifier()),
+    
