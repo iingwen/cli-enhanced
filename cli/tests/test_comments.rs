@@ -100,4 +100,13 @@ fn check_comments_lifecycle(comments_str: &str, args: Vec<&str>) {
         serde_json::from_str(&output).expect("invalid annotated comment fetched");
     assert_eq!(test_comment.id, fetched_comment.comment.id);
     assert_eq!(test_comment.messages, fetched_comment.comment.messages);
-   
+    assert_eq!(test_comment.timestamp, fetched_comment.comment.timestamp);
+    assert_eq!(
+        test_comment.user_properties,
+        fetched_comment.comment.user_properties
+    );
+
+    // Deleting one comment reduces the comment count in the source
+    let output = cli.run([
+        "delete",
+        "comments",
