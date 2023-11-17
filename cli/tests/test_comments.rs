@@ -94,4 +94,10 @@ fn check_comments_lifecycle(comments_str: &str, args: Vec<&str>) {
         "get",
         "comment",
         &format!("--source={}", source.identifier()),
-    
+        &test_comment.id.0,
+    ]);
+    let fetched_comment: AnnotatedComment =
+        serde_json::from_str(&output).expect("invalid annotated comment fetched");
+    assert_eq!(test_comment.id, fetched_comment.comment.id);
+    assert_eq!(test_comment.messages, fetched_comment.comment.messages);
+   
