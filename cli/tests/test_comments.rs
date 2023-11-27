@@ -110,3 +110,10 @@ fn check_comments_lifecycle(comments_str: &str, args: Vec<&str>) {
     let output = cli.run([
         "delete",
         "comments",
+        &format!("--source={}", source.identifier()),
+        &annotated_comments.first().unwrap().comment.id.0,
+    ]);
+    assert!(output.is_empty());
+
+    let output = cli.run(["get", "comments", source.identifier()]);
+    assert_eq!(output.lines().count(), annotated_comments.len() - 
