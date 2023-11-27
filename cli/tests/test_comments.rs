@@ -116,4 +116,13 @@ fn check_comments_lifecycle(comments_str: &str, args: Vec<&str>) {
     assert!(output.is_empty());
 
     let output = cli.run(["get", "comments", source.identifier()]);
-    assert_eq!(output.lines().count(), annotated_comments.len() - 
+    assert_eq!(output.lines().count(), annotated_comments.len() - 1);
+
+    // Delete all ids
+    let mut args = vec!["delete", "comments", "--source", source.identifier()];
+    args.extend(
+        annotated_comments
+            .iter()
+            .map(|annotated_comment| annotated_comment.comment.id.0.as_str()),
+    );
+    let outpu
