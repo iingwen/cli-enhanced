@@ -125,4 +125,13 @@ fn check_comments_lifecycle(comments_str: &str, args: Vec<&str>) {
             .iter()
             .map(|annotated_comment| annotated_comment.comment.id.0.as_str()),
     );
-    let outpu
+    let output = cli.run(&args);
+    assert!(output.is_empty());
+
+    let output = cli.run(["get", "comments", source.identifier()]);
+    assert!(output.is_empty());
+}
+
+#[test]
+fn test_delete_comments_in_range() {
+    let comments_str = include_str!("./samples/many.js
