@@ -142,4 +142,13 @@ fn test_delete_comments_in_range() {
         .unwrap();
     let num_comments = annotated_comments.len();
     let num_annotated = annotated_comments
-        
+        .iter()
+        .filter(|comment| comment.has_annotations())
+        .count();
+
+    let cli = TestCli::get();
+    let source = TestSource::new();
+    let dataset1 = TestDataset::new_args(&[&format!("--source={}", source.identifier())]);
+
+    // Upload our test data
+    let outpu
