@@ -151,4 +151,13 @@ fn test_delete_comments_in_range() {
     let dataset1 = TestDataset::new_args(&[&format!("--source={}", source.identifier())]);
 
     // Upload our test data
-    let outpu
+    let output = cli.run_with_stdin(
+        [
+            "create",
+            "comments",
+            "--allow-duplicates",
+            "--yes",
+            &format!("--source={}", source.identifier()),
+            &format!("--dataset={}", dataset1.identifier()),
+        ],
+      
