@@ -134,4 +134,12 @@ fn check_comments_lifecycle(comments_str: &str, args: Vec<&str>) {
 
 #[test]
 fn test_delete_comments_in_range() {
-    let comments_str = include_str!("./samples/many.js
+    let comments_str = include_str!("./samples/many.jsonl");
+    let annotated_comments: Vec<NewAnnotatedComment> = comments_str
+        .lines()
+        .map(serde_json::from_str)
+        .collect::<Result<_, _>>()
+        .unwrap();
+    let num_comments = annotated_comments.len();
+    let num_annotated = annotated_comments
+        
