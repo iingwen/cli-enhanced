@@ -160,4 +160,12 @@ fn test_delete_comments_in_range() {
             &format!("--source={}", source.identifier()),
             &format!("--dataset={}", dataset1.identifier()),
         ],
-      
+        comments_str.as_bytes(),
+    );
+    assert!(output.is_empty());
+
+    let uploaded_all = cli.run(["get", "comments", source.identifier()]);
+    assert_eq!(uploaded_all.lines().count(), num_comments);
+
+    // Download annotated comments and check count
+    let uploaded_
