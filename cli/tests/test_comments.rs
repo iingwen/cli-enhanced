@@ -168,4 +168,15 @@ fn test_delete_comments_in_range() {
     assert_eq!(uploaded_all.lines().count(), num_comments);
 
     // Download annotated comments and check count
-    let uploaded_
+    let uploaded_annotated = cli.run([
+        "get",
+        "comments",
+        "--reviewed-only",
+        "true",
+        "--dataset",
+        dataset1.identifier(),
+        source.identifier(),
+    ]);
+    assert_eq!(uploaded_annotated.lines().count(), num_annotated);
+
+    // Delete co
