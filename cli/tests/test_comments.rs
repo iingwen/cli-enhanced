@@ -179,4 +179,9 @@ fn test_delete_comments_in_range() {
     ]);
     assert_eq!(uploaded_annotated.lines().count(), num_annotated);
 
-    // Delete co
+    // Delete comments in range. By default this should exclude annotated comments
+    let from_timestamp_str = "2020-01-03T00:00:00Z";
+    let from_timestamp = DateTime::parse_from_rfc3339(from_timestamp_str).unwrap();
+
+    let to_timestamp_str = "2020-02-01T00:00:00Z";
+    let to_timestamp = DateTime::parse_from_rfc
