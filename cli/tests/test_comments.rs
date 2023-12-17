@@ -197,4 +197,10 @@ fn test_delete_comments_in_range() {
         to_timestamp_str,
         "--include-annotated=false",
     ]);
-  
+    let num_deleted = annotated_comments
+        .iter()
+        .filter(|comment| {
+            // N.B. to / from are inclusive
+            !comment.has_annotations()
+                && comment.comment.timestamp <= to_timestamp
+                && comment.co
