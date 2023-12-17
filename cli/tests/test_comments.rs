@@ -203,4 +203,16 @@ fn test_delete_comments_in_range() {
             // N.B. to / from are inclusive
             !comment.has_annotations()
                 && comment.comment.timestamp <= to_timestamp
-                && comment.co
+                && comment.comment.timestamp >= from_timestamp
+        })
+        .count();
+
+    // Get all comments and check counts
+    let after_deleting_range = get_comments_with_delay(
+        cli,
+        &[
+            "get",
+            "comments",
+            "--dataset",
+            dataset1.identifier(),
+  
