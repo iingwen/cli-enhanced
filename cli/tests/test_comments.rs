@@ -184,4 +184,17 @@ fn test_delete_comments_in_range() {
     let from_timestamp = DateTime::parse_from_rfc3339(from_timestamp_str).unwrap();
 
     let to_timestamp_str = "2020-02-01T00:00:00Z";
-    let to_timestamp = DateTime::parse_from_rfc
+    let to_timestamp = DateTime::parse_from_rfc3339(to_timestamp_str).unwrap();
+
+    cli.run([
+        "delete",
+        "bulk",
+        "--source",
+        source.identifier(),
+        "--from-timestamp",
+        from_timestamp_str,
+        "--to-timestamp",
+        to_timestamp_str,
+        "--include-annotated=false",
+    ]);
+  
