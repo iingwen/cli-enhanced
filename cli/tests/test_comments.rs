@@ -215,4 +215,16 @@ fn test_delete_comments_in_range() {
             "comments",
             "--dataset",
             dataset1.identifier(),
-  
+            source.identifier(),
+        ],
+        num_comments - num_deleted,
+    );
+
+    assert_eq!(
+        after_deleting_range.lines().count(),
+        num_comments - num_deleted
+    );
+
+    // Delete comments in source, excluding annotated comments
+    cli.run([
+        "de
