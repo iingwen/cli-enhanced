@@ -227,4 +227,16 @@ fn test_delete_comments_in_range() {
 
     // Delete comments in source, excluding annotated comments
     cli.run([
-        "de
+        "delete",
+        "bulk",
+        "--source",
+        source.identifier(),
+        "--include-annotated=false",
+    ]);
+
+    // Get all comments and check that only annotated ones are left
+    let after_deleting_unannotated = get_comments_with_delay(
+        cli,
+        &[
+            "get",
+      
