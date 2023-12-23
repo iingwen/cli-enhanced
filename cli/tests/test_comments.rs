@@ -239,4 +239,14 @@ fn test_delete_comments_in_range() {
         cli,
         &[
             "get",
-      
+            "comments",
+            "--dataset",
+            dataset1.identifier(),
+            source.identifier(),
+        ],
+        num_annotated,
+    );
+    assert_eq!(after_deleting_unannotated.lines().count(), num_annotated);
+
+    // Delete all comments
+    cli.run([
