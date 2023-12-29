@@ -261,4 +261,14 @@ fn test_delete_comments_in_range() {
         cli,
         &[
             "get",
-     
+            "comments",
+            "--dataset",
+            dataset1.identifier(),
+            source.identifier(),
+        ],
+        0,
+    );
+    assert_eq!(after_deleting_all.lines().count(), 0);
+}
+
+fn get_comments_with_delay(cli: &TestCli, command: &[&str], expected_count: usize) 
