@@ -250,3 +250,15 @@ fn test_delete_comments_in_range() {
 
     // Delete all comments
     cli.run([
+        "delete",
+        "bulk",
+        &format!("--source={}", source.identifier()),
+        "--include-annotated=true",
+    ]);
+
+    // Get all comments and check there are none left
+    let after_deleting_all = get_comments_with_delay(
+        cli,
+        &[
+            "get",
+     
