@@ -271,4 +271,12 @@ fn test_delete_comments_in_range() {
     assert_eq!(after_deleting_all.lines().count(), 0);
 }
 
-fn get_comments_with_delay(cli: &TestCli, command: &[&str], expected_count: usize) 
+fn get_comments_with_delay(cli: &TestCli, command: &[&str], expected_count: usize) -> String {
+    let run_command = || {
+        let result = cli.run(command);
+        let actual_count = result.lines().count();
+        if actual_count == expected_count {
+            Ok(result)
+        } else {
+            Err(backoff::Error::transient(anyhow!(
+       
