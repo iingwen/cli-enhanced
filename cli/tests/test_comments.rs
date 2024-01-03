@@ -279,4 +279,12 @@ fn get_comments_with_delay(cli: &TestCli, command: &[&str], expected_count: usiz
             Ok(result)
         } else {
             Err(backoff::Error::transient(anyhow!(
-       
+                "Expected {} results got {}",
+                expected_count,
+                actual_count
+            )))
+        }
+    };
+
+    retry(ExponentialBackoff::default(), run_command).unwrap()
+}
