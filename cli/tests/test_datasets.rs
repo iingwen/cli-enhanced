@@ -327,3 +327,75 @@ fn test_create_dataset_with_source() {
 
     let source_output = cli.run([
         "--output=json",
+        "get",
+        "sources",
+        &dataset_info.source_ids.first().unwrap().0,
+    ]);
+    let source_info: Source = serde_json::from_str(source_output.trim()).unwrap();
+    assert_eq!(&source_info.owner.0, source.owner());
+    assert_eq!(&source_info.name.0, source.name());
+}
+
+#[test]
+fn test_create_dataset_requires_owner() {
+    let cli = TestCli::get();
+
+    let output = cli
+        .command()
+        .args(["create", "dataset", "dataset-without-owner"])
+        .output()
+        .unwrap();
+
+    assert!(!output.status.success());
+}
+
+#[test]
+fn test_create_dataset_model_family() {
+    let cli = TestCli::get();
+    let dataset = TestDataset::new_args(&["--model-family==german"]);
+
+    let output = cli.run(["--output=json", "get", "datasets", dataset.identifier()]);
+    let dataset_info: Dataset = serde_json::from_str(output.trim()).unwrap();
+    assert_eq!(&dataset_info.owner.0, dataset.owner());
+    assert_eq!(&dataset_info.name.0, dataset.name());
+    assert_eq!(&dataset_info.model_family.0, "german");
+}
+
+#[test]
+fn test_create_dataset_wrong_model_family() {
+    let cli = TestCli::get();
+    let output = cli
+        .command()
+        .args([
+            "create",
+            "dataset",
+            "--model-family==non-existent-family",
+            &format!("{}/test-dataset-{}", TestCli::project(), Uuid::new_v4()),
+        ])
+        .output()
+        .unwrap();
+    assert!(!output.status.success());
+    assert!(String::from_utf8_lossy(&output.stderr)
+        .contains("API request failed with 400 Bad Request: Invalid request - Unsupported model family: non-existent-family"))
+}
+
+#[test]
+fn test_create_dataset_copy_annotations() {
+    let cli = TestCli::get();
+    let dataset1 = TestDataset::new();
+    let dataset1_output = cli.run(["--output=json", "get", "datasets", dataset1.identifier()]);
+    let dataset1_info: Dataset = serde_json::from_str(dataset1_output.trim()).unwrap();
+
+    let output = cli
+        .command()
+        .args([
+            "create",
+            "dataset",
+            &format!("--copy-annotations-from={}", dataset1_info.id.0),
+            &format!("{}/test-dataset-{}", TestCli::project(), Uuid::new_v4()),
+        ])
+        .output()
+        .unwrap();
+
+    assert!(output.status.success());
+}
