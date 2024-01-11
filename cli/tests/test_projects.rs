@@ -190,3 +190,4 @@ fn test_project_force_delete() {
 
     // To avoid panic on drop because the project has already been deleted.
     std::mem::forget(project);
+}
