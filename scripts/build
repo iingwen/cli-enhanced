@@ -3,4 +3,4 @@
 set -ex
 
 cargo check --locked --all-targets
-cargo build --locked --all-ta
+cargo build --locked --all-targets

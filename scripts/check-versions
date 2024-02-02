@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+eprintln() {
+  local message="$1"
+  >&2 echo "$message"
+}
+
+VERSION=$(grep -e "^version" cli/Cargo.toml | cut -d ' ' -f 3 | tr -d '"')
+README="README.md"
+eprintln "Enforcing links for version '$VE
