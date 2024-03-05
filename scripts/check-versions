@@ -11,4 +11,15 @@ eprintln() {
 
 VERSION=$(grep -e "^version" cli/Cargo.toml | cut -d ' ' -f 3 | tr -d '"')
 README="README.md"
-eprintln "Enforcing links for version '$VE
+eprintln "Enforcing links for version '$VERSION'"
+
+expect_link() {
+  local link="$1"
+  eprintln "Enforcing link '$link' in '$README'"
+  if ! grep -Fq "$link" "$README"; then
+      eprintln "error: '$README' does not contain expected link '$link', exiting"
+      exit 1;
+  fi
+}
+
+expect_link "https://reinfer.io/public
