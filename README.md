@@ -9,4 +9,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github
+  <a href="https://github.com/iingwen/cli-enhanced/actions?query=workflow%3ABuild">
+    <img alt="Build Status" src="https://github.com/iingwen/cli-enhanced/workflows/Build/badge.svg">
+  </a>
+
+  <a href="https://crates.io/crates/cli-enhanced">
+    <img alt="Crates.io" src="https://img.shields.io/cr
