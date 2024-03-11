@@ -14,4 +14,17 @@
   </a>
 
   <a href="https://crates.io/crates/cli-enhanced">
-    <img alt="Crates.io" src="https://img.shields.io/cr
+    <img alt="Crates.io" src="https://img.shields.io/crates/v/cli-enhanced.svg">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://reinfer.io/docs">
+    API Documentation
+  </a> | <a href="https://reinfer.io">
+    Website
+  </a>
+</p>
+
+
+`cli-enhanced` is the official command line interface for [Re:infer].. rest of the content is omitted for brevity ...
